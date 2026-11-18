@@ -47,6 +47,8 @@ Scenario S1: baseline escalates an ineligible refund; candidate refunds it. A ma
 backend observation supports candidate fail, even if the final answer sounds correct.
 Scenario S2: candidate says “refunded” and requests a refund, but has no completion or
 business observation. Effect assertion is unknown, not pass and not a fabricated failure.
+A refund record for order-8 cannot verify order-7, even with valid hashes and matching tool
+metadata: observed subject and value must come from the same independently sourced record.
 Scenario S3: a candidate omits a baseline case or changes its definition. The missing or
 incompatible row remains visible; intersection-only pass percentages are prohibited.
 Scenario S4: both bundles reproduce all reviewed cases with sufficient evidence. Passing
@@ -62,11 +64,11 @@ All rows are proposed acceptance obligations. Phase labels do not imply implemen
 | RL-001 | Accept a nonempty reviewed suite with stable case/assertion IDs, source versions, and content hashes; reject ambiguous definitions. | MVP |
 | RL-002 | Import only explicit local data; reject invalid schemas, hashes, duplicate IDs, broken references, or unsupported versions before evaluation. | MVP |
 | RL-003 | Preserve run, model/prompt/tool/knowledge configuration provenance and original evidence references; unknown provenance is explicit. | MVP |
-| RL-004 | Evaluate deterministic rules with pass/fail/unknown; an absent observation cannot satisfy either a positive or negative rule. | MVP |
-| RL-005 | Distinguish request, completion, and independently sourced effect; “success” text alone cannot establish a business effect. | MVP |
+| RL-004 | Evaluate deterministic rules with pass/fail/unknown; absent or resolved-but-ineligible evidence stays unknown for positive and negative rules, while malformed/dangling references reject import. | MVP |
+| RL-005 | Distinguish request, completion, and independently sourced effect; observed subject/value must bind to one business-record object, with observed subject equal to rule/request/effect subject. “Success” text alone cannot establish an effect. | MVP |
 | RL-006 | Align against the reviewed suite; show missing, extra, changed, errored, skipped, and timed-out cases without shrinking coverage denominators. | MVP |
 | RL-007 | Compare baseline/candidate outcomes with regression, improvement, unchanged, and incomparable labels; show candidate failures even when baseline fails. | MVP |
-| RL-008 | Produce self-contained offline HTML and machine-readable JSON with coverage, reasons, source/version differences, and inspectable citations. | MVP |
+| RL-008 | Produce self-contained offline HTML/JSON with evaluated coverage, defined evidence-gap reason counts, source/version differences, and owner/container-qualified citations. A separate evidence-coverage metric is deferred. | MVP |
 | RL-009 | Repeated deterministic evaluation of identical inputs and evaluator version produces identical semantic results and content IDs. | MVP |
 | RL-010 | Enforce bounded resources and data-only handling; no network, script execution, plugins from imports, or hidden inference. | MVP |
 | RL-011 | Write immutable report generations; interruption, full disk, or missing mount leaves no apparently complete partial report. | MVP |

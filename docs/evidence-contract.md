@@ -38,7 +38,9 @@ Artifact content type must match media_type. References never contain file paths
 Every supplied Ref must resolve within its owning suite or bundle, including the pointer;
 a dangling Ref invalidates that input. Missing evidence is represented by null or an empty
 array where permitted, not by a fabricated dangling reference. All artifact IDs are unique
-within the container. Cross-container refs are forbidden; reports qualify refs with owner.
+within the container. Cross-container refs are forbidden; reports qualify refs with owner
+and container. Each embedded suite_snapshot has its own artifact namespace, independent
+of its containing bundle; equal artifact IDs across these namespaces are permitted.
 Source IDs are stable within the user's project. Within one container each source_id must
 have exactly one kind/version/digest tuple; different versions belong in different bundles.
 Configuration contains exactly one prompt and one model descriptor, and zero or more tool
@@ -74,7 +76,7 @@ Changing any rule, input, policy bytes, or source metadata changes case_hash and
 | `Observation` | `{assertion_id:ID, value:Ref|null, effect_event_id:ID|null}` |
 | `Request` | `{event_id:ID, kind:"request", seq:integer, occurred_at:Time|null, tool:ID, subject:Scalar, arguments:Ref}` |
 | `Completion` | `{event_id:ID, kind:"completion", seq:integer, occurred_at:Time|null, request_id:ID, status:"success"|"error", result:Ref}` |
-| `Effect` | `{event_id:ID, kind:"effect", seq:integer, occurred_at:Time|null, completion_id:ID, subject:Scalar, observation:Ref}` |
+| `Effect` | `{event_id:ID, kind:"effect", seq:integer, occurred_at:Time|null, completion_id:ID, subject:Scalar, entity:Ref, subject_pointer:string|null, value_pointer:string|null}` |
 
 `Event` is exactly Request, Completion, or Effect. Each run references a case in its embedded
 suite_snapshot with matching case_hash. Unique run_id and one run per case per bundle;
@@ -90,11 +92,26 @@ must follow its request in seq; effect must follow its completion. One completio
 and one effect per completion in v1; retries are distinct requests. Events need not be adjacent.
 All links resolve within the same run; no cross-case chains. Multiple observations can cite
 one event only if each rule is independently satisfied. Events remain data; no execution occurs.
-Request arguments, completion result, and effect observation all cite bundle artifacts.
-An effect observation selects a Scalar in a JSON business_snapshot artifact. A successful
-completion is necessary but insufficient: source tuple, subject, tool, time, and value must
-also satisfy the reviewed EffectRule. Agent transcript or tool-return text is not an
-independent business_snapshot, even when it says “refund completed.” Importers must disclose
+Request arguments, completion result, and effect entity all cite bundle artifacts.
+Structural validation: entity is any well-formed resolved Ref, including text or nonobject
+JSON. Each nonnull subject_pointer/value_pointer must be a valid RFC 6901 pointer resolving
+relative to the selected entity value, not the artifact root. Null means selector absent.
+Malformed or unresolved refs/selectors invalidate input; resolved values never fail import
+merely because their media type, source kind, or selected shape is ineligible for an effect.
+
+Semantic eligibility: entity must select a JSON object (not an array) from an independent
+business_snapshot artifact. Both selectors must have exactly one reference token, selecting
+direct Scalar members of that same object. Empty/root or multi-token selectors are ineligible,
+even if resolved: an artifact-root selection cannot combine one record's ID with another's
+state. Exporters with nested records must select the record object and expose direct fields.
+The observed subject member must equal EffectRule.subject, Request.subject, and Effect.subject
+by exact type/value equality. Source tuple, request tool, successful completion, and freshness
+must also match the rule. Only then compare the observed value member with Assertion.expected.
+Effect pass/fail citations must include both observed subject and value, using the same artifact
+and full pointers formed by entity.pointer + the respective one-token selector.
+Missing selectors or any semantic ineligibility yield unknown, never an import error or pass.
+Agent transcript/tool-return text is not independent business evidence, even when it says
+“refund completed”; a resolved Ref to it is valid but ineligible. Importers must disclose
 source origin; a dishonest exporter can still forge it. Report wording must retain that limit.
 
 ## Time and evaluation rules
@@ -104,7 +121,7 @@ claim; exported_at is serialization time. None is a trusted clock or causal proo
 seq supplies run-local ordering, never global ordering between baseline and candidate.
 Known run start/end must be ordered; known linked event times must be nondecreasing and
 within known run boundaries. Violations invalidate input. Null times are permitted.
-For effect evaluation, completion/effect times and observation captured_at must be known,
+For effect evaluation, completion/effect times and entity artifact captured_at must be known,
 and completion <= effect <= captured_at <= completion + max_age_ms. Missing times, stale
 capture, or a mismatched source/tool/subject make that assertion unknown with a reason.
 Source freshness uses explicit versions and this window, never filesystem modification time.
@@ -121,9 +138,12 @@ Aggregate: any fail => fail; otherwise any unknown => unknown; otherwise all pas
 Empty required sets are invalid, never vacuous pass. Preserve unknown counts even with fail.
 
 Illustrative sequence (not a valid fixture): request refund(order-7), completion success,
-business snapshot refund_state=pending. Expected refunded => fail. Remove the snapshot =>
-unknown. Replace with agent text “refunded” => unknown. Snapshot refunded with matching
-source/time/subject => pass against imported evidence, not proof of exporter authenticity.
+entity selects {"order_id":"order-7","refund_state":"pending"}; selectors are /order_id
+and /refund_state. Expected refunded => fail. Missing effect observation => unknown; leaving
+a dangling entity Ref instead => import error. A resolved entity Ref to agent text with null
+selectors => unknown. A fresh eligible order-7 record with refunded => pass against imported
+evidence, not proof of exporter authenticity. An order-8 record with refunded => unknown even
+if every hash/source/time is valid and request/effect metadata both claim order-7.
 
 ## Alignment and comparison
 
@@ -146,16 +166,21 @@ Each side separately retains present/missing/changed status and its run status.
 
 Candidate aggregate still exposes fail/unknown regardless of delta. pass→unknown is an
 incomparable coverage loss, prominently flagged, never “no regressions, safe to ship.”
-Report evaluated coverage is `(pass + fail)/expected`; evidence coverage, unknown count,
-aligned pair count, missing/changed/extra counts, and run error statuses appear separately.
-Case and assertion denominators both come from the reviewed suite, not surviving imports.
+Report evaluated coverage is `(pass + fail)/expected`, separately per side for cases and
+assertions. Both denominators come from the nonempty reviewed suite, not surviving imports.
+A separate “evidence coverage” metric is deferred; presence of requests or artifacts is not
+eligible evidence coverage. Show unknown, aligned-pair, missing/changed/extra, and run-status
+counts with the meanings below. Also show assertion evidence-gap counts per side for each
+of MISSING_EVIDENCE, TYPE_MISMATCH, and INELIGIBLE_EFFECT: count expected Outcomes with status
+unknown and that exact reason. These are derived reason counts, not a new ratio or stored
+field; their sum is only a subset of assertion unknown, excluding run/alignment causes.
 
 ## Proposed report shape and persistence
 
 | Shape | Exact fields |
 | --- | --- |
 | `Outcome` | `{assertion_id:ID, status:"pass"|"fail"|"unknown", reason:string, citations:Citation[]}` |
-| `Citation` | `{owner:"suite"|"baseline"|"candidate", ref:Ref, artifact_hash:Hash}` |
+| `Citation` | `{owner:"suite"|"baseline"|"candidate", container:"suite"|"bundle"|"suite_snapshot", ref:Ref, artifact_hash:Hash}` |
 | `Side` | `{presence:"present"|"missing"|"changed", run_id:ID|null, run_status:"complete"|"error"|"timeout"|"skipped"|null, status:"pass"|"fail"|"unknown", outcomes:Outcome[]}` |
 | `Row` | `{case_id:ID, alignment:string, baseline:Side, candidate:Side, delta:"regression"|"improvement"|"unchanged"|"incomparable"}` |
 | `Counts` | `{expected:integer, pass:integer, fail:integer, unknown:integer, missing:integer, changed:integer, extra:integer, error:integer, timeout:integer, skipped:integer}` |
@@ -165,10 +190,26 @@ Case and assertion denominators both come from the reviewed suite, not surviving
 alignment uses only the five labels above. Each Side has one Outcome per expected assertion,
 including synthesized unknowns. Reasons use stable codes: MATCH, MISMATCH, MISSING_EVIDENCE,
 TYPE_MISMATCH, INELIGIBLE_EFFECT, RUN_ERROR, RUN_TIMEOUT, RUN_SKIPPED, MISSING_CASE, CHANGED_CASE.
+Reason precedence: missing side => MISSING_CASE; changed case => CHANGED_CASE; otherwise
+error/timeout/skipped => corresponding RUN_* for every assertion. For a complete run, absent
+Observation or null in the assertion's applicable field (value for value assertions,
+effect_event_id for effect assertions) => MISSING_EVIDENCE. Present value of wrong type =>
+TYPE_MISMATCH; present effect failing any eligibility condition => INELIGIBLE_EFFECT. Eligible
+comparisons use MATCH/MISMATCH. Thus request-only produces MISSING_EVIDENCE, stale effect
+produces INELIGIBLE_EFFECT, and an error run produces RUN_ERROR regardless of attached evidence.
 Counts pass/fail/unknown partition expected; other counters overlap and must be labeled.
 Assertion missing/changed/error/timeout/skipped count assertions in affected cases; extra
 counts assertions in extra cases. Extra ID lists are case IDs, sorted lexically.
-Rows/outcomes sort by case_id/assertion_id; citations sort by owner/artifact_id/pointer.
+Citation resolution uses exactly one artifact array: (suite,suite) => Report.suite.artifacts;
+(baseline,bundle)/(candidate,bundle) => Report[owner].artifacts; (baseline,suite_snapshot)/
+(candidate,suite_snapshot) => Report[owner].suite_snapshot.artifacts. All other pairs are invalid.
+Find the unique artifact_id there, require artifact_hash == Artifact.sha256, then resolve Ref
+by its media-type/pointer rules. Never search another namespace or fall back by matching ID/hash.
+Invalid citations prevent report publication (E_INTERNAL); future AI citations instead abstain.
+Rows/outcomes sort by case_id/assertion_id. Citations sort lexicographically by owner, container,
+artifact_id, pointer (null before strings), then artifact_hash; string ordering uses UTF-16 code
+units without locale folding. Identical full citations are deduplicated; distinct namespaces
+remain distinct even with equal artifact IDs/hashes. The renderer uses this exact resolver.
 `result_hash=H(Result without result_hash)`; generated_at is deliberately outside it.
 Report retains input snapshots for offline audit; duplicates are an intentional portability
 tradeoff. HTML renders these same results with escaped text, no scripts or remote resources.

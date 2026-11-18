@@ -21,12 +21,12 @@ before evaluator implementation; author and reviewer disagreement becomes a case
 | Test | Requirements / design boundary | Required cases and oracle |
 | --- | --- | --- |
 | T-01 suite contract | RL-001, RL-002; Importer/Contract | Empty suite/assertions, duplicate IDs/keys, unsafe numbers, invalid Unicode, unsupported schema, unknown fields; each rejects with bounded diagnostic. |
-| T-02 provenance/integrity | RL-002, RL-003; Importer/Contract | Alter bytes, policy metadata, hashes, or source versions; dangling/cross-container refs, invalid pointer escaping, wrong pointer type, duplicate run/event IDs, missing linked events; reject entire input. Null provenance stays explicit. |
+| T-02 provenance/integrity | RL-002, RL-003; Importer/Contract | Alter bytes, policy metadata, hashes, or source versions; dangling/cross-container refs, malformed/unresolved entity or member selectors, duplicate run/event IDs, missing linked events; reject entire input. Resolved text/nonobject effect entities are structurally valid. Null provenance stays explicit. |
 | T-03 value tri-state | RL-004; Evaluator | Exact equals, literal contains/not_contains, wrong actual type, missing observation, explicit null value, negative assertion without evidence; unknown never satisfies not_contains. Aggregate fail beats unknown without hiding it. |
-| T-04 effects | RL-005; Evaluator | Request only; completion only; completion error; agent “success” text; stale/missing time; wrong source/tool/subject; fresh matching and mismatching business values. Only eligible observation can pass/fail; others unknown. |
+| T-04 effects | RL-004, RL-005; Evaluator | Request only; completion only/error; resolved transcript/tool-return refs; stale/missing time; wrong source/tool/observed subject; null/non-direct selectors; fresh matching/mismatching eligible values. Ineligible evidence imports successfully then yields unknown. Same-record subject binding vectors below. |
 | T-05 alignment/deltas | RL-006, RL-007; Evaluator | Missing baseline/candidate/both, changed case hash, different suite ID, extra cases, empty runs, error/timeout/skipped, duplicate attempts. All nine pass/fail/unknown pairs; pass→unknown flags coverage loss. |
 | T-06 reproducibility | RL-009; Contract/Evaluator | Ten runs of identical inputs/version have same Result hash; generated_at may differ. Object key order changes preserve semantic hash, byte hashes differ; source-array order remains significant. Changed evaluator version changes Result identity. |
-| T-07 offline presentation | RL-008, RL-010; Renderer | JSON/HTML verdict parity, visible denominators/reasons/provenance, valid citations, script tags/event handlers/URLs in evidence remain inert, offline browser makes zero requests; keyboard-readable headings/tables. |
+| T-07 offline presentation | RL-008, RL-010; Renderer | JSON/HTML parity, evaluated-coverage denominators and evidence-gap counts, namespace-qualified citations with collision vectors below; invalid generated citation blocks publication. Script tags/event handlers/URLs remain inert; zero browser requests; keyboard-readable headings/tables. |
 | T-08 bounds/performance | RL-010; CLI/Importer | Every limit at boundary and one unit beyond, oversized/deep JSON, huge escaped strings, deadline expiry. Record wall time, peak RSS, bytes, cold/warm volume state, toolchain and hardware. |
 | T-09 recovery | RL-011, RL-012; Store | Inject write failure, full disk, permission loss, interrupted marker write, existing output, disconnected volume; no complete corrupt generation. Verify input hashes unchanged, explicit retry uses new path. |
 | T-10 usability/install | RL-012; CLI/Renderer | Clean local package install/replay from guide; observe first comparison and triage without author assistance. Record failures, inaccessible report sections, export effort, and package/runtime versions. |
@@ -46,6 +46,25 @@ Pin suite, artifact, bundle, evaluator, package/lockfile, and runtime hashes/ver
 records. Validate JCS against RFC vectors and pointer escaping independently of report snapshots.
 Use property checks for fail/unknown aggregation, expected-count conservation, and reference
 closure; golden files alone can conceal systemic denominator errors.
+
+R1/T-04: keep valid hashes, accepted source tuple, fresh times, successful completion, and
+rule/request/effect subject=order-7. Select an order-8 entity with refunded: unknown, not pass.
+In one artifact containing orders[0]=order-7/pending and orders[1]=order-8/refunded, selecting
+the root with /orders/0/order_id and /orders/1/refund_state resolves but is ineligible (multi-token
+selectors). Selecting /orders/0 with /order_id and /refund_state yields fail; the correct
+order-7/refunded record yields pass. Both pass/fail outcomes cite the observed ID and value.
+R2/T-02/04: a resolved text transcript with null selectors, a resolved nonobject JSON value,
+or a resolved JSON tool-return record yields unknown; a malformed or dangling entity/member
+pointer rejects import. Do not use dangling references to simulate absent evidence.
+R3/T-07: reuse one artifact_id with different content/hashes in all five valid owner/container
+namespaces. Each citation must resolve only its qualified target, including escaped pointer
+tokens. Swapped namespaces/hash, invalid owner/container pairs, or missing target must fail
+without fallback; test deterministic sort and that cross-namespace IDs are not deduplicated.
+R4/T-05/07: three expected cases, one effect assertion each: request-only complete run, stale
+effect complete run, and error run. Each side's counts are expected=3, pass=0, fail=0, unknown=3,
+error=1; evaluated coverage=0/3 at case and assertion levels. Evidence-gap counts are
+MISSING_EVIDENCE=1, INELIGIBLE_EFFECT=1, TYPE_MISMATCH=0; RUN_ERROR is excluded from that sum.
+No separate evidence-coverage field/percentage is rendered. These are planned vectors only.
 
 ## Proposed measurements and gates
 
@@ -71,7 +90,8 @@ abstain. Cite exact artifact pointers and quoted spans; validate pointers and qu
 deterministically, then have humans judge whether citations actually support the claim.
 
 Proposed output: `{case_id, status:"supported"|"abstained", explanation, citations, reason}`,
-where citations use contract Citation plus `quote:string`; quote must be an exact substring
+where citations use owner/container-qualified contract Citation plus `quote:string`, resolved
+only within its exact namespace; quote must be an exact substring
 of the selected string. Non-string evidence is cited without a quote in a separately reviewed
 future schema. Unsupported/invalid output becomes abstained; it cannot modify Result/status.
 AI-derived case suggestions remain separate drafts; importing them never executes their text.

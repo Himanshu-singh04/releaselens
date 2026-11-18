@@ -182,7 +182,8 @@ Later AI work would require a separately reviewed src/explain boundary; it is no
 #### Interface Documentation References
 
 [Evidence contract](../../evidence-contract.md), CRITICAL: Suite, Bundle, Run, Event, Ref,
-Result, Report, provenance, bounds, and aggregation. It is authoritative over illustrative prose.
+Result, Report, namespace-qualified Citation resolution, provenance, bounds, and aggregation.
+It is authoritative over illustrative prose; embedded suites and bundle artifacts are distinct namespaces.
 [Operations](../../operations.md), HIGH: publication lifecycle, sensitive inputs, recovery.
 
 #### Data Storage Changes
@@ -231,9 +232,12 @@ coverage loss, not unchanged. Baseline fail and candidate fail is unchanged but 
 
 #### Example: [Integration Pattern Name]
 
-A completed refund call with only a success message lacks business evidence. A fresh accepted
-ledger snapshot can support effect verification against imported data. Its missing pointer
-is an input error; an absent observation is unknown. These distinct states prevent false passes.
+A completed refund call with only a success message lacks business evidence. An eligible
+snapshot must bind observed subject and value to direct members of one selected record object;
+observed subject must agree with rule/request/effect. A valid order-8 refund cannot verify
+order-7; selecting sibling records through root-level multi-token selectors stays unknown.
+Resolved transcript/tool-return refs are structurally valid but ineligible (unknown), while
+malformed/dangling refs or malformed/unresolved member selectors reject import. Missing selectors stay unknown.
 
 #### Test Examples as Interface Documentation
 
@@ -277,7 +281,9 @@ of imports or tool calls; a rerun is explicit and cannot overwrite a complete ge
 Importer rejects invalid references before missing-evidence logic. Evaluator iterates the
 reviewed expected set, not the intersection of bundles, then separately lists extras.
 Matching case_hash is required for comparable outcomes; stable IDs alone are insufficient.
-The contract defines exact aggregation, precedence, time eligibility, and coverage formulas.
+The contract defines exact aggregation, reason precedence, subject/time eligibility, and
+evaluated coverage `(pass + fail)/expected` at case/assertion levels. Separate evidence coverage
+is deferred; show unknown and defined assertion evidence-gap reason counts without a new ratio.
 
 ## Deployment View
 
@@ -305,7 +311,8 @@ Proposed: [contract](../../evidence-contract.md), CRITICAL, immutable provenance
 
 ### User Interface & UX (if applicable)
 
-Offline report order: candidate status and scope, failures/unknowns, coverage, changed sources,
+Offline report order: candidate status and scope, failures/unknowns, evaluated coverage and
+evidence-gap counts, changed sources,
 case comparison, then evidence details. Text labels accompany colors; no percentage-only badge.
 Proposed accessibility: semantic headings/tables, keyboard-readable links, sufficient contrast,
 no script dependency. N/A: account navigation, design-system framework, live web state.
@@ -376,11 +383,12 @@ pilot sessions (T-10). Q7: costs $0 new hosting/inference (T-12); no paid CI exp
 - [ ] WHEN a reviewed suite is supplied, THE SYSTEM SHALL validate identity, sources, hashes,
   and reference integrity before evaluating (RL-001, RL-002, RL-003; T-01/02).
 - [ ] IF evidence is insufficient, THEN THE SYSTEM SHALL preserve unknown and distinguish
-  tool request, completion, and eligible business observation (RL-004, RL-005; T-03/04).
+  tool request, completion, and eligible same-record subject/value evidence (RL-004, RL-005; T-03/04).
 - [ ] WHEN comparing imports, THE SYSTEM SHALL retain every expected case and expose
   missing/changed/extra cases and candidate failures (RL-006, RL-007; T-05).
 - [ ] WHEN output completes, THE SYSTEM SHALL provide offline evidence-backed HTML/JSON
-  with deterministic semantic identity (RL-008, RL-009; T-06/07).
+  with exact namespace-qualified citations, evaluated coverage, defined evidence-gap counts,
+  and deterministic semantic identity (RL-008, RL-009; T-06/07).
 - [ ] WHILE importing/rendering, THE SYSTEM SHALL treat all input as bounded inert data
   and publish only complete generations (RL-010, RL-011; T-07/08/09).
 - [ ] THE SYSTEM SHALL support documented local recovery without new inference/hosting
