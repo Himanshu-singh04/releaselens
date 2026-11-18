@@ -32,7 +32,16 @@ Redaction creates a new artifact/hash and bundle; never silently mutate an old e
 | `Ref` | `{artifact_id:ID, pointer:string|null}`; null selects an entire text artifact; a JSON artifact requires an RFC 6901 pointer, including `""` for its root. |
 | `Artifact` | `{artifact_id:ID, media_type:"text/plain"|"application/json", content:string|JSON, sha256:Hash, source:Source, captured_at:Time|null, redacted:boolean}` |
 | `Provenance` | `{producer:Source, exported_at:Time|null, configuration:Source[]}`; producer kind is exporter. |
-| `Diagnostic` | `{code:string, location:string, message:string}`; location is an input JSON Pointer, message omits raw sensitive content. |
+| `Diagnostic` | `{code:string, location:Location, message:string}`; message is a fixed diagnostic description, never raw input values, argument text, paths, or OS exception text. |
+| `Location` | `{kind:"input", input:"suite"|"baseline"|"candidate", pointer:string}` OR `{kind:"argument", index:integer}` OR null; no other fields. |
+
+Input locations use RFC 6901 pointers relative to the selected input's root, including
+suite_snapshot paths inside bundles. Unlike evidence Refs, they may identify a missing member.
+Use schema-known property names/array indices only; unknown keys report their known parent,
+and unparseable input uses pointer "". Argument index is zero-based in user tokens after the
+executable (excluding runtime/script wrappers): compare is index 0. Unknown/repeated flags
+locate the offending occurrence; a missing value locates its flag. A wholly missing required
+flag or unlocatable I/O/platform/internal error uses null. Never echo the indexed token/value.
 
 Artifact content type must match media_type. References never contain file paths or URLs.
 Every supplied Ref must resolve within its owning suite or bundle, including the pointer;
@@ -84,8 +93,9 @@ repeated trials require distinct bundles, never “last run wins.” Zero runs i
 coverage. error/timeout require error_code; complete/skipped require null. A skipped run
 has empty events/observations. Partial error/timeout evidence can be displayed, not passed.
 Observation assertion_id must exist in that run's case; at most one per assertion. Value
-observations use value Ref|null and null effect_event_id. Effect observations use null value
-and effect_event_id pointing to an Effect in the same run, or null for missing evidence.
+observations use value Ref|null (resolved in the owning bundle.artifacts) and null effect_event_id.
+Effect observations use null value and effect_event_id pointing to an Effect in the same run,
+or null for missing evidence.
 
 Event IDs and seq are unique within run; seq is a nonnegative safe integer. Linked completion
 must follow its request in seq; effect must follow its completion. One completion per request
@@ -205,7 +215,15 @@ Citation resolution uses exactly one artifact array: (suite,suite) => Report.sui
 (candidate,suite_snapshot) => Report[owner].suite_snapshot.artifacts. All other pairs are invalid.
 Find the unique artifact_id there, require artifact_hash == Artifact.sha256, then resolve Ref
 by its media-type/pointer rules. Never search another namespace or fall back by matching ID/hash.
-Invalid citations prevent report publication (E_INTERNAL); future AI citations instead abstain.
+Every pass/fail value Outcome must include the exact observed-value Citation: owner is that
+Row's baseline/candidate side, container is bundle, ref equals Observation.value in the run
+identified by Side.run_id and matching assertion_id, and artifact_hash is that artifact's
+validated sha256. Require exact artifact_id and pointer equality, including null for text;
+another existing artifact, same-kind source, equal scalar, or matching bytes is not a substitute.
+Additional contextual citations are allowed but cannot replace the required observed citation.
+Renderer validates this binding as well as resolution before publication, without re-evaluating
+rules. Empty/misbound determinate citations prevent publication (E_INTERNAL), as do invalid
+effect citations under their subject/value binding rules; future invalid AI citations abstain.
 Rows/outcomes sort by case_id/assertion_id. Citations sort lexicographically by owner, container,
 artifact_id, pointer (null before strings), then artifact_hash; string ordering uses UTF-16 code
 units without locale folding. Identical full citations are deduplicated; distinct namespaces
@@ -216,7 +234,9 @@ tradeoff. HTML renders these same results with escaped text, no scripts or remot
 Valid comparison writes report.json and report.html in a new generation directory, with
 completion.json written last: `{schema_version:"1", json_hash:Hash, html_hash:Hash}` containing
 SHA-256 hashes of the exact respective output-file bytes. Existing generations are
-never overwritten. The marker is an integrity convention, not a guarantee against disk loss.
+never overwritten. Publication additionally requires the verified owner-private permissions
+and pinned I/O identities in [operations](operations.md); unsupported storage fails closed.
+The marker is an integrity convention, not a guarantee against disk loss.
 
 ## Versioning and bounds
 

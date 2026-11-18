@@ -38,25 +38,45 @@ Proposed evidence/output placement: explicit paths under ignored local-data/ and
 in this checkout, operator-selected before use. These are suggestions, not automatic routing.
 Private originals should remain in customer-controlled storage; use reviewed synthetic data
 for development. Report snapshots contain evidence and need the same handling as inputs.
-No account service or app-level encryption is designed; rely on deliberate filesystem access
-and existing device protection. A shared machine is not automatically an isolated tenant.
+Proposed publisher requires owner-private directories/files from creation: POSIX 0700/0600
+or a validated platform equivalent, correct owner, and no ACL grants/inheritance exposing
+contents to other ordinary accounts. Before writing evidence, preflight filesystem/mount
+ownership and ACL support and test an empty exclusive probe on that destination; validate
+effective access, not merely chmod success or displayed mode bits. Ignore-ownership volumes
+or unsupported/unverifiable protections must refuse publication. Check each empty output
+file before filling it and recheck directory/files/marker before completion. No chmod-only
+fallback or silent destination change. These controls are not encryption and do not protect
+against privileged administrators, the same account, or physical access to an unencrypted drive.
 
 ## Startup and shutdown plan after approval
 
-1. Confirm `/Volumes/AIWorkspace` is the intended mounted device and checkout identity;
-   fail visibly if absent rather than creating a lookalike directory on the Mac disk.
+1. Confirm intended volume/mount instance and directory/file identities for all explicit
+   inputs and output parent; retain verified handles in one I/O context until shutdown.
+   Read/hash from the same opened files and create/write/publish relative to pinned directory
+   handles, with mount/identity enforcement across operations. Path checks followed by fresh
+   path-based opens are insufficient. Mount loss, replacement, or identity mismatch aborts;
+   never recreate a missing mount/path or reopen it as a fallback on the Mac or another volume.
 2. Verify package/runtime versions, approved contract version, free disk, explicit input
    paths, and new output parent. Required free-space policy must be measured before release;
    proposed minimum is 3x combined input bytes plus 100 MiB, not a durability guarantee.
+   Complete the owner-private capability/probe checks above before any evidence output.
 3. Validate hashes/schemas/references before evaluation. Import files as data only. Do not
    spawn tools, follow URLs, load plugins, or obey instructions contained in evidence.
-4. Compare under the contract's bounds; publish report files and completion marker last.
+4. Compare under the contract's bounds. Revalidate pinned mounts, directory/file identities,
+   and permissions immediately before writing the marker through the retained handles;
+   verify again after flush before reporting success. Any detected loss fails closed with
+   no successful publication; a marker from an interrupted attempt is not proof of success.
 5. Inspect candidate fail/unknown and coverage; ship/hold remains a human decision.
 6. Close consumers and flush writes before ejecting the volume. Verify a completed generation
    by marker hashes on reopening; never infer completion from the directory's existence.
 
 No daemon startup is needed for the proposed MVP. Current server/history routing work is a
 separate infrastructure task, not an application installation prerequisite.
+ADR-1/ADR-4 must establish a platform-specific handle/identity and effective-permissions
+strategy before implementation; proposed Node alone is not evidence of these capabilities.
+Any native helper or narrower filesystem support needs review. Per-run support probes and
+T-09 must demonstrate the guarantees before release; an unsupported destination is rejected.
+No current pendrive permissions, mount-race protection, or probe outcome has been verified.
 
 ## Failure and recovery runbook
 
@@ -65,6 +85,7 @@ separate infrastructure task, not an application installation prerequisite.
 | Schema/hash/reference rejection | Preserve original bytes, record Diagnostic/location, correct exporter into a new bundle; do not suppress validation. |
 | Unknown or failed assertions | Inspect cited evidence and version changes; improve export or agent outside ReleaseLens; rerun with new provenance. |
 | Disk full, disconnected pendrive, process interruption | Treat absent/invalid completion marker as incomplete; keep inputs, quarantine partial output, reconnect/verify mount, retry new generation. |
+| Unsupported privacy, ACL drift, mount/path substitution | E_IO / exit 4 without success; do not relax access or recreate/reopen paths. Preserve partial data on its original verified volume; after identity verification, operator chooses an explicit supported destination/new attempt. |
 | Output path already exists | Refuse overwrite; select a new generation. Do not delete unfamiliar user files. |
 | Corrupt completed generation | Compare marker/file/input hashes; restore verified backup or regenerate from unchanged inputs/package. Hashes detect corruption, not recover bytes. |
 | Runtime/package regression | Revert to previous approved compatible package, preserve old reports, regenerate separately. Unsupported schema requires explicit conversion, never silent downgrade. |
@@ -72,8 +93,9 @@ separate infrastructure task, not an application installation prerequisite.
 | Credential/auth problem in delivery | Follow development.md recovery; credentials are not required by local comparison. |
 | Future model unavailable | Deterministic comparison remains usable; explanation abstains. No paid endpoint fallback or implicit download. |
 
-Output generation should be created exclusively and marked complete only after durable-write
-steps supported by the chosen runtime/filesystem. Test disconnect/flush behavior on the actual
+Output generation must be created exclusively with verified private access and pinned identity,
+and marked complete only after durable-write steps supported by the chosen runtime/filesystem.
+Test disconnect/flush behavior on the actual
 volume; do not promise transaction semantics from a directory rename. Partial outputs may
 be removed only after operator verification of their identity and preserved inputs.
 

@@ -27,13 +27,13 @@ must carry a bounded scope, requirement IDs, expected test outcomes, and review 
 
 | Task | Dependency / scope cap | Acceptance and verification |
 | --- | --- | --- |
-| B0: close design gates | Now; documentation only | Record runtime/language, exact dependency pins or explicit investigation outcomes, schema/evaluation/resource decisions, and AI deferral. Coordinator/owner review M0. |
+| B0: close design gates | Now; documentation only | Record runtime/language, exact dependency pins or explicit investigation outcomes, feasible private-permissions and pinned mount/handle strategy, schema/evaluation/resources, and AI deferral. Coordinator/owner review M0; no assumed Node capability. |
 | B1: fixture vocabulary | M0; 8 synthetic cases, <=3 assertions each | Include eligible refund, ineligible refund, escalation, missing observation, failed completion, stale effect, removed case, changed policy. Lead reviews expected outcomes independently; no customer data. |
 | B2: import/identity boundary | B1; Suite/Bundle only | Implement chosen schema and hash validation with malformed, duplicate, dangling-ref, and source-version tests T-01/02. No renderer/evaluator. |
 | B3: value and effect rules | B2; three operators and one effect chain | T-03/04 verify exact tri-state semantics, time/source eligibility, and negative assertions. No fuzzy semantic judge. |
 | B4: alignment and deltas | B3; one attempt/case/bundle | T-05/06 verify expected-set denominators, changed hashes, all nine outcome pairs, extra/missing rows, and reproducible result hash. |
 | B5: offline report | B4; one HTML/JSON layout | T-07 verifies shared Result, escaped evidence, inspectable references, zero external requests, and keyboard navigation. |
-| B6: publication and limits | B5; one local output lifecycle | T-08/09 cover deadline/size boundaries, partial writes, output collision, missing mount, and recovery without overwrites. |
+| B6: publication and limits | B5; one local output lifecycle | T-08/09 cover bounds, private-access probes/ACLs, mount substitution across I/O/publication, partial writes, collisions, and recovery without overwrites or path fallback. |
 | B7: package and pilot guide | B6; Mac-first installation path | T-10/12 prove clean-install instructions and no paid dependencies; retain exact toolchain/package hashes and measured limits. |
 | B8: pilot learning record | B7; three teams sought, two revisions each | Record consented/anonymized observations, export effort, triage time, repeats, failures, and pricing responses. Decide continue/narrow/stop. |
 | B9: AI feasibility design | B8; docs plus separately approved bounded experiment | Compare at most two local model/runtime combinations; document license, exact weights/hash, quantization, context, RAM/latency/cost, T-11 quality and abstention. No model downloads in required CI. |

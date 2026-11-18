@@ -28,7 +28,7 @@ before evaluator implementation; author and reviewer disagreement becomes a case
 | T-06 reproducibility | RL-009; Contract/Evaluator | Ten runs of identical inputs/version have same Result hash; generated_at may differ. Object key order changes preserve semantic hash, byte hashes differ; source-array order remains significant. Changed evaluator version changes Result identity. |
 | T-07 offline presentation | RL-008, RL-010; Renderer | JSON/HTML parity, evaluated-coverage denominators and evidence-gap counts, namespace-qualified citations with collision vectors below; invalid generated citation blocks publication. Script tags/event handlers/URLs remain inert; zero browser requests; keyboard-readable headings/tables. |
 | T-08 bounds/performance | RL-010; CLI/Importer | Every limit at boundary and one unit beyond, oversized/deep JSON, huge escaped strings, deadline expiry. Record wall time, peak RSS, bytes, cold/warm volume state, toolchain and hardware. |
-| T-09 recovery | RL-011, RL-012; Store | Inject write failure, full disk, permission loss, interrupted marker write, existing output, disconnected volume; no complete corrupt generation. Verify input hashes unchanged, explicit retry uses new path. |
+| T-09 recovery | RL-011, RL-012; Store/Importer | Private access/probe enforcement, mount/path substitution during I/O, write failure, full disk, interrupted marker, existing output; no false success or redirected writes. Verify input hashes unchanged; explicit retry follows identity verification. |
 | T-10 usability/install | RL-012; CLI/Renderer | Clean local package install/replay from guide; observe first comparison and triage without author assistance. Record failures, inaccessible report sections, export effort, and package/runtime versions. |
 | T-11 optional AI/agent | RL-013, RL-014; future boundary | Citation validity/support, abstention, retrieval omissions, conflicting/outdated policy, injection, hallucinated effects, attempted tool authority, budget exhaustion, deterministic-result preservation. Gate below. |
 | T-12 cost/isolation | RL-010, RL-012; operations | No paid hosting/inference credentials or downloads in required product checks; network-denied comparison works; models/customer evidence absent from package/Git. Confirm usage stays inside existing no-new-spend allocation. |
@@ -65,6 +65,25 @@ effect complete run, and error run. Each side's counts are expected=3, pass=0, f
 error=1; evaluated coverage=0/3 at case and assertion levels. Evidence-gap counts are
 MISSING_EVIDENCE=1, INELIGIBLE_EFFECT=1, TYPE_MISMATCH=0; RUN_ERROR is excluded from that sum.
 No separate evidence-coverage field/percentage is rendered. These are planned vectors only.
+
+R5/T-09: permissive umask, inherited broad ACL, wrong owner, ignore-ownership/unsupported
+volume, and ACL drift must not expose evidence or publish successfully. Verify empty-probe
+rejection before evidence writes and denied access from another ordinary account on supported
+platforms; mode-bit/chmod assertions alone do not qualify. Record filesystem/mount settings.
+R7/T-09: replace/unmount the volume or swap an ancestor after preflight, during input reads,
+between writes, and immediately around marker publication. Verify retained-handle identity
+enforcement, failure on loss, no local/replacement-volume files or fallback directories,
+and no success announcement; include a supported-volume success control. Platform feasibility
+is unproven; design review must identify required OS APIs/helpers before implementation.
+R8/T-03/07: every pass/fail value outcome includes its exact observed citation. Remove it or
+replace it with a valid same-kind artifact (even equal content), another pointer, or another
+side/container: report publication rejects with E_INTERNAL. Include correct text-null and
+JSON-pointer citations, extra contextual citations, and unknown-with-no-evidence controls.
+R9/T-01/02/10: compare --bogus locates argument index 1; repeated flag locates its second
+occurrence; missing value locates its flag; wholly missing required flag and unlocatable
+system errors use null. Input errors identify suite/baseline/candidate plus a schema-known
+pointer (root for parse failure). Validate exact tagged shapes and no raw values/paths/token
+text in diagnostics, including secret-like argv and unknown JSON keys.
 
 ## Proposed measurements and gates
 

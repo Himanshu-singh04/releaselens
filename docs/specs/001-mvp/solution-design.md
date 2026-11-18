@@ -102,11 +102,16 @@ Proposed/nonexistent CLI grammar: `releaselens compare --suite FILE --baseline F
 --candidate FILE --out NEW_DIRECTORY`. Exactly one value per required flag; unknown/repeated
 flags fail. No implicit discovery, configuration search, environment credentials, or network.
 Inputs are regular nonsymlink files; output must be a new directory under an explicitly
-selected existing nonsymlink parent. Local filesystem permissions supply access control.
+selected existing nonsymlink parent. Require verified owner-private directories/files
+(0700/0600 or validated equivalent), ownership/ACL and mount-capability preflight, and an
+empty probe before evidence writes; chmod success alone is insufficient. Unsupported access
+control refuses publication. [Operations](../../operations.md) specifies pinned-handle mount/
+directory identity enforcement through reads, writes, and marker publication; no path fallback.
 Outputs: report.json, report.html, completion marker; schemas and hashes in the contract.
 stdout: one JSON summary `{status:"pass"|"fail"|"unknown",result_hash:Hash,output_path:string}`
 only after complete publication; status aggregates all expected candidate cases.
-stderr: Diagnostic JSON lines on failure, with no raw evidence. Proposed exit codes:
+stderr: Diagnostic JSON lines with tagged input/argument locations or null, per the contract;
+no raw evidence, argument values, paths, or OS exception text. Proposed exit codes:
 0 candidate pass; 1 candidate fail; 2 usage/input/integrity error; 3 candidate unknown;
 4 I/O/resource/internal failure. Fatal error takes precedence; then fail, unknown, pass.
 N/A: HTTP endpoints, auth tokens, webhooks, billing, or database connections.
@@ -198,13 +203,15 @@ Proposed package-private interfaces; all failures return `{ok:false,error:Diagno
 
 | Operation | Input | Success `{ok:true,value:...}` |
 | --- | --- | --- |
-| Importer.load | Three explicit file paths, fixed limits | Validated Suite/Bundles, exact byte hashes; never partial imports. |
+| Store.prepare | Three explicit input paths, new output path | Opaque IoContext with retained verified handles/identities and destination privacy preflight; no evidence written. |
+| Importer.load | IoContext, fixed limits | Validated Suite/Bundles, exact byte hashes read from the pinned files; never partial imports. |
 | Evaluator.compare | Validated Suite, baseline Bundle, candidate Bundle, evaluator_version | Result; no I/O, clock, randomness, or model calls. |
-| Renderer.render | Report | UTF-8 JSON and HTML bytes; escaped evidence, no active content. |
-| Store.publish | New directory, rendered bytes | Absolute output_path and completion marker hashes. |
+| Renderer.render | Report | UTF-8 JSON/HTML bytes after exact observed-reference citation binding checks; escaped evidence, no active content. |
+| Store.publish | Same IoContext, rendered bytes | Absolute output_path and marker hashes after private-access/mount-identity revalidation. |
 
 CLI creates generated_at once after evaluation, packages Report, renders, publishes, then
-emits status. Contract's H helper uses one canonicalization implementation with conformance tests.
+emits status. IoContext is private process state, never imported JSON; CLI retains it across
+stages and releases handles on all exits. Contract's H helper has conformance tests planned.
 N/A: OpenAPI specification, internal HTTP endpoints, cross-process RPC.
 
 #### Application Data Models
@@ -252,17 +259,17 @@ of the evaluator, so snapshots cannot merely bless implementation output.
 #### Primary Flow: [Main User Action]
 
 1. Engineer supplies reviewed suite and baseline/candidate exports with a new output location.
-2. CLI validates arguments; Importer bounds reads and validates schemas, hashes, and references.
+2. CLI validates arguments; Store prepares pinned/private I/O; Importer bounds reads and validates inputs.
 3. Evaluator aligns each expected case and applies tri-state rules without side effects.
 4. CLI packages snapshots; Renderer produces identical semantic results in JSON and HTML.
-5. Store writes a private generation, verifies file hashes, writes completion marker last.
+5. Store verifies private access and pinned identities across writes and around final marker publication.
 6. CLI emits completion and candidate status; lead reads report and makes their own decision.
 
 ### Error Handling
 
 | Class / code | Behavior and recovery |
 | --- | --- |
-| Usage / E_USAGE | Exit 2; explain offending flag; no input evaluation or output. |
+| Usage / E_USAGE | Exit 2; tagged zero-based argument index, or null for absent required option; fixed message without echoing tokens. |
 | Parse/schema/version / E_SCHEMA | Exit 2; bounded location diagnostic; correct producer export. |
 | Hash/reference/identity / E_INTEGRITY | Exit 2; reject entire comparison; preserve original input. |
 | Different suite_id / E_SUITE | Exit 2; select correct suite/bundles; do not fuzzy-match. |
@@ -270,7 +277,7 @@ of the evaluator, so snapshots cannot merely bless implementation output.
 | Rule mismatch | Complete report with fail; review agent/policy; not a parser error. |
 | Imported error/timeout/skipped run | Unknown outcomes and explicit run state; export a new run. |
 | Limits/deadline / E_LIMIT | Exit 4; no complete marker; split suite by reviewed scope. |
-| I/O/mount/disk/permission / E_IO | Exit 4; preserve inputs, quarantine partial generation, retry new path. |
+| I/O/mount/disk/permission / E_IO | Exit 4; null location if unlocatable; no success or path fallback. Preserve partial generation; retry only after verified recovery. |
 | Unexpected implementation defect / E_INTERNAL | Exit 4; sanitized diagnostic, no successful report. |
 
 Network failures: N/A for MVP; network access is not part of comparison. No automatic retries
@@ -333,7 +340,8 @@ fatal errors exit without a complete marker. Static HTML needs no client-side st
 ### System-Wide Patterns
 
 Data-only parsing, escaped rendering, no embedded executable HTML/JS, no remote resources,
-no credential lookup, and no telemetry. Filesystem permissions are not tenant isolation.
+no credential lookup, and no telemetry. Verified owner-private filesystem access is required;
+it is not encryption or protection from privileged/same-account access.
 Log only counts, IDs, versions, reason codes, and durations; even IDs can be sensitive.
 English UI initially; preserve original Unicode evidence without localization transformations.
 Bounded single-process evaluation avoids background workers; performance targets require measurement.
@@ -360,7 +368,9 @@ authorize AI implementation. Research can refine docs; runtime work cannot begin
   exporter authenticity remain user responsibilities. User confirmed: **Pending**.
 - [ ] ADR-4 Packaging/resources: propose local package, static HTML/JSON, contract bounds,
   60-second deadline and no hosted service. Low operating cost; slower onboarding and no
-  shared dashboard. Filesystem publication durability needs testing. User confirmed: **Pending**.
+  shared dashboard. ADR-1/4 require an explicit feasible platform strategy for effective
+  permissions/ACL probes, pinned handles/mount identity, and durable publication; Node support
+  is not assumed. Unsupported volumes fail closed; T-09 evidence gates release. User confirmed: **Pending**.
 - [ ] ADR-5 AI/agent boundary: propose defer until deterministic pilot evidence. Later compare
   local runtime/model candidates or existing customer-owned inference at zero incremental
   founder cost; no model/runtime, license, quantization, context window, or capability selected.
