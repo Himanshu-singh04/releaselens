@@ -1,14 +1,16 @@
 ---
 title: "ReleaseLens deterministic comparison MVP"
 status: draft
-version: "0.2"
+version: "0.3"
 ---
 
 # Solution Design Document
 
 Planning baseline merged in [PR #6](https://github.com/Himanshu-singh04/releaselens/pull/6).
-The [B0 recommendation](../../decisions/001-runtime.md) is pending separate technical review
-and founder exact-revision approval; M0 is incomplete and implementation remains blocked.
+The [B0 research](../../decisions/001-runtime.md) was conditionally accepted in PR #11;
+tested pins and M0 closure remain blocked. The [B0a storage protocol](../../decisions/002-storage-protocol.md)
+documentation was accepted in PR #13, including R1; its requirement proposals remain
+unaccepted, implementation remains NO-GO and no test target or E1 experiment is authorized.
 All product components, interfaces, directories, and targets below are proposed/nonexistent.
 Template headings are retained verbatim, including bracketed example headings.
 
@@ -19,14 +21,15 @@ Template headings are retained verbatim, including bracketed example headings.
 - [x] Required sections contain a draft design or explicit N/A.
 - [x] No unresolved clarification placeholders in section bodies; decisions are explicit ADRs.
 - [x] Architecture pattern and proposed interfaces are described.
-- [ ] All architecture decisions confirmed by user: ADR-1 through ADR-5 remain pending.
+- [ ] All architecture gates closed: B0 research accepted, but unresolved validation and requirement decisions remain.
 - [ ] Implementation readiness: blocked until owner decisions resolve these gates.
 
 ### QUALITY CHECKS (Should Pass)
 
 - [x] Context sources, actual foundation commands, boundaries, and requirement mapping documented.
 - [x] Components, data lifecycle, errors, and measurable proposed targets specified.
-- [ ] Independent coordinator review and exact-revision owner confirmation of B0 choices pending.
+- [x] B0 research review/approval recorded in PR #11 merge verification; not implementation readiness.
+- [x] B0a documentation reviewed and approved in PR #13; D1–D4 and E1 remain unaccepted/unauthorized.
 - [ ] Runtime/SDK compatibility, resource measurements, and product validation not performed.
 
 ## Constraints
@@ -80,7 +83,7 @@ GitHub, vendors, customer agents, model providers, or business systems. Future a
 ### Implementation Boundaries
 
 - Must preserve: foundation checks, human review, independent product, and zero-spend constraint.
-- Can modify for B0/#10: recommendation record and scoped planning/README/development status consistency; approval protocol remains coordinator-owned.
+- Can modify for B0a/#12: storage protocol and minimal planning/status links; approval protocol remains coordinator-owned.
 - Must not touch now: runtime code, deployment, credentials, model downloads, or worker provisioning.
 - Future implementation starts only after explicit decisions close every current ADR gate.
 
@@ -303,8 +306,9 @@ is deferred; show unknown and defined assertion evidence-gap reason counts witho
 
 ### Single Application Deployment
 
-Proposed local CLI package on the observed arm64 Mac with owner-enabled APFS first; other
-platforms require separate proof. [B0](../../decisions/001-runtime.md) recommends CPython
+Proposed local CLI execution on the observed arm64 Mac with a separately authorized external
+owner-enabled APFS target; none is currently authorized/provisioned. Internal Mac storage is
+not selected. Other platforms require separate proof. [B0](../../decisions/001-runtime.md) recommends CPython
 3.14.10 and candidate rfc8785 0.1.4 for validation, not tested pins. Native bridge/build and
 installer versions remain gated; the currently noowners pendrive is not a valid product target.
 No required secrets/environment service. Explicit paths keep evidence and outputs local.
@@ -361,9 +365,10 @@ In-process immutable values and bundle/result hashes correlate stages. No global
 
 ## Architecture Decisions
 
-All are pending owner confirmation on the exact reviewed B0 revision. None is inferred from
-foundation or planning approval. Choosing to defer later AI must itself be explicit; it does not
-authorize AI implementation. Research can refine docs; runtime work cannot begin under open gates.
+B0 research/direction was accepted in PR #11; the entries below track remaining architecture
+gates, not a request to reapprove that research. The [B0a protocol](../../decisions/002-storage-protocol.md)
+records proposed requirement decisions D1–D4 and untested storage obligations. Runtime work
+cannot begin under open gates, and the AI deferral does not authorize AI implementation.
 
 - [ ] ADR-1 Runtime/package: **conditionally recommend** CPython 3.14.10 modular CLI per
   [B0](../../decisions/001-runtime.md); **blocked** on JCS/native-storage/build validation.

@@ -9,9 +9,19 @@ GPT-6 Astra (`gpt-6-astra`) / OpenCode, registered ReleaseLens worker; no subage
 [Issue #14](https://github.com/Himanshu-singh04/releaselens/issues/14) preserves A1–A6.
 Original founder instruction: “ok proceed with the further tasks”. Coordinator authorized
 this independent research from approved main `1bfa0576aabfbb17a9a625a513a1d7dea6079eb3`
-while B0a awaits review. The B0a branch/PR is preserved; this work does not incorporate it.
+while B0a awaited review. The original delivery preserved B0a without incorporating it.
 One byte-parser experiment, reviewed synthetic expectations and this decision record;
 no product importer, evaluator, storage publication or native bridge.
+
+Integration update: accepted main `f9b47649ea75b53daf2beff480e60ad8a1ca39a7`
+([B0a PR #13](https://github.com/Himanshu-singh04/releaselens/pull/13)) is merged into
+this research branch without rewriting its history. The accepted storage record and R1
+correction are inherited unchanged. [Coordinator verification](https://github.com/Himanshu-singh04/releaselens/pull/15#issuecomment-7006095738)
+met A1–A6 at original B0b head `f6456bb85ac3aed5a1f811c45933726c0ee10649`;
+the integrated head requires fresh review. Corpus, helpers, pins and prior captures
+are unchanged. Observations and pending-review language below retain their original
+delivery context. N1–N4 and D1–D4 remain unaccepted; E1, product implementation and
+target/storage changes remain unauthorized. Integration check evidence is in PR #15.
 
 The [contract](../evidence-contract.md) requires UTF-8 JSON, unique **decoded** object
 keys, valid Unicode, finite binary64 fractions, safe integers (±9007199254740991), and
@@ -21,13 +31,14 @@ and SHA-256 digests are four distinct things. Whitespace/escape variants can hav
 different raw hashes but equal semantic hashes; array order and Unicode normalization
 differences remain significant. Hash equality is not authenticity.
 
-The finite [corpus](../../fixtures/b0b/vectors.json) is specified **before candidate
+The finite [corpus](../../fixtures/b0b/vectors.json) was specified **before candidate
 execution**. Binary64 bit patterns/output strings are transcribed from
 [RFC8785 Appendix B](https://www.rfc-editor.org/rfc/rfc8785.html#appendix-B), including
 all 26 rows (NaN/infinity are errors). Other labelled expectations derive from
 §3.1, §3.2.1–4 and the contract, not a library-generated golden file. RFC §3.2.4's
-sample is represented by its literal published hex bytes. Coordinator independently
-reviews transcription and expectations; these are author-reviewed, not yet independently approved.
+sample is represented by its literal published hex bytes. The coordinator independently
+corroborated the RFC transcription and reviewed expectations at the original head linked above;
+that verification does not accept N1–N4 as product policy or approve the integrated head.
 
 ## Proposed numeric and boundary decisions (unaccepted)
 
@@ -321,8 +332,9 @@ passed); `python3 -m unittest discover -s scripts -p 'test_*.py'` (25 passed);
 `/Volumes/AIWorkspace/caches/actionlint/1.7.12/actionlint -shellcheck= -pyflakes=`
 (exit 0); `git diff --check origin/main` (exit 0). Final fresh-offline command above
 passed 105/105; Node command passed all stated secondary controls. Compared run1/run2
-case records: identical; all 105 IDs have document rows. B0a ref remains
-`a1c4e0b705b37cba8e016dd473fabeeddb6b8f6c` and its document is absent from this branch.
+case records: identical; all 105 IDs have document rows. B0a ref was
+`a1c4e0b705b37cba8e016dd473fabeeddb6b8f6c` at that initial delivery, when its document
+was absent from the B0b branch; the integration update above supersedes that branch-state observation.
 No target-Python, native, storage, deadline, product, peak-memory or comprehensive
 binary64 test ran. PR records preserve acquisition/CI failures and their corrections.
 Initial new-code CI run `44488237702` failed before candidate installation: Ubuntu's

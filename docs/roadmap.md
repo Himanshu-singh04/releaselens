@@ -4,6 +4,8 @@ Planning baseline for [issue #5](https://github.com/Himanshu-singh04/releaselens
 merged in [PR #6](https://github.com/Himanshu-singh04/releaselens/pull/6); App corrections
 merged in [PR #8](https://github.com/Himanshu-singh04/releaselens/pull/8), and development-worker
 provisioning is verified in [issue #9](https://github.com/Himanshu-singh04/releaselens/issues/9).
+B0 research merged in [PR #11](https://github.com/Himanshu-singh04/releaselens/pull/11),
+conditionally accepting the direction with validation gates still open.
 None completes M0 or delivers a product milestone. Dependencies are gates, not calendar promises. Scope is in the
 [PRD](product.md), contracts in the [SDD](specs/001-mvp/solution-design.md), tests in
 [testing](testing.md), and local execution/recovery in [operations](operations.md).
@@ -25,14 +27,15 @@ An owner may reject or change proposals; update dependent docs and obtain fresh 
 
 ## Issue-ready task slices
 
-Except B0 ([issue #10](https://github.com/Himanshu-singh04/releaselens/issues/10)), rows are
+Except B0 ([issue #10](https://github.com/Himanshu-singh04/releaselens/issues/10)) and B0a
+([issue #12](https://github.com/Himanshu-singh04/releaselens/issues/12)), rows are
 proposed issues, not already-created GitHub issues. Every implementation PR
 must carry a bounded scope, requirement IDs, expected test outcomes, and review evidence.
 
 | Task | Dependency / scope cap | Acceptance and verification |
 | --- | --- | --- |
-| B0: investigate design gates | #10; documentation only | [Recommendation/results](decisions/001-runtime.md): conditional Python target, Node comparison, exact candidate versions and untested gaps; current noowners mount rejected. ADR dispositions recorded; M0 remains blocked. |
-| B0a: storage capability protocol | Next proposed bounded documentation task; after review of #10 | Specify minimal Darwin bridge ABI, explicitly selected owner-enabled APFS test target and finite R5/R7/durability/deadline fault matrix; return achievable guarantees or no-go. No helper code, installs or mount changes. |
+| B0: investigate design gates | #10 closed by merged PR #11; accepted research | [Recommendation/results](decisions/001-runtime.md): conditional Python target, Node comparison, exact candidate versions and untested gaps; current noowners mount rejected. M0 remains blocked. |
+| B0a: storage capability protocol | #12 closed by merged PR #13; accepted documentation | [Protocol](decisions/002-storage-protocol.md), including R1 interruption-layer correction: minimal Darwin ABI, proposed target eligibility (none authorized/provisioned), finite R5/R7/durability/deadline matrix and explicit NO-GO guarantees. D1–D4 unaccepted; E1 unauthorized. No helper code, installs or mount changes. |
 | B1: fixture vocabulary | M0; 8 synthetic cases, <=3 assertions each | Include eligible refund, ineligible refund, escalation, missing observation, failed completion, stale effect, removed case, changed policy. Lead reviews expected outcomes independently; no customer data. |
 | B2: import/identity boundary | B1; Suite/Bundle only | Implement chosen schema and hash validation with malformed, duplicate, dangling-ref, and source-version tests T-01/02. No renderer/evaluator. |
 | B3: value and effect rules | B2; three operators and one effect chain | T-03/04 verify exact tri-state semantics, time/source eligibility, and negative assertions. No fuzzy semantic judge. |
@@ -43,11 +46,13 @@ must carry a bounded scope, requirement IDs, expected test outcomes, and review 
 | B8: pilot learning record | B7; three teams sought, two revisions each | Record consented/anonymized observations, export effort, triage time, repeats, failures, and pricing responses. Decide continue/narrow/stop. |
 | B9: AI feasibility design | B8; docs plus separately approved bounded experiment | Compare at most two local model/runtime combinations; document license, exact weights/hash, quantization, context, RAM/latency/cost, T-11 quality and abstention. No model downloads in required CI. |
 
-Next is the proposed B0a protocol task, not B1 or an application scaffold. A separately
-authorized capability experiment and Python/JCS/build compatibility validation must address
-the [remaining blockers](decisions/001-runtime.md) before M0 can close. B1 remains the first
-product task after gates close. Candidate versions are researched, not installed or tested
-product pins. Model-serving SDK and weights remain deferred beyond deterministic/pilot gates.
+B0a proposes one next experiment, E1: a read-only native metadata ABI probe, only after
+separate authorization selects an eligible external target and permits its scratch build.
+No such target is currently authorized/provisioned. Requirement decisions D1–D4, storage
+evidence and Python/JCS/build compatibility must address the [remaining blockers](decisions/002-storage-protocol.md)
+before M0 can close. B1 remains the first product task after gates close. Candidate versions
+are researched, not tested product pins. Model-serving SDK and weights remain deferred
+beyond deterministic/pilot gates. Completion of B0a does not authorize E1 or any new task.
 
 ## Dependency and release discipline
 

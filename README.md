@@ -10,7 +10,7 @@ Compare a baseline and candidate agent against reviewed scenarios and produce an
 
 ## Status
 
-Repository foundation checks exist. The planning set merged in [PR #6](https://github.com/Himanshu-singh04/releaselens/pull/6), and App-rename corrections merged in [PR #8](https://github.com/Himanshu-singh04/releaselens/pull/8). [B0 research](docs/decisions/001-runtime.md) was conditionally accepted in PR #11; product pins and M0 remain unvalidated. [B0b JSON/JCS research](docs/decisions/003-json-conformance.md) exercises finite synthetic vectors on installed Python. No application commands, product tests, model integration, or release artifacts exist.
+Repository foundation checks exist. The planning set merged in [PR #6](https://github.com/Himanshu-singh04/releaselens/pull/6), and App-rename corrections merged in [PR #8](https://github.com/Himanshu-singh04/releaselens/pull/8). [B0 research](docs/decisions/001-runtime.md) was conditionally accepted in PR #11; product pins and M0 remain unvalidated. [B0a storage documentation](docs/decisions/002-storage-protocol.md) was accepted in [PR #13](https://github.com/Himanshu-singh04/releaselens/pull/13); implementation remains NO-GO. [B0b JSON/JCS research](docs/decisions/003-json-conformance.md) exercises finite synthetic vectors on installed Python. No application commands, product tests, model integration, or release artifacts exist.
 
 ## Product planning
 
@@ -21,6 +21,7 @@ Repository foundation checks exist. The planning set merged in [PR #6](https://g
 - [Testing and evaluation](docs/testing.md): planned product checks, AI gates, and unmeasured targets.
 - [Local operations](docs/operations.md): actual storage placement, proposed packaging, recovery, and cost constraints.
 - [B0 runtime recommendation](docs/decisions/001-runtime.md): Python/Node comparison, observed storage blocker, candidate pins and pending ADR dispositions.
+- [B0a storage protocol](docs/decisions/002-storage-protocol.md): proposed native ABI, target eligibility, fault matrix and explicit no-go guarantees.
 
 ## Development workspace
 
@@ -42,4 +43,4 @@ agent attribution, and evidence requirements.
 - Report the commit and push result to the coordinator. A local commit is not a remote backup until the push succeeds.
 - Use task branches for substantive implementation work and preserve unrelated changes.
 
-Only foundation checks are available today; use the commands in [CONTRIBUTING](CONTRIBUTING.md). Proposed product interfaces in the planning documents are not runnable commands.
+Foundation checks are in [CONTRIBUTING](CONTRIBUTING.md); finite [B0b research controls](docs/decisions/003-json-conformance.md) have separate reproduction commands. Proposed product interfaces in the planning documents are not runnable commands.
