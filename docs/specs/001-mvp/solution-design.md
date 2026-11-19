@@ -1,12 +1,14 @@
 ---
 title: "ReleaseLens deterministic comparison MVP"
 status: draft
-version: "0.1"
+version: "0.2"
 ---
 
 # Solution Design Document
 
-Draft for documentation-PR confirmation, not approved architecture or permission to implement.
+Planning baseline merged in [PR #6](https://github.com/Himanshu-singh04/releaselens/pull/6).
+The [B0 recommendation](../../decisions/001-runtime.md) is pending separate technical review
+and founder exact-revision approval; M0 is incomplete and implementation remains blocked.
 All product components, interfaces, directories, and targets below are proposed/nonexistent.
 Template headings are retained verbatim, including bracketed example headings.
 
@@ -24,7 +26,7 @@ Template headings are retained verbatim, including bracketed example headings.
 
 - [x] Context sources, actual foundation commands, boundaries, and requirement mapping documented.
 - [x] Components, data lifecycle, errors, and measurable proposed targets specified.
-- [ ] Independent coordinator consistency review and exact-revision owner confirmation pending.
+- [ ] Independent coordinator review and exact-revision owner confirmation of B0 choices pending.
 - [ ] Runtime/SDK compatibility, resource measurements, and product validation not performed.
 
 ## Constraints
@@ -32,8 +34,9 @@ Template headings are retained verbatim, including bracketed example headings.
 CON-1 Agreed: independent local-first product; zero new initial hosting/inference expenditure.
 CON-2 Agreed: imported evidence is data; missing evidence is unknown; requests are not effects.
 CON-3 Current: repository contains foundation checks, not application code or runtime manifests.
-CON-4 Current: source/docs are on the pendrive; Mac CPU/RAM executes processes. Current history,
-credentials, and unconfigured model/cache routing are detailed in [operations](../../operations.md).
+CON-4 Current: source/docs and worker history/OpenAI OAuth are on the pendrive; Mac CPU/RAM
+executes processes. Coordinator history/App key remain on Mac; see [operations](../../operations.md).
+Worker provisioning does not establish product-private I/O: the observed pendrive is noowners.
 CON-5 Proposed: deterministic fixtures/imports first, one local process, no agent execution.
 CON-6 Proposed/unmeasured: bounded data and offline reports within [contract](../../evidence-contract.md) limits.
 
@@ -54,7 +57,7 @@ CON-6 Proposed/unmeasured: bounded data and offline reports within [contract](..
 | Architecture skill template.md and validation.md, local OpenCode configuration | HIGH | Required section order and design-validation criteria; reviewed 2026-11-18. |
 | [RFC 8785](https://www.rfc-editor.org/rfc/rfc8785) | HIGH | Canonical JSON hashing, duplicate-key/Unicode restrictions; informational specification. |
 | [RFC 6901](https://www.rfc-editor.org/rfc/rfc6901.txt) | HIGH | Exact JSON Pointer reference semantics and resolution errors. |
-| [Node.js releases](https://nodejs.org/en/about/previous-releases) | MEDIUM | Primary release-status source; fetched 2026-11-18, lists v26.13.1 as LTS. |
+| [B0 runtime recommendation and source register](../../decisions/001-runtime.md) | CRITICAL | #10 runtime comparison, exact version-specific sources retrieved 2026-11-19, observations, native API gaps and ADR disposition. |
 
 External sources constrain proposals, not prove local installation or compatibility. Recheck
 runtime support before pinning. No model-serving behavior is assumed without a later primary-source review.
@@ -77,7 +80,7 @@ GitHub, vendors, customer agents, model providers, or business systems. Future a
 ### Implementation Boundaries
 
 - Must preserve: foundation checks, human review, independent product, and zero-spend constraint.
-- Can modify now: the six planning documents and README; coordinator owns approval-protocol edits.
+- Can modify for B0/#10: recommendation record and scoped planning/README/development status consistency; approval protocol remains coordinator-owned.
 - Must not touch now: runtime code, deployment, credentials, model downloads, or worker provisioning.
 - Future implementation starts only after explicit decisions close every current ADR gate.
 
@@ -139,10 +142,13 @@ is a design proposal, not a runnable instruction. Future commands must enter CON
 
 ## Solution Strategy
 
-Propose a TypeScript/Node modular CLI: one process, explicit JSON imports, pure evaluator,
-immutable results, static offline renderer. This makes evidence inspectable and repeatable
-without hosting or inference, at the cost of manual export preparation and narrow semantics.
-Python standard-library CLI is a credible lower-tooling alternative; ADR-1 must resolve it.
+Propose a modular CLI: explicit JSON imports, pure evaluator, immutable results and static
+offline renderer. [B0](../../decisions/001-runtime.md) conditionally recommends CPython
+3.14.10 with a JCS dependency candidate and a narrow Darwin native bridge; the earlier
+TypeScript/Node proposal remains a compared alternative. The native bridge stays in Store;
+no new service is proposed. Compatibility, storage guarantees and deadline enforcement
+remain blocked. This retains inspectable evidence at the cost of manual export preparation
+and narrow semantics; no hosting or inference is needed.
 No database is needed for bounded immutable comparisons; files simplify portability but
 make concurrent editing and large datasets deliberately unsupported. AI is a later optional layer.
 
@@ -168,7 +174,8 @@ No component invents evidence, and Renderer cannot re-evaluate or change a verdi
 
 ### Directory Map
 
-All paths proposed, none created by this documentation task:
+All paths proposed, none created by this documentation task. These are logical component
+locations; Python package layout is not frozen while ADR-1/4 remain blocked:
 
 | Component | Directory | Responsibility / requirements |
 | --- | --- | --- |
@@ -296,9 +303,10 @@ is deferred; show unknown and defined assertion evidence-gap reason counts witho
 
 ### Single Application Deployment
 
-Proposed local CLI package on the existing Mac first; Linux compatibility follows CI proof.
-Node v26.13.1 is a candidate pin from the fetched LTS source, not installed/approved here;
-compiler, package manager, parser, and canonicalization dependencies require ADR-1 review.
+Proposed local CLI package on the observed arm64 Mac with owner-enabled APFS first; other
+platforms require separate proof. [B0](../../decisions/001-runtime.md) recommends CPython
+3.14.10 and candidate rfc8785 0.1.4 for validation, not tested pins. Native bridge/build and
+installer versions remain gated; the currently noowners pendrive is not a valid product target.
 No required secrets/environment service. Explicit paths keep evidence and outputs local.
 No package publication, installer, signed binary, server, or deployment currently exists.
 
@@ -353,27 +361,31 @@ In-process immutable values and bundle/result hashes correlate stages. No global
 
 ## Architecture Decisions
 
-All are pending owner confirmation on the exact reviewed PR revision. None is inferred from
-the foundation approval. Choosing to defer later AI must itself be explicit; it does not
+All are pending owner confirmation on the exact reviewed B0 revision. None is inferred from
+foundation or planning approval. Choosing to defer later AI must itself be explicit; it does not
 authorize AI implementation. Research can refine docs; runtime work cannot begin under open gates.
 
-- [ ] ADR-1 Runtime/package: propose TypeScript, Node v26.13.1, one modular CLI. Typed contracts
-  aid JSON tooling; Python reduces compiler/dependency setup. Exact compiler/package-manager
-  and parser/JCS pins need compatibility/license review. User confirmed: **Pending**.
+- [ ] ADR-1 Runtime/package: **conditionally recommend** CPython 3.14.10 modular CLI per
+  [B0](../../decisions/001-runtime.md); **blocked** on JCS/native-storage/build validation.
+  Python reduces tooling and exposes dir_fd operations; Node 26.13.1 has easier ECMAScript
+  serialization but a larger native I/O gap. User confirmed: **Pending**.
 - [ ] ADR-2 Storage/identity: propose JSON snapshots, RFC 8785 + SHA-256, explicit references,
   immutable reports instead of SQLite. Easy inspection/offline portability; larger duplicated
-  files and bounded scale. Parser must detect duplicate keys. User confirmed: **Pending**.
+  files and bounded scale. **Recommended**, with parser/JCS conformance and numeric-token
+  edge handling **blocked** pending validation; no relaxed JSON. User confirmed: **Pending**.
 - [ ] ADR-3 Evaluation/authority: propose exact tri-state rules, pinned business sources,
   reviewed-suite denominator, no live execution. Avoids false certainty; manual exports and
-  exporter authenticity remain user responsibilities. User confirmed: **Pending**.
+  exporter authenticity remain user responsibilities. **Recommended**, no semantics change.
+  User confirmed: **Pending**.
 - [ ] ADR-4 Packaging/resources: propose local package, static HTML/JSON, contract bounds,
   60-second deadline and no hosted service. Low operating cost; slower onboarding and no
-  shared dashboard. ADR-1/4 require an explicit feasible platform strategy for effective
-  permissions/ACL probes, pinned handles/mount identity, and durable publication; Node support
-  is not assumed. Unsupported volumes fail closed; T-09 evidence gates release. User confirmed: **Pending**.
+  shared dashboard. **Blocked**: B0's noowners mount observation and unproven native bridge,
+  effective-access, mount-race/publication and deadline guarantees prevent readiness.
+  Unsupported volumes fail closed; T-09 remains required. User confirmed: **Pending**.
 - [ ] ADR-5 AI/agent boundary: propose defer until deterministic pilot evidence. Later compare
   local runtime/model candidates or existing customer-owned inference at zero incremental
   founder cost; no model/runtime, license, quantization, context window, or capability selected.
+  **Deferred** beyond deterministic/pilot gates; this is the recommended MVP disposition.
   Grounded explanations may help triage but add nondeterminism and evaluation work. No agent
   business authority; any expansion requires a new approved ADR. User confirmed: **Pending**.
 

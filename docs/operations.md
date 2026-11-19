@@ -31,17 +31,23 @@ service, database, credential, or ownership change is part of B0.
 
 ## Proposed local runtime and packaging
 
-ADR-1 proposes a TypeScript/Node modular CLI, with Node v26.13.1 as an unverified candidate
-pin; exact toolchain/dependencies await review. See [SDD sources](specs/001-mvp/solution-design.md).
-Mac-first package, Linux compatibility only after evidence; no Windows support promise yet.
+The [B0 recommendation](decisions/001-runtime.md) conditionally prefers CPython 3.14.10
+over TypeScript/Node 26.13.1, with an untested JCS dependency candidate and required Darwin
+native bridge. Exact build/installer pins and compatibility remain blocked, not approved.
+Proposed first target is the observed arm64 Mac with owner-enabled local APFS; other
+platforms require separate evidence. No Windows/Linux product support is promised.
 Future package must include built code, contract/version metadata, license inventory, and
 reviewed synthetic examples, plus reproducible lockfile/build provenance and checksums.
 No customer evidence, credentials, model weights, caches, or session history in releases.
 Install/build/product commands do not exist; only [CONTRIBUTING](../CONTRIBUTING.md) commands
 are currently executable project instructions. No installer or automatic updater is implied.
 
-Proposed evidence/output placement: explicit paths under ignored local-data/ and artifacts/
-in this checkout, operator-selected before use. These are suggestions, not automatic routing.
+Earlier evidence/output placement suggestions under ignored local-data/ and artifacts/
+in this checkout are **blocked on this mount**: B0's read-only `diskutil info -plist
+/Volumes/AIWorkspace` reported `GlobalPermissionsEnabled=false`, and `mount` confirmed
+APFS `noowners` on 2026-11-19. Product I/O must refuse this destination under the existing
+private-access requirements. No mount/ownership changes or alternate destination selection
+were performed; a future target requires explicit selection and validation.
 Private originals should remain in customer-controlled storage; use reviewed synthetic data
 for development. Report snapshots contain evidence and need the same handling as inputs.
 Proposed publisher requires owner-private directories/files from creation: POSIX 0700/0600
@@ -76,13 +82,15 @@ against privileged administrators, the same account, or physical access to an un
 6. Close consumers and flush writes before ejecting the volume. Verify a completed generation
    by marker hashes on reopening; never infer completion from the directory's existence.
 
-No daemon startup is needed for the proposed MVP. Current server/history routing work is a
-separate infrastructure task, not an application installation prerequisite.
-ADR-1/ADR-4 must establish a platform-specific handle/identity and effective-permissions
-strategy before implementation; proposed Node alone is not evidence of these capabilities.
-Any native helper or narrower filesystem support needs review. Per-run support probes and
-T-09 must demonstrate the guarantees before release; an unsupported destination is rejected.
-No current pendrive permissions, mount-race protection, or probe outcome has been verified.
+No daemon startup is needed for the proposed MVP. The verified development service/history
+routing is separate infrastructure, not an application installation prerequisite.
+ADR-1/ADR-4 remain blocked. The [B0 storage analysis](decisions/001-runtime.md) describes
+descriptor-relative traversal, native mount/UUID/ACL APIs, empty-object validation and a
+candidate exclusive marker/flush protocol. Neither Python nor Node alone supplies all
+guarantees. Native bridge ABI, continuous identity/failure semantics, effective-access tests
+and APFS/USB durability need review and evidence; unsupported storage is rejected.
+Only read-only mount/mode observations exist. No product privacy probe, mount-race or
+durable-publication test has passed, and the worker restart test is not a substitute for T-09.
 
 ## Failure and recovery runbook
 

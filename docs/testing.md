@@ -8,10 +8,13 @@ Only foundation checks currently run. Requirements: [PRD](product.md); expected 
 
 Use the four existing commands in [CONTRIBUTING](../CONTRIBUTING.md): repository checker,
 policy unittests, actionlint, and diff check. They validate repository policy, not this
-product's correctness. The repository checker sees tracked files only; coordinator must
+product's correctness. The repository checker sees tracked files only; the author must
 stage new documents before its link/format coverage includes them. Supplementary draft
 validation must check all new files, template heading order, and requirement coverage.
-Live PR-record validation and CI verification belong to coordinator delivery, not this draft.
+Workers record live PR-policy/CI outcomes; the coordinator independently verifies delivery.
+The [B0 investigation](decisions/001-runtime.md) includes read-only runtime/mount observations,
+not T-* results. Current noowners storage, native APIs, and unproven publication/failure
+semantics block readiness; R5/R7 remain required and unchanged.
 
 ## Requirement-to-design-to-test matrix
 

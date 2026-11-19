@@ -20,6 +20,7 @@ Repository foundation checks exist. The planning set merged in [PR #6](https://g
 - [Roadmap](docs/roadmap.md): ordered milestones and bounded proposed tasks.
 - [Testing and evaluation](docs/testing.md): planned product checks, AI gates, and unmeasured targets.
 - [Local operations](docs/operations.md): actual storage placement, proposed packaging, recovery, and cost constraints.
+- [B0 runtime recommendation](docs/decisions/001-runtime.md): Python/Node comparison, observed storage blocker, candidate pins and pending ADR dispositions.
 
 ## Development workspace
 
