@@ -1,7 +1,11 @@
 # B0 runtime recommendation and investigation results
 
-Status: **Recommendation ready for coordinator review; implementation NO-GO.** This is a
-recommendation, not an accepted ADR. Founder exact-revision approval is pending.
+Current status: **B0 research accepted; implementation NO-GO.** [PR #11 merge verification](https://github.com/Himanshu-singh04/releaselens/pull/11#issuecomment-7000315548)
+records conditional acceptance at main `1bfa0576aabfbb17a9a625a513a1d7dea6079eb3`.
+This accepts the investigation/direction, not tested pins, M0 completion or runtime/storage
+changes. The recommendation, pending-gate wording and observations below retain their B0
+review-time context; [issue #12](https://github.com/Himanshu-singh04/releaselens/issues/12)
+now assigns the separately authorized B0a documentation protocol.
 Date: 2026-11-19. Author: GPT-6 Astra (`gpt-6-astra`), OpenCode, persistent ReleaseLens worker.
 
 ## Question, scope, and recommendation

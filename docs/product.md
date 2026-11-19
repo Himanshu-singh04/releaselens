@@ -1,8 +1,9 @@
 # ReleaseLens product requirements
 
 Status: planning baseline merged in [PR #6](https://github.com/Himanshu-singh04/releaselens/pull/6)
-for [issue #5](https://github.com/Himanshu-singh04/releaselens/issues/5). The [B0 recommendation](decisions/001-runtime.md)
-still needs separate technical decisions and exact-revision approval; M0 is incomplete.
+for [issue #5](https://github.com/Himanshu-singh04/releaselens/issues/5). [B0 research](decisions/001-runtime.md)
+was conditionally accepted in [PR #11](https://github.com/Himanshu-singh04/releaselens/pull/11);
+technical validation gates remain open and M0 is incomplete.
 Requirements describe intended behavior, not delivered functionality. No product runtime or tests exist.
 See [solution design](specs/001-mvp/solution-design.md), [contract](evidence-contract.md),
 [roadmap](roadmap.md), [testing](testing.md), and [operations](operations.md).
