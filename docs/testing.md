@@ -15,6 +15,10 @@ Workers record live PR-policy/CI outcomes; the coordinator independently verifie
 The [B0 investigation](decisions/001-runtime.md) includes read-only runtime/mount observations,
 not T-* results. Current noowners storage, native APIs, and unproven publication/failure
 semantics block readiness; R5/R7 remain required and unchanged.
+The [B0a protocol](decisions/002-storage-protocol.md) maps these obligations to G1–G9 and
+the finite F-01–24 fault matrix. All capability/fault tests remain unperformed; simulated
+faults, process kills and physical power loss have distinct evidence limits. No eligible
+external test target is authorized/provisioned, and counterexamples are not passing tests.
 
 ## Requirement-to-design-to-test matrix
 

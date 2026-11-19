@@ -32,15 +32,17 @@ or exposure by another account has been demonstrated. Encryption at rest alone w
 establish access control while mounted. The founder's storage choice remains unchanged.
 Graceful restart was verified; reboot, unplug/power-loss, and full restore were not.
 Do not copy/edit a live database; SQLite backups also contain credentials. No
-service, database, credential, or ownership change is part of B0.
+service, database, credential, or ownership change is part of B0 or B0a.
 
 ## Proposed local runtime and packaging
 
-The [B0 recommendation](decisions/001-runtime.md) conditionally prefers CPython 3.14.10
+The [B0 research accepted in PR #11](decisions/001-runtime.md) conditionally prefers CPython 3.14.10
 over TypeScript/Node 26.13.1, with an untested JCS dependency candidate and required Darwin
 native bridge. Exact build/installer pins and compatibility remain blocked, not approved.
-Proposed first target is the observed arm64 Mac with owner-enabled local APFS; other
-platforms require separate evidence. No Windows/Linux product support is promised.
+Proposed execution host is the observed arm64 Mac; the [B0a protocol](decisions/002-storage-protocol.md)
+specifies a separately authorized owner-enabled external APFS test target. None is currently
+authorized/provisioned; internal Mac storage is not selected as a substitute. Other platforms
+require separate evidence. No Windows/Linux product support is promised.
 Future package must include built code, contract/version metadata, license inventory, and
 reviewed synthetic examples, plus reproducible lockfile/build provenance and checksums.
 No customer evidence, credentials, model weights, caches, or session history in releases.
@@ -96,6 +98,9 @@ guarantees. Native bridge ABI, continuous identity/failure semantics, effective-
 and APFS/USB durability need review and evidence; unsupported storage is rejected.
 Only read-only mount/mode observations exist. No product privacy probe, mount-race or
 durable-publication test has passed, and the worker restart test is not a substitute for T-09.
+The [B0a protocol](decisions/002-storage-protocol.md) makes the ABI, failure oracles and
+counterexamples explicit. Continuous identity/drift guarantees, late-error marker absence
+and a hard blocked-I/O deadline remain NO-GO; proposed requirement decisions are unaccepted.
 
 ## Failure and recovery runbook
 
