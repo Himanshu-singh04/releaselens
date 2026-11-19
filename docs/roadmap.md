@@ -1,7 +1,10 @@
 # Proposed roadmap and bounded backlog
 
-Draft for [issue #5](https://github.com/Himanshu-singh04/releaselens/issues/5); no milestone
-below is delivered. Dependencies are gates, not calendar promises. Scope is in the
+Planning baseline for [issue #5](https://github.com/Himanshu-singh04/releaselens/issues/5)
+merged in [PR #6](https://github.com/Himanshu-singh04/releaselens/pull/6); App corrections
+merged in [PR #8](https://github.com/Himanshu-singh04/releaselens/pull/8), and development-worker
+provisioning is verified in [issue #9](https://github.com/Himanshu-singh04/releaselens/issues/9).
+None completes M0 or delivers a product milestone. Dependencies are gates, not calendar promises. Scope is in the
 [PRD](product.md), contracts in the [SDD](specs/001-mvp/solution-design.md), tests in
 [testing](testing.md), and local execution/recovery in [operations](operations.md).
 
@@ -9,7 +12,7 @@ below is delivered. Dependencies are gates, not calendar promises. Scope is in t
 
 | Milestone | Depends on | Observable exit evidence | Exclusions |
 | --- | --- | --- | --- |
-| M0: confirm design | Current documentation PR | Owner decision on exact revision, ADR-1–5 resolved, independent consistency review, foundation checks and PR record. | No runtime code or provisioning. |
+| M0: confirm design | B0 technical decisions after merged planning baseline | Owner decision on exact revision, ADR-1–5 resolved, independent consistency review, foundation checks and PR record. | No product runtime code or provisioning. |
 | M1: deterministic contract fixtures | M0; runtime/schema decisions | Reviewed synthetic refund/escalation corpus; parser/hash/reference rejection vectors; T-01/02 pass. | No agent calls or AI. |
 | M2: baseline/candidate evaluator | M1 | Golden tri-state/effect/alignment results; T-03/04/05/06 pass with all expected cases retained. | No vendor adapter. |
 | M3: local report and recovery | M2 | Offline HTML/JSON parity; inert rendering, bounded resources, interruption recovery; T-07/08/09/12 pass. | No server/accounts/billing. |
@@ -22,12 +25,14 @@ An owner may reject or change proposals; update dependent docs and obtain fresh 
 
 ## Issue-ready task slices
 
-Each row is a proposed issue, not an already-created GitHub issue. Every implementation PR
+Except B0 ([issue #10](https://github.com/Himanshu-singh04/releaselens/issues/10)), rows are
+proposed issues, not already-created GitHub issues. Every implementation PR
 must carry a bounded scope, requirement IDs, expected test outcomes, and review evidence.
 
 | Task | Dependency / scope cap | Acceptance and verification |
 | --- | --- | --- |
-| B0: close design gates | Now; documentation only | Record runtime/language, exact dependency pins or explicit investigation outcomes, feasible private-permissions and pinned mount/handle strategy, schema/evaluation/resources, and AI deferral. Coordinator/owner review M0; no assumed Node capability. |
+| B0: investigate design gates | #10; documentation only | [Recommendation/results](decisions/001-runtime.md): conditional Python target, Node comparison, exact candidate versions and untested gaps; current noowners mount rejected. ADR dispositions recorded; M0 remains blocked. |
+| B0a: storage capability protocol | Next proposed bounded documentation task; after review of #10 | Specify minimal Darwin bridge ABI, explicitly selected owner-enabled APFS test target and finite R5/R7/durability/deadline fault matrix; return achievable guarantees or no-go. No helper code, installs or mount changes. |
 | B1: fixture vocabulary | M0; 8 synthetic cases, <=3 assertions each | Include eligible refund, ineligible refund, escalation, missing observation, failed completion, stale effect, removed case, changed policy. Lead reviews expected outcomes independently; no customer data. |
 | B2: import/identity boundary | B1; Suite/Bundle only | Implement chosen schema and hash validation with malformed, duplicate, dangling-ref, and source-version tests T-01/02. No renderer/evaluator. |
 | B3: value and effect rules | B2; three operators and one effect chain | T-03/04 verify exact tri-state semantics, time/source eligibility, and negative assertions. No fuzzy semantic judge. |
@@ -38,10 +43,11 @@ must carry a bounded scope, requirement IDs, expected test outcomes, and review 
 | B8: pilot learning record | B7; three teams sought, two revisions each | Record consented/anonymized observations, export effort, triage time, repeats, failures, and pricing responses. Decide continue/narrow/stop. |
 | B9: AI feasibility design | B8; docs plus separately approved bounded experiment | Compare at most two local model/runtime combinations; document license, exact weights/hash, quantization, context, RAM/latency/cost, T-11 quality and abstention. No model downloads in required CI. |
 
-Initial bounded task after approval is B1, not a complete application scaffold. If ADR-1
-needs additional investigation first, B0 remains documentation research; do not write product
-code under a provisional runtime choice. Package manager, JSON parser/JCS library, compiler,
-model-serving SDK, and model weights have not been selected, installed, or benchmarked here.
+Next is the proposed B0a protocol task, not B1 or an application scaffold. A separately
+authorized capability experiment and Python/JCS/build compatibility validation must address
+the [remaining blockers](decisions/001-runtime.md) before M0 can close. B1 remains the first
+product task after gates close. Candidate versions are researched, not installed or tested
+product pins. Model-serving SDK and weights remain deferred beyond deterministic/pilot gates.
 
 ## Dependency and release discipline
 
@@ -65,6 +71,6 @@ decision, not an incidental adapter. Deferred items remain out of the critical M
 | A6 exact-revision approval | Coordinator-owned AGENTS/development updates; owner decision and delegated-submission disclosure in PR record. Workers cannot self-approve. |
 | A7 links/checks/history/SHA | README and local validation; coordinator stages drafts, reruns tracked checker, records pushed SHA/review timeline and verifies PR CI. |
 
-The temporary documentation specialist does not commit, push, mutate GitHub, or provision
-workers. This file does not claim A6/A7 remote delivery is complete; coordinator records
-those outcomes after review. Approval of a changed head requires a fresh exact-revision decision.
+The issue #5 planning delivery is recorded in merged PR #6. Subsequent B0 findings and
+worker delivery evidence belong to #10's PR; the coordinator independently verifies them.
+Approval of a changed head requires a fresh exact-revision decision.

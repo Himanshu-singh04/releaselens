@@ -1,6 +1,8 @@
 # ReleaseLens product requirements
 
-Status: draft for owner confirmation on the documentation PR for [issue #5](https://github.com/Himanshu-singh04/releaselens/issues/5).
+Status: planning baseline merged in [PR #6](https://github.com/Himanshu-singh04/releaselens/pull/6)
+for [issue #5](https://github.com/Himanshu-singh04/releaselens/issues/5). The [B0 recommendation](decisions/001-runtime.md)
+still needs separate technical decisions and exact-revision approval; M0 is incomplete.
 Requirements describe intended behavior, not delivered functionality. No product runtime or tests exist.
 See [solution design](specs/001-mvp/solution-design.md), [contract](evidence-contract.md),
 [roadmap](roadmap.md), [testing](testing.md), and [operations](operations.md).
@@ -97,7 +99,8 @@ the workflow before adding a hosted platform. No demand or revenue is claimed.
 
 Owner confirms product scope and significant ADRs on the reviewed documentation revision;
 the approval and exact-SHA procedure lives in [development](development.md).
-Temporary design assistance is not a provisioned persistent worker or independent approval.
+The persistent development worker is verified in [issue #9](https://github.com/Himanshu-singh04/releaselens/issues/9);
+worker delivery is not independent review or owner approval.
 [Testing](testing.md) maps every requirement to planned verification; [roadmap](roadmap.md)
 maps issue acceptance A1–A7 to artifacts and coordinator-owned delivery evidence.
 Policy authors own expected outcomes; engineers own export provenance; release owners own
