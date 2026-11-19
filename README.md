@@ -10,7 +10,7 @@ Compare a baseline and candidate agent against reviewed scenarios and produce an
 
 ## Status
 
-Repository foundation checks exist. The planning set merged in [PR #6](https://github.com/Himanshu-singh04/releaselens/pull/6), and App-rename corrections merged in [PR #8](https://github.com/Himanshu-singh04/releaselens/pull/8). Planning approval does not resolve architecture gates or complete M0. [B0 / issue #10](https://github.com/Himanshu-singh04/releaselens/issues/10) researches runtime and design decisions for separate exact-revision approval. No application commands, product tests, model integration, or release artifacts exist.
+Repository foundation checks exist. The planning set merged in [PR #6](https://github.com/Himanshu-singh04/releaselens/pull/6), and App-rename corrections merged in [PR #8](https://github.com/Himanshu-singh04/releaselens/pull/8). [B0 research merged in PR #11](https://github.com/Himanshu-singh04/releaselens/pull/11): the Python/JCS/native-bridge direction is conditionally accepted, not validated product pins or M0 completion. [B0a / issue #12](https://github.com/Himanshu-singh04/releaselens/issues/12) specifies the storage protocol; implementation remains NO-GO. No application commands, product tests, model integration, or release artifacts exist.
 
 ## Product planning
 
@@ -21,6 +21,7 @@ Repository foundation checks exist. The planning set merged in [PR #6](https://g
 - [Testing and evaluation](docs/testing.md): planned product checks, AI gates, and unmeasured targets.
 - [Local operations](docs/operations.md): actual storage placement, proposed packaging, recovery, and cost constraints.
 - [B0 runtime recommendation](docs/decisions/001-runtime.md): Python/Node comparison, observed storage blocker, candidate pins and pending ADR dispositions.
+- [B0a storage protocol](docs/decisions/002-storage-protocol.md): proposed native ABI, target eligibility, fault matrix and explicit no-go guarantees.
 
 ## Development workspace
 
