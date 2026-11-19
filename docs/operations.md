@@ -1,7 +1,8 @@
 # Local operations and recovery
 
-Draft plan; no application, package, model integration, persistent project server, or
-dedicated project worker is provisioned. [Development](development.md) governs delivery
+Product operations remain a plan; no application, package, or model integration exists.
+The persistent development worker is provisioned and verified in [issue #9](https://github.com/Himanshu-singh04/releaselens/issues/9).
+[Development](development.md) governs delivery
 approval; [roadmap](roadmap.md) gates implementation; [testing](testing.md) defines verification.
 
 ## Storage and execution: current reality
@@ -10,18 +11,23 @@ approval; [roadmap](roadmap.md) gates implementation; [testing](testing.md) defi
 | --- | --- | --- |
 | Source and these documents | `/Volumes/AIWorkspace/projects/releaselens` | Pendrive checkout; all task artifacts remain here. |
 | CPU and RAM | Existing Mac; observed 16 GiB RAM / 8 logical CPUs | Processes use Mac compute, not pendrive memory; not a benchmark. |
-| Coordinator and all current session history | `/Users/himanshusingh/.local/share/opencode/opencode.db` | Current Mac OpenCode service; changing working directory does not relocate history. |
-| App private key and `gh` authentication | Mac, outside repository | Credentials remain on Mac; never copied into evidence, pendrive checkout, or CI. |
-| Model/cache directories | Directories exist; redirection NOT configured | No claim that model weights/caches currently route to pendrive or that a model is installed. |
-| Dedicated project server/workers | NOT provisioned | Temporary documentation specialist is not the promised persistent project worker. |
+| Coordinator session history | `/Users/himanshusingh/.local/share/opencode/opencode.db` | Separate Mac service, unchanged by worker provisioning. |
+| Worker history and OpenAI OAuth | `/Volumes/AIWorkspace/portfolio/runtime/data/opencode/projects.db` | Founder explicitly chose pendrive database with credentials/history together; private and outside Git. |
+| App private key and owner `gh` authentication | Mac, outside repository | Never copied into product evidence, checkout, or CI. |
+| Worker caches/state | `/Volumes/AIWorkspace/caches/project-opencode/` and `/Volumes/AIWorkspace/portfolio/runtime/state/` | Development-service routing; not a product model installation. |
+| Product model/cache directories | No product routing/model configured | Future downloads still need explicit decisions and effective-path verification. |
+| Dedicated project service/worker | OpenCode 2.2.7, authenticated localhost service; reusable ReleaseLens session | Effective DB handles, routing, and continuity after graceful restart verified by coordinator in #9. |
 | GitHub | Remote copies of pushed tracked commits only | Uncommitted/unpushed drafts and ignored local data are not backed up there. |
 
-Desired future project-history placement on the pendrive requires separate configuration,
-service restart, mounted-volume checks, and routing verification. Do not move/copy a live
-session database casually; obtain the actual service's supported backup/restore procedure
-before migration. Keep coordinator history on its existing Mac service unless separately
-authorized. Record process identity, effective database path, and verified test-session routing
-after restart; provisioned directories alone are not proof. No migration occurs in this task.
+Public [provisioning evidence and operations snapshot](https://github.com/Himanshu-singh04/releaselens/issues/9#issuecomment-6999734870)
+record lifecycle/recovery procedures; the local guide is
+`/Volumes/AIWorkspace/portfolio/documentation/project-workers.md`. The founder authorized
+worker OAuth on the pendrive. Worker inference consumes the existing ChatGPT subscription
+allowance, with no new paid service/API fallback; this is development assistance, not the
+future product's local inference. Processes share one macOS user, not a credential sandbox.
+Graceful restart was verified; reboot, unplug/power-loss, and full restore were not.
+Do not copy/edit a live database; private SQLite backups also contain credentials. No
+service, database, credential, or ownership change is part of B0.
 
 ## Proposed local runtime and packaging
 
@@ -123,5 +129,6 @@ verdicts. Existing customer-owned resources are eligible only with explicit zero
 founder-cost accounting and a separately approved authority/data boundary.
 No hosted deployment, domain purchase, hosted auth/billing, paid inference, or new paid CI
 capacity now. Monitor any existing free allocation; exhaustion means stop/report, not upgrade.
-Future release publication and persistent-worker provisioning each need separate approved
-tasks with exact revisions, rollback steps, and measured startup/storage-routing evidence.
+Future product release publication needs a separate approved task with exact revision,
+rollback steps, and measured installation/recovery evidence. Development-worker provisioning
+is already verified in #9; it does not resolve product runtime or storage gates.

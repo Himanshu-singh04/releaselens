@@ -129,8 +129,9 @@ verification replies so earlier findings and decisions remain readable.
 Label comments `Coordinator review`, `Implementation response`, or `Coordinator
 verification`, with actual model and task/session references. Both roles use the
 same portfolio App; role labels are not independent authenticated approvals.
-Until project workers are provisioned, bootstrap corrections identify the
-coordinator as their implementer instead of claiming a worker did the work.
+Persistent project workers are verified in [issue #9](https://github.com/Himanshu-singh04/releaselens/issues/9).
+Historical bootstrap corrections retain truthful coordinator attribution; later
+tasks and correction rounds reuse the registered project-worker session.
 
 Before requesting human approval, brief one PR at a time: original/refined task,
 actual delivery, reviewed SHA, acceptance evidence, checks run/not run, resolved
@@ -179,6 +180,10 @@ helper for a fresh scoped token. Lost App key: generate a replacement in App
 settings, replace the local key, verify authentication, then revoke the old key.
 An interrupted helper may leave a token valid until its normal expiration.
 
-The project checkout is on `/Volumes/AIWorkspace`. Dedicated project-session
-database placement and routing are pending; changing directory alone does not
-move OpenCode history. The coordinator remains on the Mac.
+The project checkout is on `/Volumes/AIWorkspace`. Worker history and OpenAI OAuth
+are in `/Volumes/AIWorkspace/portfolio/runtime/data/opencode/projects.db`, outside
+Git, by the founder's explicit **Pendrive database** decision. The coordinator's
+history and GitHub App private key remain on the Mac. [Issue #9](https://github.com/Himanshu-singh04/releaselens/issues/9)
+records effective-path, repository-routing, and graceful-restart continuity checks;
+it does not establish power-loss recovery or same-user credential isolation.
+See [operations](operations.md) for the development/product boundary.

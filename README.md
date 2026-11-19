@@ -10,7 +10,7 @@ Compare a baseline and candidate agent against reviewed scenarios and produce an
 
 ## Status
 
-Repository foundation checks exist. The product planning set for [issue #5](https://github.com/Himanshu-singh04/releaselens/issues/5) is a draft for owner confirmation on the documentation PR. Architecture decisions remain pending; implementation must not start under unresolved gates. No application commands, product tests, model integration, or release artifacts exist.
+Repository foundation checks exist. The planning set merged in [PR #6](https://github.com/Himanshu-singh04/releaselens/pull/6), and App-rename corrections merged in [PR #8](https://github.com/Himanshu-singh04/releaselens/pull/8). Planning approval does not resolve architecture gates or complete M0. [B0 / issue #10](https://github.com/Himanshu-singh04/releaselens/issues/10) researches runtime and design decisions for separate exact-revision approval. No application commands, product tests, model integration, or release artifacts exist.
 
 ## Product planning
 
@@ -27,7 +27,7 @@ Local checkout: `/Volumes/AIWorkspace/projects/releaselens`.
 
 Execution will use existing local or customer-owned resources, with no new initial founder hosting or inference expenditure. This product has an independent repository and release lifecycle.
 
-Source and docs are on the pendrive; execution uses Mac CPU/RAM. Coordinator and all current session history remain at `/Users/himanshusingh/.local/share/opencode/opencode.db`; credentials stay on the Mac. Model/cache directories exist but redirection is not configured. Persistent project servers/workers are not provisioned; future history routing needs restart, mount, and effective-path verification.
+Source and docs are on the pendrive; execution uses Mac CPU/RAM. The persistent development worker and restart/routing continuity are verified in [issue #9](https://github.com/Himanshu-singh04/releaselens/issues/9). Worker history and OpenAI OAuth share the pendrive database by explicit founder decision; coordinator history and the GitHub App key remain on the Mac. Development inference uses the existing subscription allowance; it is not product-local inference. See [operations](docs/operations.md) for paths and limits. No product model/runtime is installed or approved by this provisioning record.
 
 ## Git workflow
 
