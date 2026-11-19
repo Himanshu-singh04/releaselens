@@ -12,7 +12,7 @@ approval; [roadmap](roadmap.md) gates implementation; [testing](testing.md) defi
 | Source and these documents | `/Volumes/AIWorkspace/projects/releaselens` | Pendrive checkout; all task artifacts remain here. |
 | CPU and RAM | Existing Mac; observed 16 GiB RAM / 8 logical CPUs | Processes use Mac compute, not pendrive memory; not a benchmark. |
 | Coordinator session history | `/Users/himanshusingh/.local/share/opencode/opencode.db` | Separate Mac service, unchanged by worker provisioning. |
-| Worker history and OpenAI OAuth | `/Volumes/AIWorkspace/portfolio/runtime/data/opencode/projects.db` | Founder explicitly chose pendrive database with credentials/history together; private and outside Git. |
+| Worker history and OpenAI OAuth | `/Volumes/AIWorkspace/portfolio/runtime/data/opencode/projects.db` | Founder explicitly chose pendrive database with credentials/history together; outside Git, filesystem confidentiality unverified. |
 | App private key and owner `gh` authentication | Mac, outside repository | Never copied into product evidence, checkout, or CI. |
 | Worker caches/state | `/Volumes/AIWorkspace/caches/project-opencode/` and `/Volumes/AIWorkspace/portfolio/runtime/state/` | Development-service routing; not a product model installation. |
 | Product model/cache directories | No product routing/model configured | Future downloads still need explicit decisions and effective-path verification. |
@@ -25,8 +25,13 @@ record lifecycle/recovery procedures; the local guide is
 worker OAuth on the pendrive. Worker inference consumes the existing ChatGPT subscription
 allowance, with no new paid service/API fallback; this is development assistance, not the
 future product's local inference. Processes share one macOS user, not a credential sandbox.
+Authenticated localhost API access and outside-Git storage do not establish filesystem
+confidentiality. Other-account access to the worker database has not been tested; ownership-based
+privacy cannot be assumed on the observed unencrypted `noowners` mount. No credential read
+or exposure by another account has been demonstrated. Encryption at rest alone would not
+establish access control while mounted. The founder's storage choice remains unchanged.
 Graceful restart was verified; reboot, unplug/power-loss, and full restore were not.
-Do not copy/edit a live database; private SQLite backups also contain credentials. No
+Do not copy/edit a live database; SQLite backups also contain credentials. No
 service, database, credential, or ownership change is part of B0.
 
 ## Proposed local runtime and packaging

@@ -185,5 +185,8 @@ are in `/Volumes/AIWorkspace/portfolio/runtime/data/opencode/projects.db`, outsi
 Git, by the founder's explicit **Pendrive database** decision. The coordinator's
 history and GitHub App private key remain on the Mac. [Issue #9](https://github.com/Himanshu-singh04/releaselens/issues/9)
 records effective-path, repository-routing, and graceful-restart continuity checks;
-it does not establish power-loss recovery or same-user credential isolation.
+it does not establish power-loss recovery or same-user credential isolation. Outside-Git
+storage and authenticated localhost API access do not prove filesystem confidentiality.
+Other-account database access is untested; ownership-based privacy cannot be assumed on
+the observed `noowners` mount. No other-account credential read has been demonstrated.
 See [operations](operations.md) for the development/product boundary.

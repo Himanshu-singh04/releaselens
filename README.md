@@ -28,7 +28,7 @@ Local checkout: `/Volumes/AIWorkspace/projects/releaselens`.
 
 Execution will use existing local or customer-owned resources, with no new initial founder hosting or inference expenditure. This product has an independent repository and release lifecycle.
 
-Source and docs are on the pendrive; execution uses Mac CPU/RAM. The persistent development worker and restart/routing continuity are verified in [issue #9](https://github.com/Himanshu-singh04/releaselens/issues/9). Worker history and OpenAI OAuth share the pendrive database by explicit founder decision; coordinator history and the GitHub App key remain on the Mac. Development inference uses the existing subscription allowance; it is not product-local inference. See [operations](docs/operations.md) for paths and limits. No product model/runtime is installed or approved by this provisioning record.
+Source and docs are on the pendrive; execution uses Mac CPU/RAM. The persistent development worker and restart/routing continuity are verified in [issue #9](https://github.com/Himanshu-singh04/releaselens/issues/9). Worker history and OpenAI OAuth share the pendrive database outside Git by explicit founder decision; coordinator history and the GitHub App key remain on the Mac. Authenticated localhost API access does not establish filesystem confidentiality: other-account database access is untested, and ownership-based privacy cannot be assumed on this `noowners` mount. Development inference uses the existing subscription allowance; it is not product-local inference. See [operations](docs/operations.md) for paths and limits. No product model/runtime is installed or approved by this provisioning record.
 
 ## Git workflow
 
