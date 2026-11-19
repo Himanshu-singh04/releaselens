@@ -1,7 +1,11 @@
 # B0 runtime recommendation and investigation results
 
-Status: **Recommendation ready for coordinator review; implementation NO-GO.** This is a
-recommendation, not an accepted ADR. Founder exact-revision approval is pending.
+Current status: **B0 research accepted; implementation NO-GO.** [PR #11 merge verification](https://github.com/Himanshu-singh04/releaselens/pull/11#issuecomment-7000315548)
+records conditional acceptance at main `1bfa0576aabfbb17a9a625a513a1d7dea6079eb3`.
+This accepts the investigation/direction, not tested product pins, M0 completion or
+runtime/storage changes. Historical observations and pending-gate wording below retain
+their B0 review-time context. Separately authorized [B0b research](003-json-conformance.md)
+tests finite JSON/JCS vectors on installed Python, not the proposed target runtime.
 Date: 2026-11-19. Author: GPT-6 Astra (`gpt-6-astra`), OpenCode, persistent ReleaseLens worker.
 
 ## Question, scope, and recommendation

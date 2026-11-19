@@ -10,7 +10,7 @@ Compare a baseline and candidate agent against reviewed scenarios and produce an
 
 ## Status
 
-Repository foundation checks exist. The planning set merged in [PR #6](https://github.com/Himanshu-singh04/releaselens/pull/6), and App-rename corrections merged in [PR #8](https://github.com/Himanshu-singh04/releaselens/pull/8). Planning approval does not resolve architecture gates or complete M0. [B0 / issue #10](https://github.com/Himanshu-singh04/releaselens/issues/10) researches runtime and design decisions for separate exact-revision approval. No application commands, product tests, model integration, or release artifacts exist.
+Repository foundation checks exist. The planning set merged in [PR #6](https://github.com/Himanshu-singh04/releaselens/pull/6), and App-rename corrections merged in [PR #8](https://github.com/Himanshu-singh04/releaselens/pull/8). [B0 research](docs/decisions/001-runtime.md) was conditionally accepted in PR #11; product pins and M0 remain unvalidated. [B0b JSON/JCS research](docs/decisions/003-json-conformance.md) exercises finite synthetic vectors on installed Python. No application commands, product tests, model integration, or release artifacts exist.
 
 ## Product planning
 
