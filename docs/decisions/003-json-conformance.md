@@ -65,6 +65,9 @@ installing pip into the venv. Bundled installer wheel SHA-256:
 It is existing interpreter tooling, not a downloaded dependency or a newly authenticated
 Python distribution. Every run prints the actual bundled wheel identity; other Python
 installations may bundle another installer and are separate observations.
+Distribution Pythons may instead provide their installer wheel in the interpreter's
+`sysconfig` `WHEEL_PKG_DIR`; the helper uses that configured directory when present,
+requiring exactly one pip wheel and recording its name/hash. No installer is downloaded.
 
 Primary metadata retrieved 2026-11-19 from
 [version-specific PyPI JSON](https://pypi.org/pypi/rfc8785/0.1.4/json), corroborated
@@ -322,3 +325,8 @@ case records: identical; all 105 IDs have document rows. B0a ref remains
 `a1c4e0b705b37cba8e016dd473fabeeddb6b8f6c` and its document is absent from this branch.
 No target-Python, native, storage, deadline, product, peak-memory or comprehensive
 binary64 test ran. PR records preserve acquisition/CI failures and their corrections.
+Initial new-code CI run `44488237702` failed before candidate installation: Ubuntu's
+Python provides pip outside `ensurepip/_bundled`. The helper was corrected to use
+`WHEEL_PKG_DIR` where configured; this changes installer discovery, not corpus expectations.
+The corrected helper's fresh local `artifacts/b0b/run3` rerun passed 105/105,
+pip check and installed-member equality with the same installer/candidate inventory.

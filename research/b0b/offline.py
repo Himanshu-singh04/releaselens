@@ -47,9 +47,11 @@ def main():
     run([sys.executable, "-I", "-B", "-m", "venv", "--without-pip", str(task / ".venv")])
     python = str(task / ".venv" / "bin" / "python")
     bootstrap = '''
-import ensurepip, hashlib, pathlib, runpy, sys
-wheels=list((pathlib.Path(ensurepip.__file__).parent / "_bundled").glob("pip-*.whl"))
-if len(wheels) != 1: raise SystemExit("Expected one interpreter-bundled pip wheel")
+import ensurepip, hashlib, pathlib, runpy, sys, sysconfig
+configured=sysconfig.get_config_var("WHEEL_PKG_DIR")
+directory=pathlib.Path(configured) if configured else pathlib.Path(ensurepip.__file__).parent / "_bundled"
+wheels=list(directory.glob("pip-*.whl"))
+if len(wheels) != 1: raise SystemExit("Expected one interpreter-provided pip wheel")
 wheel=wheels[0]
 print("Installer:",wheel.name,hashlib.sha256(wheel.read_bytes()).hexdigest(),file=sys.stderr)
 sys.path.insert(0,str(wheel))
