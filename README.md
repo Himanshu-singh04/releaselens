@@ -10,7 +10,14 @@ Compare a baseline and candidate agent against reviewed scenarios and produce an
 
 ## Status
 
-Repository foundation checks exist. The planning set merged in [PR #6](https://github.com/Himanshu-singh04/releaselens/pull/6), and App-rename corrections merged in [PR #8](https://github.com/Himanshu-singh04/releaselens/pull/8). [B0 research](docs/decisions/001-runtime.md) was conditionally accepted in PR #11; product pins and M0 remain unvalidated. [B0a storage documentation](docs/decisions/002-storage-protocol.md) was accepted in [PR #13](https://github.com/Himanshu-singh04/releaselens/pull/13); implementation remains NO-GO. [B0b JSON/JCS research](docs/decisions/003-json-conformance.md) exercises finite synthetic vectors on installed Python. No application commands, product tests, model integration, or release artifacts exist.
+Repository foundation checks exist. The planning set merged in [PR #6](https://github.com/Himanshu-singh04/releaselens/pull/6), and App-rename corrections merged in [PR #8](https://github.com/Himanshu-singh04/releaselens/pull/8). [B0 research](docs/decisions/001-runtime.md) was conditionally accepted in PR #11; product pins and M0 remain unvalidated. [B0a storage documentation](docs/decisions/002-storage-protocol.md) was accepted in [PR #13](https://github.com/Himanshu-singh04/releaselens/pull/13); customer implementation remains NO-GO. [B0b JSON/JCS research](docs/decisions/003-json-conformance.md) exercises finite synthetic vectors on installed Python. No application commands, product tests, model integration, or release artifacts exist.
+
+The accepted [B0c packet](docs/decisions/004-mvp-decision.md) is historical. The founder later
+adopted exact N1–N4 and a synthetic-terminal scope/sequence exception with AI deferred;
+[B0d](docs/decisions/005-adopted-policy-reconciliation.md) records those decisions and this
+pending normative reconciliation. Enforcement and runtime qualification remain unverified.
+Only separately authorized synthetic work can use the exception; customer implementation stays
+blocked. D1–D4 remain unadopted, noowners storage ineligible, and M0/M1–M4 incomplete.
 
 ## Product planning
 
@@ -22,6 +29,7 @@ Repository foundation checks exist. The planning set merged in [PR #6](https://g
 - [Local operations](docs/operations.md): actual storage placement, proposed packaging, recovery, and cost constraints.
 - [B0 runtime recommendation](docs/decisions/001-runtime.md): Python/Node comparison, observed storage blocker, candidate pins and pending ADR dispositions.
 - [B0a storage protocol](docs/decisions/002-storage-protocol.md): proposed native ABI, target eligibility, fault matrix and explicit no-go guarantees.
+- [Adopted policy and reconciliation](docs/decisions/005-adopted-policy-reconciliation.md): exact authority, clause/file trace, synthetic exception and retained customer gates.
 
 ## Development workspace
 

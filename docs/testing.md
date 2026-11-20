@@ -4,6 +4,10 @@ Status: proposed product tests and targets; no product code, benchmark, or model
 Foundation and [B0b research checks](decisions/003-json-conformance.md) run; the latter
 are finite parser/JCS controls, not product tests or runtime qualification. Requirements: [PRD](product.md); expected semantics:
 [evidence contract](evidence-contract.md); component boundaries: [SDD](specs/001-mvp/solution-design.md).
+The founder adopted N1–N4 and synthetic-terminal scope/sequence/AI deferral; [B0d](decisions/005-adopted-policy-reconciliation.md)
+records the decisions and pending normative reconciliation. All new oracles below remain
+unperformed. B0b's 105 historical controls, including lexical N2, do not validate replacement
+N2 normalization/reparse or expanded N4 artifact accounting. Foundation policy tests do not either.
 
 ## Existing checks
 
@@ -41,8 +45,53 @@ before evaluator implementation; author and reviewer disagreement becomes a case
 | T-11 optional AI/agent | RL-013, RL-014; future boundary | Citation validity/support, abstention, retrieval omissions, conflicting/outdated policy, injection, hallucinated effects, attempted tool authority, budget exhaustion, deterministic-result preservation. Gate below. |
 | T-12 cost/isolation | RL-010, RL-012; operations | No paid hosting/inference credentials or downloads in required product checks; network-denied comparison works; models/customer evidence absent from package/Git. Confirm usage stays inside existing no-new-spend allocation. |
 
+## Adopted numeric and boundary oracles (unperformed)
+
+Append these to the indicated T-* obligations; retain their existing cases. These are exact
+prospective vectors from adopted B0c A2, not executable fixtures or reported test results.
+Apply the contract rules across JSON, Scalar, expected/actual values, subjects and integer fields.
+
+- N1 / T-01: Accept 9007199254740991; reject 9007199254740992, 9007199254740993e0, 1e30
+  and 9007199254740991.5 (rounds to an unsafe integer), with a fixed input diagnostic.
+- Replacement N2 / T-01/03/06: 1, 1.0 and 1e0 normalize to integer 1 and yield equal semantic hashes
+  and Scalar outcomes; raw byte hashes differ. true never equals 1. 1.5 is JSON, not Scalar.
+  1.0000000000000001 rounds to integer 1. JCS serialization/reparse preserves normalized types and outcomes.
+- N3 / T-01/06: 1e-400 rejects; 5e-324 remains nonzero; -0.0 accepts and canonicalizes to 0.
+- N4 / T-01/08: Depth 32 accepts, 33 rejects; braces in strings do not add depth. Each
+  byte limit accepts exactly its bound and rejects one byte over; count whitespace, multibyte
+  UTF-8 and escaped text. BOM rejects. Test embedded arrays and 20 MiB decoded aggregate separately.
+
+N4's byte-limit oracle uses raw suite/bundle UTF-8 bytes including whitespace, raw artifact
+content-value token bytes including quotes/escapes/internal whitespace, and decoded text UTF-8
+or JSON JCS totals independently per artifact array, including embedded suite arrays.
+MiB is 1048576 bytes; root container depth is 1 and primitive depth is 0. Existing ceilings stay.
+Preserve B0b's historical lexical N2 corpus and results; future normalization tests need new
+independently reviewed expectations, not rewritten historical pass claims.
+
+## Synthetic-terminal demo acceptance (unperformed)
+
+The adopted first-demo path uses a fixed bundled reviewed baseline/candidate and displays
+eight reviewed rows, including missing/changed cases, with both outcomes, deltas, reasons,
+citations and expected-suite coverage. Escape terminal control characters. Ten identical
+comparisons must produce the same Result hash; an independent reviewer must explain the
+regression and coverage loss without author interpretation. Record failed explanations.
+These are future criteria, not evidence of usability, demand or policy correctness.
+
+Retain T-03–06 tri-state, alignment and eligibility semantics: request is not completion or
+independently sourced effect; bind subject/value to one record with eligible source/time.
+For effects, an eligible mismatching value fails; missing/request-only/failed-completion/stale/wrong-subject
+evidence stays unknown. A missing negative observation cannot pass `not_contains`.
+No customer/path import, Store, persisted report or release package is permitted in this lane.
+Terminal acceptance does not pass full T-07/09 publication or complete RL-008/011 or M0/M1–M4.
+Later pure slices require scoped runtime/JCS/new N2/N4 validation and separate implementation
+permission; unchanged bounds/deadline obligations remain. The customer test matrix still applies
+to that later product; R5/R7 and fatal-marker oracles are not weakened by this display-only scope.
+
 ## Fixtures and review discipline
 
+After this reconciliation merges, B1 source-only specifications require separate authorization;
+no fixture specifications or encoding exist from this task. Follow the adopted
+[sequence exception](roadmap.md#ordered-milestones), with M0/M1–M4 still incomplete.
 Start with eight synthetic order-support cases in B1; later expand negative cases, not only
 happy-path volume. Include a false “refund completed” answer with no business effect, an
 unauthorized refund with a real effect, an escalation without a support ticket observation,
@@ -95,6 +144,11 @@ text in diagnostics, including secret-like argv and unknown JSON keys.
 
 ## Proposed measurements and gates
 
+The original 60-second comparison deadline remains an obligation for the synthetic demo too.
+D4 is unadopted: observed-expiry checks/best-effort cancellation are not a substitute for
+enforcement. Blocking terminal I/O and scheduling leave hard completion unverified; report
+the conflict before later implementation authorization rather than infer a demo waiver.
+
 Nothing here is measured. On a 100-case/10-assertion fixture with <=10 MiB total inputs,
 target <=10 seconds and <=512 MiB peak RSS for each of 10 local runs. Proposed hard limits
 are in the contract, including a 60-second deadline. A resource failure is an operational
@@ -107,7 +161,8 @@ and two teams repeating on a second change. Log recruitment shortfalls; do not f
 
 ## Later AI/RAG/agent evaluation gate
 
-No runtime/model is selected. Proposed role: explain existing outcomes or suggest new cases
+AI deferral beyond deterministic/pilot gates is adopted; no AI implementation is authorized.
+No AI runtime/model is selected. Proposed role: explain existing outcomes or suggest new cases
 for human review. Retrieval is local over explicitly imported policy/knowledge/evidence only;
 no web search, hidden memory, or customer tool calls. Preserve source/version/hash per chunk.
 Proposed retrieval budget: <=8 chunks, <=1000 UTF-8 bytes/chunk; <=2048 output tokens and

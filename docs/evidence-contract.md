@@ -1,6 +1,8 @@
 # Proposed evidence contract v1
 
-Draft, pending ADR-2/ADR-3. This is an interface specification, not a shipped schema.
+Interface specification, not a shipped schema; remaining ADR-2/ADR-3 gates stay open.
+N1–N4 and the synthetic-only scope are adopted; [B0d](decisions/005-adopted-policy-reconciliation.md)
+records authority and this pending normative reconciliation. Enforcement remains unverified.
 All shapes below are documentation notation, not executable TypeScript or JSON Schema.
 The [PRD](product.md) defines scope; the [SDD](specs/001-mvp/solution-design.md) defines components.
 
@@ -13,8 +15,24 @@ All listed fields are required; `?` is not used. `T|null` explicitly permits unk
 `Hash` is `sha256:` followed by 64 lowercase hex characters. IDs identify things; hashes
 identify their exact content. A stable case ID must not hide a changed case hash.
 `Time` is a valid UTC timestamp `YYYY-MM-DDTHH:mm:ss.sssZ`; leap seconds are rejected in v1.
+`JSON` is bounded valid JSON. Reject a numeric token whose exact mathematical
+decimal value is integral and outside [-9007199254740991, 9007199254740991], including dot and
+exponent forms, before binary64 conversion. Reject nonfinite binary64 results and rounded
+integral binary64 results outside that range. Other finite rounding is permitted subject to N3.
+N3: Reject a nonzero exact decimal token if binary64 conversion produces zero.
+Accept finite nonzero subnormal rounding. Accept signed exact zero; canonicalize it to 0.
+
 `Scalar` is string, boolean, null, or safe integer; monetary examples use integer minor units.
-`JSON` is bounded valid JSON; integers must be safe and fractions finite IEEE-754 values.
+After N1/N3 validation, normalize every integral binary64 numeric value
+in the safe range to an exact integer, including dot/exponent spellings and signed zero.
+Integer-grammar tokens retain their exact safe integer value. Nonintegral numbers remain binary64
+and are not Scalars. Boolean is a distinct type; never coerce it to/from integer.
+N1 is the JSON safety rule above; replacement N2 is this normalization rule. Apply them to
+every JSON number, including nested artifact content, expected/actual values, subjects and
+integer fields, before type validation, hashing or equality. Other field constraints still apply.
+Thus 1, 1.0 and 1e0 have the same Scalar meaning and semantic hash; true stays distinct.
+The accepted binary64 rounding trade-off includes 1.0000000000000001 becoming integer 1;
+numeric spelling does not encode type, and exact decimal precision is not promised.
 
 `H(x)` means SHA-256 of UTF-8 RFC 8785 canonical JSON of x. Array order is significant.
 Hash fields exclude only themselves at the specified object level, never nested hashes.
@@ -71,7 +89,8 @@ artifacts referenced by input/policy_refs sorted by artifact_id. This binds byte
 metadata. `suite_hash` binds all cases and artifacts. Revision is a human label, not identity.
 `contains`/`not_contains` require string expected and string actual; literal case-sensitive
 substring only, no regex, locale folding, or executable expression. `equals` uses exact type
-and value equality on Scalar. Explicit JSON null is a value; absent evidence is not null data.
+and value equality on Scalar after the numeric normalization above, including subject equality.
+Explicit JSON null is a value; absent evidence is not null data.
 An effect assertion requires operator equals and a nonnull EffectRule; value requires null.
 The rule pins the accepted business-observation source, subject, tool, and freshness window.
 Changing any rule, input, policy bytes, or source metadata changes case_hash and comparability.
@@ -187,6 +206,15 @@ field; their sum is only a subset of assertion unknown, excluding run/alignment 
 
 ## Proposed report shape and persistence
 
+The adopted synthetic-terminal demo uses the same Suite/Bundle/Result semantics and
+namespace-qualified citations for bundled reviewed inputs. It accepts no customer/path
+imports and invokes no Store, persisted Report or release package. It displays outcomes,
+deltas, reasons, citations and coverage with terminal control characters escaped; it does
+not satisfy RL-008/011 publication. The Report shape and persistence obligations below
+remain the customer-product contract. No field or schema-version literal changes for the demo.
+The [roadmap exception](roadmap.md#ordered-milestones) changes sequencing only within that scope;
+the bounds and original 60-second deadline below still apply. Enforcement is unverified.
+
 | Shape | Exact fields |
 | --- | --- |
 | `Outcome` | `{assertion_id:ID, status:"pass"|"fail"|"unknown", reason:string, citations:Citation[]}` |
@@ -240,9 +268,18 @@ The marker is an integrity convention, not a guarantee against disk loss.
 
 ## Versioning and bounds
 
-All numerical bounds are proposed/unmeasured: suite <= 5 MiB, each bundle <= 25 MiB,
+Retained numerical ceilings, with adopted N4 accounting and unverified enforcement:
+suite <= 5 MiB, each bundle <= 25 MiB,
 1000 expected cases, 20 assertions/case, 200 events/run, 2000 artifacts/container,
 1 MiB/artifact, JSON depth <= 32, and aggregate decoded artifacts <= 20 MiB/container.
+Reject a UTF-8 BOM. Count open object/array containers, ignoring string contents:
+root container depth 1, primitive depth 0; depth 32 is allowed, 33 rejects. MiB = 1048576 bytes.
+Suite/bundle limits count exact input UTF-8 bytes including whitespace. Per-artifact 1 MiB
+counts its raw JSON content-value token bytes, including quotes/escapes and internal whitespace.
+Aggregate decoded content counts UTF-8 bytes for text and JCS bytes for JSON, independently
+per artifact array, including embedded suite arrays. All byte bounds are inclusive.
+Measure token spans before decoding and decoded totals after content validation. Whitespace/
+escape-heavy exports can exceed limits despite equal decoded content; re-encoding changes byte hashes.
 Apply case/assertion limits to embedded snapshots too. Reject excess before full allocation
 where possible; runtime must independently enforce a 60-second comparison deadline.
 No archives, symlinks, recursive discovery, external URI dereferencing, or automatic migrations.

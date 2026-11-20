@@ -5,6 +5,21 @@ The persistent development worker is provisioned and verified in [issue #9](http
 [Development](development.md) governs delivery
 approval; [roadmap](roadmap.md) gates implementation; [testing](testing.md) defines verification.
 
+## Adopted synthetic-terminal boundary
+
+[B0d](decisions/005-adopted-policy-reconciliation.md) records adoption of N1–N4 and synthetic
+scope/sequence/AI deferral, with this normative reconciliation pending review/merge. Future
+source-only definitions may precede M0 after reviewed schema adoption and separate permission;
+pure Contract/Evaluator/terminal-renderer slices additionally need scoped runtime/JCS validation.
+Use only bundled reviewed synthetic inputs and a fixed baseline/candidate, displaying outcomes,
+deltas, reasons, citations and coverage with terminal control characters escaped. No customer/path
+imports, Store, persisted reports or release package. Public synthetic source on the checkout
+does not qualify its noowners mount for customer evidence or weaken the customer duties below.
+M0/M1–M4 stay incomplete; this scope grants no executable command or implementation authority.
+The original 60-second deadline also remains for the demo. Scheduling/blocked terminal I/O
+leave enforcement unverified; do not substitute D4's decision budget or promise bounded completion.
+Return unresolved conflicts for review before later implementation authorization.
+
 ## Storage and execution: current reality
 
 | Item | Current location / state | Meaning |
@@ -36,9 +51,11 @@ service, database, credential, or ownership change is part of B0 or B0a.
 
 ## Proposed local runtime and packaging
 
-The [B0 research accepted in PR #11](decisions/001-runtime.md) conditionally prefers CPython 3.14.10
-over TypeScript/Node 26.13.1, with an untested JCS dependency candidate and required Darwin
-native bridge. Exact build/installer pins and compatibility remain blocked, not approved.
+The adopted conditional direction is CPython 3.14.10 standard GIL on arm64 macOS with rfc8785
+0.1.4, following [B0](decisions/001-runtime.md) and the B0c scope decision. The product stack
+remains uninstalled/unqualified; B0b on local 3.13.4 and CI's 3.14.4 do not qualify it or new
+N2/N4 enforcement. The Darwin bridge is required for customer Store, not pure computation.
+Exact build/installer pins and compatibility remain blocked, not approved; no installation authority.
 Proposed execution host is the observed arm64 Mac; the [B0a protocol](decisions/002-storage-protocol.md)
 specifies a separately authorized owner-enabled external APFS test target. None is currently
 authorized/provisioned; internal Mac storage is not selected as a substitute. Other platforms
@@ -46,13 +63,14 @@ require separate evidence. No Windows/Linux product support is promised.
 Future package must include built code, contract/version metadata, license inventory, and
 reviewed synthetic examples, plus reproducible lockfile/build provenance and checksums.
 No customer evidence, credentials, model weights, caches, or session history in releases.
-Install/build/product commands do not exist; only [CONTRIBUTING](../CONTRIBUTING.md) commands
-are currently executable project instructions. No installer or automatic updater is implied.
+Install/build/product commands do not exist. [CONTRIBUTING](../CONTRIBUTING.md) lists foundation
+commands; [B0b research](decisions/003-json-conformance.md) has separate
+historical controls. No demo command, installer or automatic updater exists.
 
 Earlier evidence/output placement suggestions under ignored local-data/ and artifacts/
 in this checkout are **blocked on this mount**: B0's read-only `diskutil info -plist
 /Volumes/AIWorkspace` reported `GlobalPermissionsEnabled=false`, and `mount` confirmed
-APFS `noowners` on 2026-11-19. Product I/O must refuse this destination under the existing
+APFS `noowners` on 2026-11-19. Customer-path I/O must refuse this destination under the existing
 private-access requirements. No mount/ownership changes or alternate destination selection
 were performed; a future target requires explicit selection and validation.
 Private originals should remain in customer-controlled storage; use reviewed synthetic data
@@ -68,6 +86,8 @@ fallback or silent destination change. These controls are not encryption and do 
 against privileged administrators, the same account, or physical access to an unencrypted drive.
 
 ## Startup and shutdown plan after approval
+
+This is the unchanged customer Store/publication path, excluded from the terminal demo.
 
 1. Confirm intended volume/mount instance and directory/file identities for all explicit
    inputs and output parent; retain verified handles in one I/O context until shutdown.
@@ -100,7 +120,9 @@ Only read-only mount/mode observations exist. No product privacy probe, mount-ra
 durable-publication test has passed, and the worker restart test is not a substitute for T-09.
 The [B0a protocol](decisions/002-storage-protocol.md) makes the ABI, failure oracles and
 counterexamples explicit. Continuous identity/drift guarantees, late-error marker absence
-and a hard blocked-I/O deadline remain NO-GO; proposed requirement decisions are unaccepted.
+and a hard blocked-I/O deadline remain NO-GO; D1–D4 remain unadopted. Their proposed observed-
+drift/loss, recoverable-late-marker and decision-budget replacements do not govern this path.
+The noowners rejection and R5/R7/fatal-marker/deadline requirements remain blockers, not waived tests.
 
 ## Failure and recovery runbook
 
@@ -137,6 +159,7 @@ checking hashes and replaying a synthetic comparison; remote Git never protects 
 
 ## AI, deployment, and cost gates
 
+AI deferral beyond deterministic/pilot gates is adopted; later AI still needs its own approval.
 No AI runtime/model/weights, GPU fit, quantization, context length, or tool-use capability is
 confirmed. M5 investigates at most two local combinations with primary-source license/runtime
 documentation and the [AI evaluation gate](testing.md). Model/cache path redirection needs
