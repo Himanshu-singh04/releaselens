@@ -1,7 +1,7 @@
 ---
 title: "ReleaseLens deterministic comparison MVP"
 status: draft
-version: "0.3"
+version: "0.4"
 ---
 
 # Solution Design Document
@@ -10,8 +10,12 @@ Planning baseline merged in [PR #6](https://github.com/Himanshu-singh04/releasel
 The [B0 research](../../decisions/001-runtime.md) was conditionally accepted in PR #11;
 tested pins and M0 closure remain blocked. The [B0a storage protocol](../../decisions/002-storage-protocol.md)
 documentation was accepted in PR #13, including R1; its requirement proposals remain
-unaccepted, implementation remains NO-GO and no test target or E1 experiment is authorized.
-All product components, interfaces, directories, and targets below are proposed/nonexistent.
+unadopted; customer implementation remains NO-GO and no test target or E1 is authorized.
+The founder adopted N1–N4, conditional runtime direction, synthetic-terminal scope/sequence
+and AI deferral; [B0d](../../decisions/005-adopted-policy-reconciliation.md) records exact authority
+and this pending normative reconciliation. Enforcement is unverified. The synthetic exception
+does not itself authorize implementation or close M0/M1–M4; D1–D4 remain unadopted.
+Product components, callable interfaces, directories and runtime qualification remain nonexistent.
 Template headings are retained verbatim, including bracketed example headings.
 
 ## Validation Checklist
@@ -22,7 +26,7 @@ Template headings are retained verbatim, including bracketed example headings.
 - [x] No unresolved clarification placeholders in section bodies; decisions are explicit ADRs.
 - [x] Architecture pattern and proposed interfaces are described.
 - [ ] All architecture gates closed: B0 research accepted, but unresolved validation and requirement decisions remain.
-- [ ] Implementation readiness: blocked until owner decisions resolve these gates.
+- [ ] Implementation readiness: synthetic slices need the adopted scoped prerequisites and separate permission; customer gates remain blocked.
 
 ### QUALITY CHECKS (Should Pass)
 
@@ -40,7 +44,8 @@ CON-3 Current: repository contains foundation checks, not application code or ru
 CON-4 Current: source/docs and worker history/OpenAI OAuth are on the pendrive; Mac CPU/RAM
 executes processes. Coordinator history/App key remain on Mac; see [operations](../../operations.md).
 Worker provisioning does not establish product-private I/O: the observed pendrive is noowners.
-CON-5 Proposed: deterministic fixtures/imports first, one local process, no agent execution.
+CON-5 Adopted: bundled synthetic terminal demo first under the roadmap exception; no agent execution.
+Customer imports/publication remain gated; no customer/path input, Store or persistence in the demo.
 CON-6 Proposed/unmeasured: bounded data and offline reports within [contract](../../evidence-contract.md) limits.
 
 ## Implementation Context
@@ -61,6 +66,7 @@ CON-6 Proposed/unmeasured: bounded data and offline reports within [contract](..
 | [RFC 8785](https://www.rfc-editor.org/rfc/rfc8785) | HIGH | Canonical JSON hashing, duplicate-key/Unicode restrictions; informational specification. |
 | [RFC 6901](https://www.rfc-editor.org/rfc/rfc6901.txt) | HIGH | Exact JSON Pointer reference semantics and resolution errors. |
 | [B0 runtime recommendation and source register](../../decisions/001-runtime.md) | CRITICAL | #10 runtime comparison, exact version-specific sources retrieved 2026-11-19, observations, native API gaps and ADR disposition. |
+| [B0d authority and reconciliation](../../decisions/005-adopted-policy-reconciliation.md) | CRITICAL | #18; exact adopted B0c numeric/scope clauses, pending enforcement, unadopted D1–D4 and retained customer gates. |
 
 External sources constrain proposals, not prove local installation or compatibility. Recheck
 runtime support before pinning. No model-serving behavior is assumed without a later primary-source review.
@@ -83,9 +89,13 @@ GitHub, vendors, customer agents, model providers, or business systems. Future a
 ### Implementation Boundaries
 
 - Must preserve: foundation checks, human review, independent product, and zero-spend constraint.
-- Can modify for B0a/#12: storage protocol and minimal planning/status links; approval protocol remains coordinator-owned.
-- Must not touch now: runtime code, deployment, credentials, model downloads, or worker provisioning.
-- Future implementation starts only after explicit decisions close every current ADR gate.
+- Can modify for B0d/#18: normative Markdown for adopted numeric/synthetic scope and necessary status/navigation links.
+- Must not touch now: fixture definitions/encoding, source, experiments, installs, deployment, credentials or provisioning.
+- B1 source-only definitions may precede M0 after reviewed schema adoption, this reconciliation's merge and separate authorization.
+- Later separately authorized pure Contract/Evaluator/terminal-renderer slices need scoped runtime/JCS/new N2/N4 validation;
+  they may precede native storage/full packaging only for bundled reviewed synthetic inputs. No customer/path imports,
+  Store, persisted report or release package. M0/M1–M4 stay incomplete; all customer gates still apply.
+- No waiver of the 60-second deadline: terminal-I/O/scheduling enforcement remains unresolved; return conflicts before implementation permission.
 
 ### External Interfaces
 
@@ -99,12 +109,14 @@ graph LR
     Report --> Operator
 ```
 
+This diagram describes the later customer path. The synthetic lane instead selects bundled
+reviewed inputs, compares in memory and displays a terminal table, with no Files-path import or Store.
 Files and Report are local data, Operator is external; CLI maps to src/cli below.
 The support agent and business system export data outside this boundary; there is no execution arrow.
 
 #### Interface Specifications
 
-Proposed/nonexistent CLI grammar: `releaselens compare --suite FILE --baseline FILE
+Customer-path proposed/nonexistent CLI grammar: `releaselens compare --suite FILE --baseline FILE
 --candidate FILE --out NEW_DIRECTORY`. Exactly one value per required flag; unknown/repeated
 flags fail. No implicit discovery, configuration search, environment credentials, or network.
 Inputs are regular nonsymlink files; output must be a new directory under an explicitly
@@ -121,6 +133,13 @@ no raw evidence, argument values, paths, or OS exception text. Proposed exit cod
 0 candidate pass; 1 candidate fail; 2 usage/input/integrity error; 3 candidate unknown;
 4 I/O/resource/internal failure. Fatal error takes precedence; then fail, unknown, pass.
 N/A: HTTP endpoints, auth tokens, webhooks, billing, or database connections.
+
+Adopted synthetic interface scope: select the bundled example with fixed baseline/candidate;
+display eight reviewed rows (including missing/changed), both outcomes, delta, reason, citations
+and expected-suite coverage, escaping terminal control characters. No user-supplied paths or
+customer evidence. This is not the customer publication summary with output_path above.
+No executable demo command/grammar exists or is authorized here. Terminal display does not
+fulfill RL-008/011; immutable Report/marker shapes and the customer failure contract stay intact.
 
 ### Cross-Component Boundaries (if applicable)
 
@@ -145,15 +164,18 @@ is a design proposal, not a runnable instruction. Future commands must enter CON
 
 ## Solution Strategy
 
-Propose a modular CLI: explicit JSON imports, pure evaluator, immutable results and static
-offline renderer. [B0](../../decisions/001-runtime.md) conditionally recommends CPython
-3.14.10 with a JCS dependency candidate and a narrow Darwin native bridge; the earlier
+Retain a modular CLI for the customer path: explicit imports, pure evaluator, immutable results
+and static offline renderer. The synthetic lane exercises pure Contract/Evaluator and a terminal
+renderer before customer Store, under the explicit prerequisites above. The adopted conditional
+direction from [B0](../../decisions/001-runtime.md) is CPython 3.14.10 standard GIL with rfc8785
+0.1.4; the customer Store needs a narrow Darwin bridge. The earlier
 TypeScript/Node proposal remains a compared alternative. The native bridge stays in Store;
 no new service is proposed. Compatibility, storage guarantees and deadline enforcement
 remain blocked. This retains inspectable evidence at the cost of manual export preparation
 and narrow semantics; no hosting or inference is needed.
 No database is needed for bounded immutable comparisons; files simplify portability but
-make concurrent editing and large datasets deliberately unsupported. AI is a later optional layer.
+make concurrent editing and large datasets deliberately unsupported. AI deferral beyond
+deterministic/pilot gates is adopted; no AI runtime/model or implementation is authorized.
 
 ## Building Block View
 
@@ -174,6 +196,8 @@ graph LR
 CLI orchestrates only. Importer owns parsing/integrity; Evaluator owns alignment/assertions;
 Renderer owns safe presentation; Store owns publication; Contract owns types/version constants.
 No component invents evidence, and Renderer cannot re-evaluate or change a verdict.
+This is the customer dependency graph. The synthetic lane omits Importer/Store I/O and uses
+only bundled validated values through Contract/Evaluator and terminal presentation in Renderer.
 
 ### Directory Map
 
@@ -186,7 +210,7 @@ locations; Python package layout is not frozen while ADR-1/4 remain blocked:
 | Importer | src/import | Bounded reads, schema/reference/hash checks; RL-001, RL-002, RL-003. |
 | Contract | src/contract | Shapes and canonical identity helpers; RL-001, RL-003, RL-009. |
 | Evaluator | src/evaluate | Pure alignment, rule outcomes, aggregation; RL-004, RL-005, RL-006, RL-007, RL-009. |
-| Renderer | src/report | Self-contained escaped HTML and JSON; RL-008. |
+| Renderer | src/report | Customer HTML/JSON (RL-008); separately scoped inert terminal presentation for the demo. |
 | Store | src/storage | New generation, file digests, completion marker; RL-011. |
 
 fixtures/ would hold reviewed synthetic data; tests/ would cover the [test matrix](../../testing.md).
@@ -206,6 +230,7 @@ It is authoritative over illustrative prose; embedded suites and bundle artifact
 N/A for database changes. Proposed files: explicit reviewed suite, two immutable input bundles,
 and a new output generation with three files. Store does not copy inputs to a global cache.
 Report snapshots deliberately duplicate bounded imports for offline audit. No search index.
+The synthetic demo has no persisted report/generation; that scope does not change customer storage.
 
 #### Internal API Changes
 
@@ -224,6 +249,12 @@ emits status. IoContext is private process state, never imported JSON; CLI retai
 stages and releases handles on all exits. Contract's H helper has conformance tests planned.
 N/A: OpenAPI specification, internal HTTP endpoints, cross-process RPC.
 
+Those Store/Importer/Report interfaces remain customer-only. Future synthetic calls use bundled
+validated Suite/Bundles and the same pure Evaluator.compare Result semantics. Terminal rendering
+uses those values and namespace-qualified citations to display escaped inert text, without
+publishing Report bytes or invoking Store. It may not change verdicts. Exact callable packaging
+belongs to a later authorized slice; no new callable interface or implementation exists here.
+
 #### Application Data Models
 
 Suite defines reviewed expectations; Bundle preserves an export and suite snapshot; Run
@@ -233,7 +264,7 @@ Report adds timestamp, byte hashes, and snapshots. All fields are specified in t
 
 #### Integration Points
 
-CLI passes validated values between components in memory. Only Importer reads source files;
+In the customer path CLI passes validated values in memory. Only Importer reads source files;
 only Store writes output. Renderer consumes the computed Result, never source HTML templates.
 No external integration SDK selected. Export adapters and model runtimes remain gated later work.
 
@@ -268,6 +299,12 @@ of the evaluator, so snapshots cannot merely bless implementation output.
 
 #### Primary Flow: [Main User Action]
 
+Synthetic path: select bundled fixed baseline/candidate; validate against the adopted contract;
+compare in memory; display outcomes/deltas/reasons/citations/coverage with control characters
+escaped. No path import, Store, persistence, agent or model call. Subject/value evidence must
+bind to the same eligible record; request-only and missing negative observations stay unknown.
+Customer flow (separately gated):
+
 1. Engineer supplies reviewed suite and baseline/candidate exports with a new output location.
 2. CLI validates arguments; Store prepares pinned/private I/O; Importer bounds reads and validates inputs.
 3. Evaluator aligns each expected case and applies tri-state rules without side effects.
@@ -276,6 +313,10 @@ of the evaluator, so snapshots cannot merely bless implementation output.
 6. CLI emits completion and candidate status; lead reads report and makes their own decision.
 
 ### Error Handling
+
+The customer publication behaviors below remain unchanged; the demo cannot create a marker
+or claim publication success. Fatal errors do not become comparison passes, and the original
+resource/deadline obligation remains for both scopes. D3/D4 replacements are unadopted.
 
 | Class / code | Behavior and recovery |
 | --- | --- |
@@ -306,13 +347,16 @@ is deferred; show unknown and defined assertion evidence-gap reason counts witho
 
 ### Single Application Deployment
 
-Proposed local CLI execution on the observed arm64 Mac with a separately authorized external
+Customer-path local CLI execution would use the observed arm64 Mac with a separately authorized external
 owner-enabled APFS target; none is currently authorized/provisioned. Internal Mac storage is
 not selected. Other platforms require separate proof. [B0](../../decisions/001-runtime.md) recommends CPython
 3.14.10 and candidate rfc8785 0.1.4 for validation, not tested pins. Native bridge/build and
 installer versions remain gated; the currently noowners pendrive is not a valid product target.
 No required secrets/environment service. Explicit paths keep evidence and outputs local.
 No package publication, installer, signed binary, server, or deployment currently exists.
+Conditional target is standard-GIL CPython 3.14.10/rfc8785 0.1.4, uninstalled/unqualified as
+a product stack; local 3.13.4/CI 3.14.4 do not qualify it. Public synthetic source can remain
+on the checkout under the adopted exception, without authorizing customer I/O on noowners.
 
 ### Multi-Component Coordination (if applicable)
 
@@ -329,6 +373,11 @@ Proposed: [contract](../../evidence-contract.md), CRITICAL, immutable provenance
 [testing](../../testing.md), HIGH, independent expected outcomes and deterministic replay.
 
 ### User Interface & UX (if applicable)
+
+Synthetic terminal: fixed example, eight reviewed rows, both outcomes/deltas/reasons/citations/
+coverage; escape control characters. Future acceptance requires ten identical Result hashes
+and independent explanation of regression/coverage loss without author interpretation.
+Record failed explanations; no usability/demand claim follows from adoption.
 
 Offline report order: candidate status and scope, failures/unknowns, evaluated coverage and
 evidence-gap counts, changed sources,
@@ -352,7 +401,7 @@ fatal errors exit without a complete marker. Static HTML needs no client-side st
 ### System-Wide Patterns
 
 Data-only parsing, escaped rendering, no embedded executable HTML/JS, no remote resources,
-no credential lookup, and no telemetry. Verified owner-private filesystem access is required;
+no credential lookup, and no telemetry. Customer I/O requires verified owner-private access;
 it is not encryption or protection from privileged/same-account access.
 Log only counts, IDs, versions, reason codes, and durations; even IDs can be sensitive.
 English UI initially; preserve original Unicode evidence without localization transformations.
@@ -367,36 +416,41 @@ In-process immutable values and bundle/result hashes correlate stages. No global
 
 B0 research/direction was accepted in PR #11; the entries below track remaining architecture
 gates, not a request to reapprove that research. The [B0a protocol](../../decisions/002-storage-protocol.md)
-records proposed requirement decisions D1–D4 and untested storage obligations. Runtime work
-cannot begin under open gates, and the AI deferral does not authorize AI implementation.
+records unadopted D1–D4 and untested storage obligations. B0d records the later numeric and
+synthetic-only decisions; no whole-ADR/product-readiness approval follows. Pure work has the
+scoped exception/prerequisites above; customer runtime/storage work retains full gates.
+The original hard deadline remains unverified, including blocked terminal I/O; do not infer D4.
 
-- [ ] ADR-1 Runtime/package: **conditionally recommend** CPython 3.14.10 modular CLI per
-  [B0](../../decisions/001-runtime.md); **blocked** on JCS/native-storage/build validation.
+- [ ] ADR-1 Runtime/package: **conditional direction adopted**, CPython 3.14.10 standard GIL /
+  rfc8785 0.1.4 per [B0](../../decisions/001-runtime.md); **unqualified** pending scoped JCS/new N2/N4
+  validation, plus native-storage/build qualification for the customer package.
   Python reduces tooling and exposes dir_fd operations; Node 26.13.1 has easier ECMAScript
-  serialization but a larger native I/O gap. User confirmed: **Pending**.
+  serialization but a larger native I/O gap. Direction confirmed; tested pins/installation authority **not granted**.
 - [ ] ADR-2 Storage/identity: propose JSON snapshots, RFC 8785 + SHA-256, explicit references,
   immutable reports instead of SQLite. Easy inspection/offline portability; larger duplicated
-  files and bounded scale. **Recommended**, with parser/JCS conformance and numeric-token
-  edge handling **blocked** pending validation; no relaxed JSON. User confirmed: **Pending**.
+  files and bounded scale. N1–N4 **adopted**, including replacement N2 normalization; parser/JCS
+  conformance/new N2/N4 validation remain **blocked**. Other storage/identity gates remain open;
+  the numeric decision is not approval of D1–D4 or full ADR closure.
 - [ ] ADR-3 Evaluation/authority: propose exact tri-state rules, pinned business sources,
   reviewed-suite denominator, no live execution. Avoids false certainty; manual exports and
   exporter authenticity remain user responsibilities. **Recommended**, no semantics change.
-  User confirmed: **Pending**.
+  Synthetic semantic scope confirmed; customer readiness/complete ADR closure remain pending.
 - [ ] ADR-4 Packaging/resources: propose local package, static HTML/JSON, contract bounds,
   60-second deadline and no hosted service. Low operating cost; slower onboarding and no
   shared dashboard. **Blocked**: B0's noowners mount observation and unproven native bridge,
   effective-access, mount-race/publication and deadline guarantees prevent readiness.
-  Unsupported volumes fail closed; T-09 remains required. User confirmed: **Pending**.
-- [ ] ADR-5 AI/agent boundary: propose defer until deterministic pilot evidence. Later compare
+  Unsupported volumes fail closed; T-09 remains required. Terminal-only scope/sequence confirmed;
+  customer packaging/resources and hard-deadline enforcement remain unresolved.
+- [x] ADR-5 AI/agent boundary: **deferral adopted** beyond deterministic/pilot gates. Later compare
   local runtime/model candidates or existing customer-owned inference at zero incremental
   founder cost; no model/runtime, license, quantization, context window, or capability selected.
-  **Deferred** beyond deterministic/pilot gates; this is the recommended MVP disposition.
+  Only the MVP deferral is resolved; later investigation/implementation retains its separate gate.
   Grounded explanations may help triage but add nondeterminism and evaluation work. No agent
-  business authority; any expansion requires a new approved ADR. User confirmed: **Pending**.
+  business authority; any expansion requires a new approved ADR. User confirmed: **deferral only**.
 
 ## Quality Requirements
 
-All targets proposed and unmeasured. Q1: identical Result hashes across 10 identical runs
+Adopted demo criteria and retained customer targets are unmeasured. Q1: identical Result hashes across 10 identical runs
 (T-06). Q2: no missing-evidence pass in reviewed negative corpus (T-03/04/05). Q3: 100-case,
 10-assertion/case, <=10 MiB total input comparison <=10 seconds and <=512 MiB peak RSS in
 10 trials on the observed Mac (T-08); record cold/warm disk conditions, not just averages.
@@ -407,6 +461,9 @@ pilot sessions (T-10). Q7: costs $0 new hosting/inference (T-12); no paid CI exp
 
 ## Acceptance Criteria
 
+- [ ] Synthetic demo only: eight reviewed bundled rows including missing/changed, fixed baseline/
+  candidate, escaped terminal outcomes/deltas/reasons/citations/coverage; ten identical Result hashes
+  and independent explanation of regression/coverage loss. Full customer criteria below remain open.
 - [ ] WHEN a reviewed suite is supplied, THE SYSTEM SHALL validate identity, sources, hashes,
   and reference integrity before evaluating (RL-001, RL-002, RL-003; T-01/02).
 - [ ] IF evidence is insufficient, THEN THE SYSTEM SHALL preserve unknown and distinguish
@@ -441,6 +498,9 @@ Revisit only with measured pilot friction; avoid premature SDK/vendor abstractio
 
 Reject duplicate JSON keys before ordinary parsing loses them. Null evidence differs from a
 reference to a null JSON value. Case hashes bind referenced source metadata, not only text.
+Apply N1/N3 rejection then replacement N2 normalization before numeric type checks, hashing or
+Scalar equality across expected/actual, subjects and integer fields; true is not 1. N4 counts
+raw token bytes and decoded artifact-array totals separately. B0b's lexical N2 tests are historical.
 Filesystem rename/flush behavior on the mounted volume needs verification; a marker is not
 a backup. Redaction changes hashes. Sorting report rows must not reorder source event arrays.
 

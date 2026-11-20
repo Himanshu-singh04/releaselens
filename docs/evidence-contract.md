@@ -206,6 +206,15 @@ field; their sum is only a subset of assertion unknown, excluding run/alignment 
 
 ## Proposed report shape and persistence
 
+The adopted synthetic-terminal demo uses the same Suite/Bundle/Result semantics and
+namespace-qualified citations for bundled reviewed inputs. It accepts no customer/path
+imports and invokes no Store, persisted Report or release package. It displays outcomes,
+deltas, reasons, citations and coverage with terminal control characters escaped; it does
+not satisfy RL-008/011 publication. The Report shape and persistence obligations below
+remain the customer-product contract. No field or schema-version literal changes for the demo.
+The [roadmap exception](roadmap.md#ordered-milestones) changes sequencing only within that scope;
+the bounds and original 60-second deadline below still apply. Enforcement is unverified.
+
 | Shape | Exact fields |
 | --- | --- |
 | `Outcome` | `{assertion_id:ID, status:"pass"|"fail"|"unknown", reason:string, citations:Citation[]}` |

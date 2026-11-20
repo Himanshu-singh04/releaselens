@@ -4,6 +4,9 @@ Status: planning baseline merged in [PR #6](https://github.com/Himanshu-singh04/
 for [issue #5](https://github.com/Himanshu-singh04/releaselens/issues/5). [B0 research](decisions/001-runtime.md)
 was conditionally accepted in [PR #11](https://github.com/Himanshu-singh04/releaselens/pull/11);
 technical validation gates remain open and M0 is incomplete.
+The founder adopted exact N1–N4 and synthetic-terminal scope/sequence/AI deferral on 2026-11-20.
+[B0d](decisions/005-adopted-policy-reconciliation.md) records authority and this pending normative
+reconciliation; D1–D4 remain unadopted. Adoption is not tested enforcement or task authorization.
 Requirements describe intended behavior, not delivered functionality. No product runtime or tests exist.
 See [solution design](specs/001-mvp/solution-design.md), [contract](evidence-contract.md),
 [roadmap](roadmap.md), [testing](testing.md), and [operations](operations.md).
@@ -26,17 +29,38 @@ ReleaseLens is independent of the other portfolio products and has its own relea
 Already agreed: local-first operation, independent product, no new initial founder hosting
 or inference expenditure, imported evidence treated as untrusted data, missing evidence
 never promoted to pass, and separation of tool request, completion, and verified effect.
-Proposed: a deterministic, file-based comparison CLI and offline HTML/JSON report before AI.
-Language, runtime version, storage format, model/runtime, packaging, and thresholds await
-the SDD ADR decisions. No implementation may start while those gates remain unresolved.
+The customer product remains a deterministic file-based comparison CLI with offline HTML/JSON.
+The adopted first-demo scope is narrower: bundled synthetic inputs and a terminal display.
+CPython 3.14.10 standard GIL / rfc8785 0.1.4 is the conditional direction, uninstalled/unqualified
+as a product stack; local 3.13.4 and CI 3.14.4 do not qualify it. AI is deferred beyond
+deterministic/pilot gates. Other runtime/build/storage/packaging and enforcement gates remain.
+Only the [explicit sequence exception](roadmap.md#ordered-milestones) permits pre-M0 work:
+source-only definitions after reviewed schema adoption, then separately authorized pure work
+after scoped runtime/JCS validation. It grants no implementation permission by itself.
 
-The first release consumes reviewed synthetic fixtures, then operator-prepared baseline
+The later customer release consumes reviewed synthetic fixtures, then operator-prepared baseline
 and candidate exports. It does not call the agent under test. Export preparation is an
 explicit pilot cost; vendor adapters and live execution are deferred until demand is known.
 No hosted accounts, authentication service, billing, dashboard, production monitoring,
 autonomous release gate, customer tool execution, or shared portfolio backend is in MVP.
 
 ## Narrow workflow and acceptance scenarios
+
+Adopted first-demo journey: select the bundled refund-policy example, compare fixed baseline/
+candidate, and read a terminal table of both outcomes, delta, reason, citations and coverage.
+Accept no user-supplied paths/customer evidence; escape terminal control characters. Keep all
+eight reviewed rows, including missing/changed cases. Ten identical comparisons must yield
+the same Result hash, and an independent reviewer must explain the regression and coverage
+loss without author interpretation. These are future acceptance criteria, not completed results.
+Preserve exact Scalars, pass/fail/unknown, request/completion/effect separation, same-record
+subject/value/source/time eligibility and missing-negative-observation rules. No agent executes.
+The demo tests understanding of evidence gaps; it establishes neither demand nor policy truth.
+No Store, persisted report or release package; arbitrary imports, durable recovery, HTML/JSON,
+installer/pilots, adapters, database/server, AI and live actions remain deferred. Public synthetic
+source may stay on the checkout, without qualifying it for customer evidence. The original
+60-second deadline remains; any unresolved enforcement conflict blocks that inference of readiness.
+
+The customer workflow remains separately gated:
 
 1. Engineer and support lead review a versioned suite of refund/escalation cases and rules.
 2. Engineer obtains exports outside ReleaseLens for the unchanged baseline and changed agent.
@@ -60,7 +84,8 @@ means only that these assertions passed against these imports, not that the agen
 ## Requirements
 
 IDs are stable; changing meaning requires a reviewed PR and contract/test impact review.
-All rows are proposed acceptance obligations. Phase labels do not imply implementation.
+Rows retain the customer-product acceptance obligations. Adopted numeric rules apply throughout;
+the terminal demo does not fulfill RL-008/011 publication. Phase labels imply no implementation.
 
 | ID | Requirement and observable acceptance | Phase |
 | --- | --- | --- |
