@@ -25,6 +25,14 @@ jobs:
         run: |
           python3 scripts/check_repository.py
           python3 -m unittest discover -s scripts -p 'test_*.py'
+      - name: Bounded B0b research vectors (runner Python, not target qualification)
+        run: |
+          mkdir -p "$RUNNER_TEMP/b0b-wheel"
+          curl --fail --silent --show-error --proto '=https' --max-time 60 \
+            https://files.pythonhosted.org/packages/4d/78/119878110660b2ad709888c8a1614fce7e2fab39080ab960656dc8605bf6/rfc8785-0.1.4-py3-none-any.whl \
+            --output "$RUNNER_TEMP/b0b-wheel/rfc8785-0.1.4-py3-none-any.whl"
+          python3 -I -B research/b0b/offline.py \
+            "$RUNNER_TEMP/b0b-wheel/rfc8785-0.1.4-py3-none-any.whl" "$RUNNER_TEMP/b0b-run"
       - name: Validate workflow syntax
         env:
           ACTIONLINT_SHA256: 8aca8db96f1b94770f1b0d72b6dddcb1ebb8123cb3712530b08cc387b349a3d8

@@ -1,7 +1,8 @@
 # Testing and evaluation plan
 
-Status: proposed tests and targets; no product code, fixtures, benchmark, or model exists.
-Only foundation checks currently run. Requirements: [PRD](product.md); expected semantics:
+Status: proposed product tests and targets; no product code, benchmark, or model exists.
+Foundation and [B0b research checks](decisions/003-json-conformance.md) run; the latter
+are finite parser/JCS controls, not product tests or runtime qualification. Requirements: [PRD](product.md); expected semantics:
 [evidence contract](evidence-contract.md); component boundaries: [SDD](specs/001-mvp/solution-design.md).
 
 ## Existing checks

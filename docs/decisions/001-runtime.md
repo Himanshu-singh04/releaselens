@@ -2,10 +2,13 @@
 
 Current status: **B0 research accepted; implementation NO-GO.** [PR #11 merge verification](https://github.com/Himanshu-singh04/releaselens/pull/11#issuecomment-7000315548)
 records conditional acceptance at main `1bfa0576aabfbb17a9a625a513a1d7dea6079eb3`.
-This accepts the investigation/direction, not tested pins, M0 completion or runtime/storage
-changes. The recommendation, pending-gate wording and observations below retain their B0
-review-time context; [issue #12](https://github.com/Himanshu-singh04/releaselens/issues/12)
-now assigns the separately authorized [B0a documentation protocol](002-storage-protocol.md).
+This accepts the investigation/direction, not tested product pins, M0 completion or
+runtime/storage changes. Historical observations and pending-gate wording below retain
+their B0 review-time context. [B0a documentation](002-storage-protocol.md), including the
+R1 interruption-layer correction, was accepted in [PR #13](https://github.com/Himanshu-singh04/releaselens/pull/13)
+at main `f9b47649ea75b53daf2beff480e60ad8a1ca39a7`; D1–D4 remain unaccepted and E1
+remains unauthorized. Separately authorized [B0b research](003-json-conformance.md)
+tests finite JSON/JCS vectors on installed Python, not the proposed target runtime.
 Date: 2026-11-19. Author: GPT-6 Astra (`gpt-6-astra`), OpenCode, persistent ReleaseLens worker.
 
 ## Question, scope, and recommendation

@@ -9,7 +9,8 @@ version: "0.3"
 Planning baseline merged in [PR #6](https://github.com/Himanshu-singh04/releaselens/pull/6).
 The [B0 research](../../decisions/001-runtime.md) was conditionally accepted in PR #11;
 tested pins and M0 closure remain blocked. The [B0a storage protocol](../../decisions/002-storage-protocol.md)
-is proposed for separate review, with explicit no-go guarantees and no authorized test target.
+documentation was accepted in PR #13, including R1; its requirement proposals remain
+unaccepted, implementation remains NO-GO and no test target or E1 experiment is authorized.
 All product components, interfaces, directories, and targets below are proposed/nonexistent.
 Template headings are retained verbatim, including bracketed example headings.
 
@@ -28,7 +29,7 @@ Template headings are retained verbatim, including bracketed example headings.
 - [x] Context sources, actual foundation commands, boundaries, and requirement mapping documented.
 - [x] Components, data lifecycle, errors, and measurable proposed targets specified.
 - [x] B0 research review/approval recorded in PR #11 merge verification; not implementation readiness.
-- [ ] B0a protocol independently reviewed and exact-revision founder decision recorded.
+- [x] B0a documentation reviewed and approved in PR #13; D1–D4 and E1 remain unaccepted/unauthorized.
 - [ ] Runtime/SDK compatibility, resource measurements, and product validation not performed.
 
 ## Constraints
