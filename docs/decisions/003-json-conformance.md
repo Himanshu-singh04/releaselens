@@ -4,6 +4,12 @@ Status: **105/105 finite controls pass; candidate GO for continued evaluation on
 tested CPython 3.13.4 only; product implementation NO-GO.** Date: 2026-11-19.
 GPT-6 Astra (`gpt-6-astra`) / OpenCode, registered ReleaseLens worker; no subagents.
 
+Acceptance update: [PR #15](https://github.com/Himanshu-singh04/releaselens/pull/15) merged
+at `b271ec1f19f3f4a67ef9dd2279af129334c322b1`; [main CI](https://github.com/Himanshu-singh04/releaselens/actions/runs/44673491213)
+passed. This accepts finite research, not N1–N4, runtime qualification or implementation.
+The integration/review-state wording below is historical. [B0c](004-mvp-decision.md)
+collects proposed decisions; D1–D4 and E1 remain unaccepted/unauthorized respectively.
+
 ## Scope and independent expectations
 
 [Issue #14](https://github.com/Himanshu-singh04/releaselens/issues/14) preserves A1–A6.
