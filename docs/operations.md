@@ -8,8 +8,8 @@ approval; [roadmap](roadmap.md) gates implementation; [testing](testing.md) defi
 ## Adopted synthetic-terminal boundary
 
 [B0d](decisions/005-adopted-policy-reconciliation.md) records adoption of N1–N4 and synthetic
-scope/sequence/AI deferral, with this normative reconciliation pending review/merge. Future
-source-only definitions may precede M0 after reviewed schema adoption and separate permission;
+scope/sequence/AI deferral; normative reconciliation merged in [PR #19](https://github.com/Himanshu-singh04/releaselens/pull/19).
+[B1 source-only definitions](fixtures/mvp-cases.md) have separate permission to precede M0;
 pure Contract/Evaluator/terminal-renderer slices additionally need scoped runtime/JCS validation.
 Use only bundled reviewed synthetic inputs and a fixed baseline/candidate, displaying outcomes,
 deltas, reasons, citations and coverage with terminal control characters escaped. No customer/path

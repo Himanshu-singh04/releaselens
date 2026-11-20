@@ -5,8 +5,9 @@ for [issue #5](https://github.com/Himanshu-singh04/releaselens/issues/5). [B0 re
 was conditionally accepted in [PR #11](https://github.com/Himanshu-singh04/releaselens/pull/11);
 technical validation gates remain open and M0 is incomplete.
 The founder adopted exact N1–N4 and synthetic-terminal scope/sequence/AI deferral on 2026-11-20.
-[B0d](decisions/005-adopted-policy-reconciliation.md) records authority and this pending normative
-reconciliation; D1–D4 remain unadopted. Adoption is not tested enforcement or task authorization.
+[B0d](decisions/005-adopted-policy-reconciliation.md) records authority; normative reconciliation
+merged in [PR #19](https://github.com/Himanshu-singh04/releaselens/pull/19). D1–D4 remain unadopted.
+Adoption is not tested enforcement or task authorization; [B1](fixtures/mvp-cases.md) has separate source-only permission.
 Requirements describe intended behavior, not delivered functionality. No product runtime or tests exist.
 See [solution design](specs/001-mvp/solution-design.md), [contract](evidence-contract.md),
 [roadmap](roadmap.md), [testing](testing.md), and [operations](operations.md).

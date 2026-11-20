@@ -5,7 +5,7 @@ Foundation and [B0b research checks](decisions/003-json-conformance.md) run; the
 are finite parser/JCS controls, not product tests or runtime qualification. Requirements: [PRD](product.md); expected semantics:
 [evidence contract](evidence-contract.md); component boundaries: [SDD](specs/001-mvp/solution-design.md).
 The founder adopted N1–N4 and synthetic-terminal scope/sequence/AI deferral; [B0d](decisions/005-adopted-policy-reconciliation.md)
-records the decisions and pending normative reconciliation. All new oracles below remain
+records the decisions; normative reconciliation merged in [PR #19](https://github.com/Himanshu-singh04/releaselens/pull/19). All new oracles below remain
 unperformed. B0b's 105 historical controls, including lexical N2, do not validate replacement
 N2 normalization/reparse or expanded N4 artifact accounting. Foundation policy tests do not either.
 
@@ -89,8 +89,9 @@ to that later product; R5/R7 and fatal-marker oracles are not weakened by this d
 
 ## Fixtures and review discipline
 
-After this reconciliation merges, B1 source-only specifications require separate authorization;
-no fixture specifications or encoding exist from this task. Follow the adopted
+After merged #19, [issue #20](https://github.com/Himanshu-singh04/releaselens/issues/20) separately
+authorized B1 [eight source cases](fixtures/mvp-cases.md) and [expectations](fixtures/mvp-expectations.md),
+now awaiting independent review. Executable schema/encoding remains absent. Follow the adopted
 [sequence exception](roadmap.md#ordered-milestones), with M0/M1–M4 still incomplete.
 Start with eight synthetic order-support cases in B1; later expand negative cases, not only
 happy-path volume. Include a false “refund completed” answer with no business effect, an

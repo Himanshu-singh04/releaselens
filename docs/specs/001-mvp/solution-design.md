@@ -13,7 +13,7 @@ documentation was accepted in PR #13, including R1; its requirement proposals re
 unadopted; customer implementation remains NO-GO and no test target or E1 is authorized.
 The founder adopted N1–N4, conditional runtime direction, synthetic-terminal scope/sequence
 and AI deferral; [B0d](../../decisions/005-adopted-policy-reconciliation.md) records exact authority
-and this pending normative reconciliation. Enforcement is unverified. The synthetic exception
+and normative reconciliation merged in [PR #19](https://github.com/Himanshu-singh04/releaselens/pull/19). Enforcement is unverified. The synthetic exception
 does not itself authorize implementation or close M0/M1–M4; D1–D4 remain unadopted.
 Product components, callable interfaces, directories and runtime qualification remain nonexistent.
 Template headings are retained verbatim, including bracketed example headings.
@@ -89,9 +89,9 @@ GitHub, vendors, customer agents, model providers, or business systems. Future a
 ### Implementation Boundaries
 
 - Must preserve: foundation checks, human review, independent product, and zero-spend constraint.
-- Can modify for B0d/#18: normative Markdown for adopted numeric/synthetic scope and necessary status/navigation links.
-- Must not touch now: fixture definitions/encoding, source, experiments, installs, deployment, credentials or provisioning.
-- B1 source-only definitions may precede M0 after reviewed schema adoption, this reconciliation's merge and separate authorization.
+- Can modify for B1/#20: eight source-only case/expectation definitions and minimal documentation status/navigation links.
+- Must not touch now: fixture encoding, source, experiments, installs, deployment, credentials or provisioning.
+- [B1 source-only definitions](../../fixtures/mvp-cases.md) have separate authorization after merged #19; independent review remains pending.
 - Later separately authorized pure Contract/Evaluator/terminal-renderer slices need scoped runtime/JCS/new N2/N4 validation;
   they may precede native storage/full packaging only for bundled reviewed synthetic inputs. No customer/path imports,
   Store, persisted report or release package. M0/M1–M4 stay incomplete; all customer gates still apply.
