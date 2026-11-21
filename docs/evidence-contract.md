@@ -2,7 +2,7 @@
 
 Interface specification, not a shipped schema; remaining ADR-2/ADR-3 gates stay open.
 N1–N4 and the synthetic-only scope are adopted; [B0d](decisions/005-adopted-policy-reconciliation.md)
-records authority and this pending normative reconciliation. Enforcement remains unverified.
+records authority; normative reconciliation merged in [PR #19](https://github.com/Himanshu-singh04/releaselens/pull/19). Enforcement remains unverified.
 All shapes below are documentation notation, not executable TypeScript or JSON Schema.
 The [PRD](product.md) defines scope; the [SDD](specs/001-mvp/solution-design.md) defines components.
 

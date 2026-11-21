@@ -14,8 +14,10 @@ Repository foundation checks exist. The planning set merged in [PR #6](https://g
 
 The accepted [B0c packet](docs/decisions/004-mvp-decision.md) is historical. The founder later
 adopted exact N1–N4 and a synthetic-terminal scope/sequence exception with AI deferred;
-[B0d](docs/decisions/005-adopted-policy-reconciliation.md) records those decisions and this
-pending normative reconciliation. Enforcement and runtime qualification remain unverified.
+[B0d](docs/decisions/005-adopted-policy-reconciliation.md) records those decisions; normative
+reconciliation merged in [PR #19](https://github.com/Himanshu-singh04/releaselens/pull/19).
+B1 source-only definitions are separately authorized in [issue #20](https://github.com/Himanshu-singh04/releaselens/issues/20)
+and await independent review. Enforcement and runtime qualification remain unverified.
 Only separately authorized synthetic work can use the exception; customer implementation stays
 blocked. D1–D4 remain unadopted, noowners storage ineligible, and M0/M1–M4 incomplete.
 
@@ -24,6 +26,7 @@ blocked. D1–D4 remain unadopted, noowners storage ineligible, and M0/M1–M4 i
 - [Product requirements](docs/product.md): user workflow, stable requirement IDs, scope, and demand/pricing hypotheses.
 - [MVP solution design](docs/specs/001-mvp/solution-design.md): proposed architecture, interfaces, pending ADRs, and acceptance mapping.
 - [Evidence contract](docs/evidence-contract.md): provenance, reference integrity, tri-state results, and comparison coverage.
+- [Eight synthetic source cases](docs/fixtures/mvp-cases.md) and [expectations](docs/fixtures/mvp-expectations.md): B1 paper specifications, without encoded fixtures or executed product tests.
 - [Roadmap](docs/roadmap.md): ordered milestones and bounded proposed tasks.
 - [Testing and evaluation](docs/testing.md): planned product checks, AI gates, and unmeasured targets.
 - [Local operations](docs/operations.md): actual storage placement, proposed packaging, recovery, and cost constraints.

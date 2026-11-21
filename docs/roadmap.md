@@ -7,8 +7,9 @@ provisioning is verified in [issue #9](https://github.com/Himanshu-singh04/relea
 B0 research merged in [PR #11](https://github.com/Himanshu-singh04/releaselens/pull/11),
 conditionally accepting the direction with validation gates still open.
 The founder subsequently adopted N1–N4 and the synthetic-terminal exception below;
-[B0d](decisions/005-adopted-policy-reconciliation.md) records exact authority and this pending
-reconciliation. D1–D4 remain unadopted; the B0c packet's recommendation bundle was not adopted.
+[B0d](decisions/005-adopted-policy-reconciliation.md) records exact authority; reconciliation
+merged in [PR #19](https://github.com/Himanshu-singh04/releaselens/pull/19).
+D1–D4 remain unadopted; the B0c packet's recommendation bundle was not adopted.
 None completes M0 or delivers a product milestone. Dependencies are gates, not calendar promises. Scope is in the
 [PRD](product.md), contracts in the [SDD](specs/001-mvp/solution-design.md), tests in
 [testing](testing.md), and local execution/recovery in [operations](operations.md).
@@ -21,9 +22,10 @@ slices may precede native storage and full packaging qualification.
 Accept only bundled reviewed synthetic inputs; no customer/path import, Store,
 persisted report or release package. M0/M1–M4 remain incomplete.”
 
-This changes task ordering, not the customer milestone exits below. This reconciliation
-must merge before the coordinator separately requests the eight-case fixture-specification
-slice; no fixture task or implementation is authorized now. Later pure work needs scoped
+This changes task ordering, not the customer milestone exits below. After merged #19, the
+founder separately authorized [B1 source-only specifications](fixtures/mvp-cases.md) in
+[issue #20](https://github.com/Himanshu-singh04/releaselens/issues/20); independent review is pending.
+Encoding and implementation remain unauthorized. Later pure work needs scoped
 runtime/JCS/replacement N2/expanded N4 validation and its own bounded implementation permission.
 The original 60-second deadline remains for the demo; unverified terminal-I/O/scheduling
 completion is a blocker to claiming readiness, not adoption of D4. AI deferral is adopted.
@@ -44,7 +46,7 @@ An owner may reject or change proposals; update dependent docs and obtain fresh 
 
 ## Issue-ready task slices
 
-B0–B0d below have linked issues; B1–B9 remain proposed tasks, not created/authorized issues.
+B0–B1 below have linked issues; B2–B9 remain proposed tasks, not created/authorized issues.
 Every implementation PR
 must carry a bounded scope, requirement IDs, expected test outcomes, and review evidence.
 
@@ -54,8 +56,8 @@ must carry a bounded scope, requirement IDs, expected test outcomes, and review 
 | B0a: storage capability protocol | #12 closed by merged PR #13; accepted documentation | [Protocol](decisions/002-storage-protocol.md), including R1 interruption-layer correction: minimal Darwin ABI, proposed target eligibility (none authorized/provisioned), finite R5/R7/durability/deadline matrix and explicit NO-GO guarantees. D1–D4 unaccepted; E1 unauthorized. No helper code, installs or mount changes. |
 | B0b: finite JSON/JCS research | #14 closed by PR #15; accepted research | [Historical controls](decisions/003-json-conformance.md); lexical N2 is not current policy or validation of replacement N2/N4. |
 | B0c: decision packet | #16 closed by PR #17; accepted documentation | [Packet](decisions/004-mvp-decision.md); subsequent separate numeric/scope adoption recorded in B0d. D1–D4 unadopted. |
-| B0d: adopted-policy reconciliation | #18; current documentation-only task | [Authority/trace](decisions/005-adopted-policy-reconciliation.md); review and exact-revision approval before merge. No fixture specs/code. |
-| B1: fixture vocabulary | Source-only definitions may precede M0 after reviewed schema adoption, reconciliation merge and separate authorization; 8 cases, <=3 assertions each | Include eligible refund, ineligible refund, escalation, missing observation, failed completion, stale effect, removed case, changed policy. Lead reviews expectations independently; no customer data. Encoding/executable work needs its own scope/gates. |
+| B0d: adopted-policy reconciliation | #18 closed by merged PR #19; accepted documentation | [Authority/trace](decisions/005-adopted-policy-reconciliation.md); historical review-time wording retained. Enforcement remains unverified. |
+| B1: fixture vocabulary | #20; separately authorized source-only task after merged #19; 8 cases, <=3 assertions each | [Definitions](fixtures/mvp-cases.md) and [expectations](fixtures/mvp-expectations.md) await independent review. Eligible/ineligible refund, escalation, missing observation, failed completion, stale effect, removed case, changed policy. No customer data; encoding/executable work needs its own scope/gates. |
 | B2: import/identity boundary | Customer path: M0 and B1; Suite/Bundle only | Implement schema/hash validation with malformed, duplicate, dangling-ref and source-version tests T-01/02. Only pure Contract work can use the pre-M0 exception; no customer/path import there. |
 | B3: value and effect rules | Customer: M0 and B2. Synthetic: reviewed B1 definitions and validated pure Contract subset under the exception | T-03/04 verify exact tri-state semantics, time/source eligibility, and negative assertions. No fuzzy semantic judge. |
 | B4: alignment and deltas | B3; same lane-specific gates; one attempt/case/bundle | T-05/06 verify expected-set denominators, changed hashes, all nine outcome pairs, extra/missing rows, and reproducible result hash. |
