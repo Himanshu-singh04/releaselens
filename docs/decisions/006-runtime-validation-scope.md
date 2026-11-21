@@ -5,7 +5,7 @@ Status: author draft; future permission proposal, not acquisition authority or t
 [Issue #22](https://github.com/Himanshu-singh04/releaselens/issues/22) fixes A1–A6.
 Approved base: `541a8d3b14349a92068e320e6e3f4f58a7b26a94`, merged B1 PR #21.
 Successful start: 2026-11-21 07:36:17 UTC; stop no later than 09:36:17 UTC.
-This draft records five public documents; final limits/check evidence goes in the PR.
+Five public documents were retrieved; final limits/check evidence is recorded in the PR.
 
 ## Decision and authority
 
@@ -134,13 +134,16 @@ not deleting caches or expanding paths. Retain small logs; generate boundary inp
 1. Record exact authorization/revision and preflight target path absence, free space, OS/CPU,
    existing framework links/receipts and service interpreter bindings. No native storage probes.
 2. Download-only: fetch only the exact S1 pkg and S3 wheel over verified HTTPS to the cache.
-   Use existing curl with failure reporting, HTTPS-only redirects and no retry/insecure options.
-   Record final URLs, sizes and local SHA-256; reject mismatch, redirect to unapproved host,
-   missing file or changed upstream metadata. No package execution at this step.
-3. Inspect using existing `shasum -a 256`, `pkgutil --check-signature`, Gatekeeper assessment,
+   Recheck S1/S3 metadata; use existing curl with `--fail --proto '=https'`, without following
+   redirects or retry/insecure options. Require HTTP 200; any redirect stops before following.
+   Record URLs, sizes and local SHA-256; reject mismatch, missing file or changed metadata.
+   Network is limited to these python.org/PyPI/file-host requests; no package execution yet.
+3. Inspect using existing `shasum -a 256`, `pkgutil --check-signature`, `spctl --assess --type install`,
    `pkgutil --expand`, installer choice/payload/script listings and read-only wheel ZIP listing.
    Require trusted PSF signing identity, valid assessment, expected destinations and inert wheel
    contents; absent verification capability or unexpected scripts/dependencies stops installation.
+   Record actual signer chain/team identity; none is guessed here. Existing macOS trust assessment
+   may contact Apple services: include that OS-managed verification in future assent, not TLS bypass.
 4. Founder-admin alone performs the inspected customized installation through macOS Installer;
    worker does not request/store credentials or acquire broad sudo. Compare before/after inventory.
    Unexpected link/profile/service changes are failure, not an authorized automatic repair.
@@ -151,7 +154,8 @@ not deleting caches or expanding paths. Retain small logs; generate boundary inp
    ensurepip or configured bundled-wheel directory. No target pip/build-tool version is assumed.
    Permit only that bundled pip as bootstrap tooling; missing/ambiguous/incompatible wheel stops.
    Use its isolated invocation to install only the pinned local rfc8785 wheel into the new venv,
-   with `--no-index --no-deps --require-hashes --no-cache-dir`; no ensurepip network or upgrade.
+   with pip `--isolated` and `--no-index --no-deps --require-hashes --no-cache-dir`, using a
+   one-entry exact-version/hash requirements file and the local wheel directory; no index/upgrade.
    Record installer identity separately from runtime dependency; inventory must show only rfc8785.
 7. Run reviewed research checks offline through cache `venv/bin/python`, not host/default Python.
    Capture commands, exit codes, types/bytes/reasons, versions and evidence manifests, then stop.
@@ -168,10 +172,15 @@ retain receipts/logs for coordinator/founder disposition; do not promise automat
 
 Future research cap: one harness/manifest pair, at most 96 new named checks, plus unchanged
 105 B0b controls as a separately labelled historical regression group; no fuzzing/download corpus.
+The new harness includes the bootstrap adapter; legacy controls retain their own legacy adapter.
+Do not feed adopted N2 normalization into lexical-N2 controls and relabel discrepancies as passes.
 Independent coordinator reviews expectations/recipes before execution, with clause and source
 locators. Literal RFC bytes/bit-pattern expectations come from S5, never candidate self-output.
 Two executions maximum (initial plus identical confirmation); any mismatch stops qualification.
 At most two working sessions / four worker hours after prerequisite admin work; no automatic reruns.
+Limit generated raw test inputs to 25 MiB + 1 byte each; process one boundary recipe at a time.
+Use standard-library parent-process timeout handling at 30 seconds per check; timeout is failure, with elapsed
+time/termination recorded, not evidence for the product's harder 60-second completion obligation.
 Any provider/quota/transport error stops without retry, alternate provider/model or allowance bypass.
 
 | Group | Exact proposed oracle / retained evidence |
@@ -185,7 +194,7 @@ Any provider/quota/transport error stops without retry, alternate provider/model
 | N4 raw | At-bound and one-byte-over 5 MiB suite, 25 MiB bundle, 1 MiB artifact content-value token; include quotes, escapes, internal whitespace, multibyte UTF-8. Measure original token spans before decoding. |
 | N4 decoded | At-bound and one-byte-over 20 MiB independently for authoritative, baseline/candidate bundle and embedded suite artifact arrays; text UTF-8 versus JSON JCS bytes. Equal IDs never merge array budgets. |
 | N4 depth | Root object/array depth 1, primitive 0; 32 accepts, 33 rejects; braces/escaped quotes inside strings do not add depth. BOM rejects, never stripped before accounting. |
-| Diagnostics | Fixed reason and schema-known input location or null; no input values, hostile keys, paths, traceback or library exception text. Parse/type rejection and byte/depth limit rejection remain distinguishable. |
+| Diagnostics | Contract Diagnostic/Location and SDD error classes: fixed E_SCHEMA for parse/invalid required type, E_LIMIT for byte/depth bound. Known input location or null; no input values, hostile keys, paths, traceback or library exception text. No product exit-code claim. |
 
 Use adopted [numeric/boundary oracles](../testing.md#adopted-numeric-and-boundary-oracles-unperformed)
 and B1 paper annotations as independent policy references; do not edit B0b's lexical expectations.
@@ -196,6 +205,10 @@ N4 tests separately exercise byte-accounting components and containing-input lim
 component at 20 MiB does not mean an envelope violating another bound is valid. No false fit claim.
 Short accounting oracle: quoted literal é is 4 raw bytes, quoted backslash-u00e9 is 8; decoded
 text is 2, JSON-string JCS is 4. Outside-token whitespace counts only toward the input envelope.
+MiB is exactly 1048576 bytes. Include same decoded text with larger escaped/raw spelling and
+JSON internal whitespace: raw rejection must not be bypassed by re-encoding before measurement.
+Schema count limits (1000 cases/20 assertions/200 events/2000 artifacts) remain later Contract
+obligations; this accounting harness does not implement or qualify full schema/reference validation.
 Diagnostic observations use fixed synthetic canaries and compare captured output to a reviewed
 allowlist; research results are not a shipped CLI/Diagnostic implementation or T-* completion.
 
@@ -212,6 +225,9 @@ for these two hashes and named paths, including founder-admin customized Mac fra
 with reviewed expectations and the listed stop conditions; retain source/manifests/results for review.
 Inputs: this reviewed packet, merged contract/testing/B1, unchanged B0b controls and S1–S5.
 Output: one research PR plus outside-Git acquisition/install/validation record; no next-task dispatch.
+Retain dated source URLs, download/local hashes, signature output, choice/payload/script inventory,
+before/after system effects, license files, pip identity, expectation-review revision, harness SHA,
+per-check expected/actual/type/bytes/reason, timing, exit codes and every failure; binaries stay out of Git.
 Acceptance: verified bytes/signature/install boundary, exact target/bootstrap inventory, all
 independently reviewed checks pass twice, reproducible evidence, no historical/control changes.
 Any failed identity/check/limit, unexpected write/network/dependency, uncertain service impact,
