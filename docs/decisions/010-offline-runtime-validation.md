@@ -1,7 +1,93 @@
 # B1d: offline validation preparation
 
-Status: **preparation packet ready for independent review; target behavior unverified**.
-No acquired-runtime invocation, new experiment or local legacy experiment has occurred.
+Status: **released bootstrap failed; qualification stopped before either suite run**.
+
+## Second-session execution result (2026-11-22)
+
+[Preparation verification / B1d-P1 resolution](https://github.com/Himanshu-singh04/releaselens/pull/31#issuecomment-7078858636)
+and [controlling execution release](https://github.com/Himanshu-singh04/releaselens/pull/31#issuecomment-7078860431)
+authorized only reviewed execution revision **`6d758d11b164fcd22530e23003a57891dbe3b3b6`**.
+The coordinator-created release file matched the published six-file map, issue, head and URL;
+SHA-256 **`846051c31aa9824d6f912a46dbe3fe778dae37c1ee4bdff7a5251b18cd0a0ab1`**.
+It was not regenerated or edited. All six files stayed unchanged throughout execution.
+This subsequent update changes only this results note; executable/oracle/requirement files
+remain byte-identical to the execution revision. Old note-manifest entries are verified against
+that preserved Git blob, not rewritten to match this results revision.
+
+Second/final worker session started **12:06:14.931025 UTC**, with **1699.398429 seconds**
+previously charged and **12700.601571 seconds** remaining. Absolute worker deadline:
+**15:37:55.532596 UTC**; reporting/delivery also count. The reviewed runner began its separate
+7200-second sequence at **12:06:55.944251 UTC**, deadline **14:06:55.944251 UTC**. Neither clock
+was reset. STOP record was persisted at **12:07:00.608388 UTC** (filesystem timestamp).
+Final cumulative elapsed/remainder, including delivery, is retained in session2 evidence/PR.
+
+Preflight checked clean exact head, explicit existing host Python 3.13.4, all six packet hashes,
+release binding, empty task cache/absent execution output, and **121,047,654,400 bytes available**
+at both task roots. Prior manifests and **63 + 13 + 7 + 1,773 + 9 + 16 entries** verified;
+B1c tracked entries used exact #29 Git blobs, other entries direct disk before note editing.
+
+Only this released host command was invoked, once, from
+`/Volumes/AIWorkspace/projects/releaselens`:
+
+```text
+/Library/Frameworks/Python.framework/Versions/3.13/bin/python3 -I -B /Volumes/AIWorkspace/projects/releaselens/experiments/b1d/runner.py bootstrap 6d758d11b164fcd22530e23003a57891dbe3b3b6 /Volumes/AIWorkspace/projects/releaselens/artifacts/b1d/continuation/release.json
+```
+
+It exited **1**. Four runner-managed target children were invoked:
+
+| Prerequisite | Observed outcome | Elapsed seconds | Child exit |
+| --- | --- | ---: | ---: |
+| 1: base identity | Passed reviewed identity/import/origin/path checks; inventory pip 26.3 | 0.818475 | 0 |
+| 2: fresh copied venv, --without-pip | Command completed with empty stdout/stderr | 1.989367 | 0 |
+| 3: empty venv identity | Passed reviewed checks; distribution inventory empty | 0.435306 | 0 |
+| 4: local wheel tooling/install | Parent recorded **parent-FileNotFoundError**, sent SIGTERM and reaped child | 1.113622 | -15 |
+| 5: installed payload/origin/inventory | **Not reached** | — | — |
+
+Actual base and empty-venv identity records report **CPython 3.14.10**, build
+`3.14.10 (main, Nov 11 2026, 00:14:32) [Clang 23.1.3 ]`, **arm64, GIL=true, JIT=false**.
+Base prefix is the retained B1c private tree. Venv prefix is the new B1d private venv; its
+sys.path excludes base site-packages, retaining the private stdlib/lib-dynload and local venv
+site-packages. Needed modules resolved to built-in/frozen or retained-tree files. These
+observations support only those prerequisite assertions, not numeric/JCS qualification.
+
+Prerequisite 4 first repeated empty identity successfully and identified the exact pip wheel
+hash. Its stdout then reported processing the retained rfc8785 wheel and
+**“Successfully installed rfc8785-0.1.4”**. That text is not a verified installation result:
+the parent failed and terminated the process, and prerequisite 5 never compared installed
+payload/origins/inventory. Preserve the venv and all partial state; no cleanup or repair.
+
+The parent recorded the exception class but not the missing pathname or originating stack
+site. The reviewed allocation walk overlaps transient installer files, a possible mechanism
+visible from source, **not an established or reproduced cause**. No diagnostic target command,
+retry, source/oracle change, fallback or trust repair was attempted. No timeout/output-cap
+failure was recorded; all four stderr streams were empty. Recorded stdout sizes were
+2,292 / 0 / 2,229 / 2,734 bytes; prerequisite 4 termination list was `["SIGTERM"]`.
+
+The STOP latch and all command/environment/identity/elapsed/exit/termination records remain
+under `artifacts/b1d/continuation/execution/`. Runner's failure preservation rechecked
+**63 + 13 + 7 + 1,773 + 9 entries**, with new-task allocation **79,253,504 bytes** at that point.
+Additional read-only result/preservation/manifest/clock records use `artifacts/b1d/session2/`;
+the final manifest/accounting and required repository/attribution/CI outcomes are in the PR.
+
+**Run1 and run2 were not invoked. Zero of 96 new checks and zero of 105 historical controls
+ran on the target; no confirmation or finite qualification result exists.** Ordinary unchanged
+baseline delivery CI remains separate. No new acquisition, admin/system/PATH/service/trust/
+quarantine change, package/compiler fallback, customer/product/native-storage work or bypass.
+
+A1 exact release/input preservation verified; A2 independently reviewed oracle unchanged but
+unexecuted; A3 base/empty-venv prerequisites passed, bootstrap installation validation blocked;
+A4 bounded parent recorded a real failure and stopped, suite behavior unverified; A5 stop rule
+honored without run1/run2; A6 results-only delivery for independent review. This is a blocked
+execution outcome, not A1–A6 qualification completion, runtime adoption or product readiness.
+Second session ends at the results handoff; remaining clock does not authorize a retry/new
+session. No approval/merge or next-task self-dispatch. B1a-I1 and all existing gates remain.
+
+## Frozen preparation record (execution revision above)
+
+The following records the earlier preparation state and prospective recipe. Its statements
+about unexecuted commands or an absent release file describe that checkpoint; the results
+above supersede those temporal claims without changing the reviewed code or expectations.
+
 2026-11-22; original GPT-6 Astra (`gpt-6-astra`, OpenAI) / OpenCode worker.
 [Issue #30](https://github.com/Himanshu-singh04/releaselens/issues/30), fixed A1–A6;
 [complete briefing](https://github.com/Himanshu-singh04/releaselens/pull/29#issuecomment-7078385272),
