@@ -1,7 +1,68 @@
 # B1f: confirmation-only preparation
 
-Status: **prepared for independent review; no B1f target use or execution release**.
+Status: **one released confirmation passed; awaiting independent result review**.
 2026-11-22; original GPT-6 Astra (`gpt-6-astra`, OpenAI) / OpenCode worker, $0 new spend.
+
+## Released confirmation result — 2026-11-22
+
+[Independent preparation review](https://github.com/Himanshu-singh04/releaselens/pull/31#issuecomment-7080371985)
+passed all A1–A6 preparation gates and independently ran ten host tests in0.120s.
+It resolved B1e-R1 as additive disclosure/workflow correction, **not retroactive authorization**.
+[Coordinator release](https://github.com/Himanshu-singh04/releaselens/pull/31#issuecomment-7080371968)
+authorized exactly one confirmation at **`b58454703ae7fd3949aa915f713942af0df9543d`** under
+founder assent7080060030. The coordinator-created release was verified without editing:
+SHA256 **`76fd4b12e12408a10d54a1f6853d877b464ab281bb45a090b403d545bcda0a56`**.
+
+All13 execution hashes, the reference result, all89 preparation entries, nine old manifests,
+44 execution-revision files and15 prior refs verified before use. The exact20-file retained
+B1e cache and extracted base inventory remained intact. Coordinator-added synthetic fixtures
+in owned B1f scratch were retained and counted outside the old seal. No real execution directory
+existed at admission. Fresh session records are under `artifacts/b1f/session2/`.
+
+Final-session admission: **14:13:24.638 UTC**; absolute worker deadline
+**14:43:24.638 UTC**. Prior preparation charge1800s; final session allowance1800s, all
+preflight/reporting/delivery included, no reset. Invocation at **14:14:55.691869 UTC** had
+**1708.946s remaining**, above the1200s admission threshold. The unchanged release gives the
+target sequence a separate900s ceiling. Exactly once, from the required checkout:
+
+```text
+/Library/Frameworks/Python.framework/Versions/3.13/bin/python3 -I -B /Volumes/AIWorkspace/projects/releaselens/experiments/b1f/confirm.py b58454703ae7fd3949aa915f713942af0df9543d /Volumes/AIWorkspace/projects/releaselens/artifacts/b1f/release.json
+```
+
+The command exited0 at **14:15:54.310903 UTC**, elapsed **58.617s**, with empty host stdout/
+stderr and a retained success record, no STOP. Installed identity → **96/96 new +105/105 legacy**
+→ installed identity completed. **Complete semantic outcome equality to B1e run1 passed**,
+not just equal counts. Original and confirmation outcomes remain in `execution/comparison.json`.
+Both identity outputs are byte-identical to initial B1e run1 identity, SHA256
+**`223924994bbdbbf703b7e36c744c754667b4058910aa200f675b92e5e2342c41`**.
+
+All99 children used the exact reviewed arguments/environment; each exited0, with no timeout,
+parent error, stop reason or termination signal. All105 legacy observer verdicts match the
+retained full report and initial outcome. Maximum child duration4.560s; maximum legacy interval
+1.221s. Largest stdout21293B and stderr24996B, within262144B/stream. No bootstrap, reinstall,
+direct probe, additional target command or target retry occurred.
+
+- Success SHA256: **`e0ffb71ae3bf0838cad3c428f5ac27f9b5b1e71b9128b86f997e601300807129`**.
+- Comparison SHA256: **`acfc9f05db57fbc00ca1fa94c3795a57de84c219916fec3b9430850f7a3cfee5`**.
+- Preparation seal: **`861909e2f660d1bcb1508e26b503b009a7af74779f5b84fe652db15a4fa43752`**.
+- Before this note update, all89 sealed entries and93 preexisting B1f raw/scratch records
+  reverified directly, along with all nine old manifests. Post-result sampled new allocation
+  was5177344B; retained B1e allocation80429056B. Final sealing/clock accounting is in the handoff.
+
+This results update is the only source change after execution. The other12 release-bound
+files remain byte-identical. When verifying the old preparation seal after this update, resolve
+only its Decision012 entry through the exact execution Git blob at b584547; raw/cache entries
+remain direct disk hashes. Old manifests, releases, STOPs and clocks are never rewritten.
+The original preparation note below describes its historical stage, not the current disposition.
+
+Final repository/policy/actionlint/whitespace checks, full attribution, current-head/current-body
+CI, serialized-history cutoff, sealed results and charged clock are recorded in the PR handoff.
+The reviewed adapter/tests remain unchanged; no additional target invocation is needed for
+delivery checks. Both B1f sessions are consumed and close at handoff; no further execution is
+authorized. Stop for independent result review. No approval, merge or runtime/product adoption;
+the finite research result leaves all existing trust/privacy/storage/product/demo gates intact.
+
+## Historical preparation record
 
 ## Authority and narrow scope
 
