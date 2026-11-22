@@ -14,7 +14,7 @@ import zipfile
 
 ROOT = Path(__file__).resolve().parents[2]
 BASE = Path('/Volumes/AIWorkspace/caches/releaselens/b1c-standalone-inspection/extracted/python')
-TASK = Path('/Volumes/AIWorkspace/caches/releaselens/b1d-offline-validation')
+TASK = Path('/Volumes/AIWorkspace/caches/releaselens/b1e-offline-validation')
 VENV = TASK / 'venv'
 PIP = BASE / 'lib/python3.14/ensurepip/_bundled/pip-26.3-py3-none-any.whl'
 WHEEL = Path('/Volumes/AIWorkspace/caches/releaselens/b1a-runtime/rfc8785-0.1.4-py3-none-any.whl')
