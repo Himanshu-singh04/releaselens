@@ -1,6 +1,109 @@
 # B1e: transient-file accounting repair and preparation
 
-Status: **host-only repair prepared; independent review and a new release required**.
+Status: **bootstrap and run1 passed; stopped during host reporting before confirmation**.
+
+## Second/final-session result (2026-11-22)
+
+[Independent preparation verification / B1d-R1 resolution](https://github.com/Himanshu-singh04/releaselens/pull/31#issuecomment-7079739529)
+and [controlling execution release](https://github.com/Himanshu-singh04/releaselens/pull/31#issuecomment-7079740993)
+authorized exact execution head **`e83b191771eac3fc6b1825bff2268f1c4f78b4cb`**. The coordinator's
+`artifacts/b1e/release.json` matched issue32, head, published eight-file map, authorization URL
+and 3600-second ceiling; SHA-256
+**`39a82773727f6824ba3f3bb93453af68006f7a747dee0a2422f4a2fc5de388e6`**.
+It was neither regenerated nor edited. All eight files remained unchanged through execution.
+Only this results note changes afterward; executable/test/harness/oracle/requirement and
+historical Decision010 bytes remain identical to the executed revision.
+
+Second session began **13:21:34.808013 UTC**, prior conservative B1e charge **875.702482s**,
+original remainder **6324.297518s**, absolute worker deadline **15:06:59.105531 UTC**.
+Runner sequence began **13:22:26.196209 UTC**, separate persistent deadline
+**14:22:26.196209 UTC**. No clock reset. Reporting and delivery count; final conservative
+charged total/remainder is retained in `artifacts/b1e/session2/final-clock.json` and the PR.
+
+Preflight verified clean released head, explicit host Python3.13.4, all eight hashes, old
+manifests and **63+13+7+1773+9+16+54+42 entries**, exact retained-tree inventory, 33 main files,
+55 SDD headings and 15 prior refs. B1e cache was empty, execution directory absent, with
+**120,934,379,520 bytes available**. Old B1d cache/STOP/release remained preserved.
+
+Exactly two released host commands were invoked separately, from the required checkout:
+
+```text
+/Library/Frameworks/Python.framework/Versions/3.13/bin/python3 -I -B /Volumes/AIWorkspace/projects/releaselens/experiments/b1d/runner.py bootstrap e83b191771eac3fc6b1825bff2268f1c4f78b4cb /Volumes/AIWorkspace/projects/releaselens/artifacts/b1e/release.json
+/Library/Frameworks/Python.framework/Versions/3.13/bin/python3 -I -B /Volumes/AIWorkspace/projects/releaselens/experiments/b1d/runner.py run1 e83b191771eac3fc6b1825bff2268f1c4f78b4cb /Volumes/AIWorkspace/projects/releaselens/artifacts/b1e/release.json
+```
+
+Both host commands exited **0**. Bootstrap's five child exits were **0**, with no stderr,
+timeout, parent error or termination signal:
+
+| Prerequisite | Observed result | Seconds |
+| --- | --- | ---: |
+| Base identity | Passed; retained private base, pip26.3 distribution inventory | 0.258727 |
+| Copied --without-pip venv | Passed; fresh B1e venv | 2.078503 |
+| Empty venv identity | Passed; empty distribution inventory, no base site-packages | 1.037048 |
+| Pinned offline wheel install | Passed; exact pip wheel identified, rfc8785 install reported | 1.238399 |
+| Installed verification | Passed payload comparison, allowed files, inventory and import origin | 0.262062 |
+
+Actual identity: **CPython 3.14.10 (main, Nov 11 2026, 00:14:32) [Clang 23.1.3 ]**,
+native **arm64, GIL=true, JIT=false**, expected isolated private prefixes and needed module
+origins. Installed inventory was exactly **rfc8785 0.1.4**; origin was
+`/Volumes/AIWorkspace/caches/releaselens/b1e-offline-validation/venv/lib/python3.14/site-packages/rfc8785/__init__.py`.
+Unlike B1d, installed verification actually ran and passed. Bootstrap allocation snapshot:
+**78,893,056 bytes**; old preservation checks passed and all 42 B1e preparation entries rehashed.
+
+Only then run1 was invoked. **96/96 new checks and 105/105 unchanged legacy controls passed**.
+All raw new rows matched the phase outcome; all legacy observer rows matched the original
+full report and fixed ID/order inventory. All **99** suite child commands exited0 with no
+timeout, parent error or termination. Installed identity before/after was identical.
+Longest new check **4.469736s**; longest legacy interval **1.208612s**; whole legacy child
+**3.259131s**; sum of suite child elapsed **50.062411s**. Largest stdout **21,293 bytes**;
+largest stderr **24,996 bytes**, the expected unchanged legacy full report. Other stderr empty.
+Allocation after run1: **79,835,136 bytes**. These are sampled/finite observations, not a quota
+or product performance qualification.
+
+The fixed RFC/JCS, rejection, N1–N4, type/reparse/hash, raw/decoded boundaries and diagnostic
+rows passed their reviewed assertions. Original legacy lexical-N2 P37/P38 still reject
+float/exponent Scalar; those controls were not reinterpreted. Synthetic aggregate component
+and envelope outcomes remain separate; schema/native-storage/product acceptance is not implied.
+
+### Reporting failure and stop before run2
+
+During inspection, one read requested guessed `N2-rounded-fraction.stdout`, which is not a
+fixed oracle ID, and returned file-not-found. The subsequent completed `run1-inspection.json`
+verified every actual fixed ID/file, all201 pass rows, raw/outcome equality, exits, limits,
+identity and preservation. No actual target record was missing.
+
+A later **host-only display helper** reading recorded JSON exited **1** with **`KeyError: 'hex'`**:
+it assumed every `source=RFC` actual descriptor contained a `hex` member. This was a worker
+reporting-schema assumption, **not a target test or runner failure**. Under the release's
+stop-on-any-failure rule, execution stopped before run2. The display helper was not retried;
+no source/oracle/target repair or extra target command followed.
+
+**Run2 was not invoked.** There is one successful suite, **104 target child invocations total**
+(5 bootstrap + 99 run1), zero target-check failures, and **no identical-confirmation result**.
+The successful runner phases created no runner STOP; worker stop is separately retained at
+`artifacts/b1e/session2/reporting-STOP.json`, without fabricating a runner failure. Preserve
+both successes and reporting errors. Remaining time does not authorize another session/attempt.
+
+Execution command/environment/stdout/stderr/identity/timing/outcome records are retained under
+`artifacts/b1e/execution/`; fresh inspection/preservation/check/manifest/clock records under
+`artifacts/b1e/session2/`. Old Decision011 manifest entry is verified against the original
+**e83b191 Git blob** after this update; every old raw/cache entry remains a direct disk check.
+No old manifest, release, STOP or venv is rewritten or cleaned.
+
+A1 preservation verified; A2/A3 independently reviewed repair/host proof retained and bootstrap/
+initial suite passed; A4 immutable inputs preserved; A5 stopped on reporting failure, confirmation
+**unperformed**; A6 results-only delivery/checks/attribution/CI recorded in PR for independent
+result review. This is a **partial finite success with an incomplete confirmation sequence**,
+not a completed two-run qualification, runtime adoption, PR approval/merge or product readiness.
+No new acquisition/spend, fallback, system/trust change or customer/product/native-storage work.
+B1a-I1 and all privacy/storage/product/deadline gates remain unresolved.
+
+## Historical preparation record (execution revision above)
+
+The following describes the prior preparation checkpoint. Claims that no B1e target ran or
+release existed apply to that checkpoint; the actual results above supersede those temporal
+claims without changing the reviewed executable or expectations.
+
 2026-11-22; original GPT-6 Astra (`gpt-6-astra`, OpenAI) / OpenCode worker, $0 new spend.
 
 ## Authority and fixed scope
