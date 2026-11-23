@@ -1,6 +1,7 @@
 """B2-only host supervisor: retained-runtime tests, immutable attempt evidence.
 
-Run with approved host Python -I -B: check.py LABEL encode|test.
+Run with approved host Python -I -B: check.py LABEL encode|test [session2].
+Final correction session also permits mode probe for the fixed coordinator probe.
 This never invokes a historical research runner or repairs an environment.
 """
 from datetime import datetime, timezone
@@ -67,18 +68,27 @@ def retained():
 
 def main():
     assert sys.executable == HOST
-    label, mode = sys.argv[1:]
-    assert label.isascii() and label.replace('-', '').isalnum() and mode in ('encode', 'test')
-    deadline = datetime.fromisoformat(json.loads((EVIDENCE / 'start.json').read_text())['deadline_utc']).timestamp()
+    label, mode, *session = sys.argv[1:]
+    assert session in ([], ['session2'])
+    assert label.isascii() and label.replace('-', '').isalnum()
+    assert mode in (('test', 'probe') if session else ('encode', 'test'))
+    records = EVIDENCE / 'session2' if session else EVIDENCE
+    task = SCRATCH / 'session2' if session else SCRATCH
+    clock = records / 'start.json'
+    deadline = datetime.fromisoformat(json.loads(clock.read_text())['deadline_utc']).timestamp()
     assert deadline - time.time() >= CEILING + 300, 'Reserve closing delivery; no late suite'
     capacity()
     retained()
-    directory = EVIDENCE / label
+    directory = records / label
     directory.mkdir()
     paths = set()
     for pattern in ('releaselens/*.py', 'tests/*.py', 'fixtures/b2/*.json', 'experiments/b2/*.py'):
         paths.update(ROOT.glob(pattern))
     paths.add(ROOT / '.github/workflows/ci.yml')
+    probe = EVIDENCE / 'coordinator-review-3bfc7a/probe_contract.py'
+    if mode == 'probe':
+        assert sha(probe) == json.loads((records / 'preflight.json').read_text())['probe_sha256']
+        paths.add(probe)
     files = {}
     for p in sorted(paths):
         relative = p.relative_to(ROOT)
@@ -86,18 +96,19 @@ def main():
         destination.parent.mkdir(parents=True, exist_ok=True)
         shutil.copyfile(p, destination)
         files[str(relative)] = sha(p)
-    command = [HOST if mode == 'encode' else TARGET, '-I', '-B',
-               str(ROOT / 'tests' / ('fixture_source.py' if mode == 'encode' else 'test_contract.py'))]
-    environment = {'PATH': os.defpath, 'HOME': str(SCRATCH / 'home'), 'TMPDIR': str(SCRATCH / 'tmp'),
-                   'TMP': str(SCRATCH / 'tmp'), 'TEMP': str(SCRATCH / 'tmp'),
-                   'XDG_CACHE_HOME': str(SCRATCH / 'cache'), 'XDG_CONFIG_HOME': str(SCRATCH / 'config'),
+    script = probe if mode == 'probe' else ROOT / 'tests' / (
+        'fixture_source.py' if mode == 'encode' else 'test_contract.py')
+    command = [HOST if mode == 'encode' else TARGET, '-I', '-B', str(script)]
+    environment = {'PATH': os.defpath, 'HOME': str(task / 'home'), 'TMPDIR': str(task / 'tmp'),
+                   'TMP': str(task / 'tmp'), 'TEMP': str(task / 'tmp'),
+                   'XDG_CACHE_HOME': str(task / 'cache'), 'XDG_CONFIG_HOME': str(task / 'config'),
                    'PYTHONDONTWRITEBYTECODE': '1', 'LC_ALL': 'C', 'PIP_CONFIG_FILE': os.devnull,
                    'PIP_DISABLE_PIP_VERSION_CHECK': '1'}
     record = {'utc': datetime.now(timezone.utc).isoformat(), 'argv': command, 'cwd': str(ROOT),
               'environment': environment, 'files': files, 'head': subprocess.check_output(
                   ['git', 'rev-parse', 'HEAD'], cwd=ROOT, text=True).strip(),
               'session_remaining_seconds': deadline - time.time(), 'ceiling_seconds': CEILING,
-              'stream_cap_bytes': CAP, 'mode': mode}
+              'stream_cap_bytes': CAP, 'mode': mode, 'clock_path': str(clock), 'clock_sha256': sha(clock)}
     (directory / 'started.json').write_text(json.dumps(record, indent=2) + '\n')
     process = None
     reason = None

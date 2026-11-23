@@ -112,3 +112,63 @@ customer import or production storage qualification. D1–D4 stay unadopted; the
 whole-comparison obligation is unchanged and unproven by these unit-test timings. Existing
 hash/TLS/ad-hoc runtime trust and incomplete native inventory remain. Stop for independent
 code/fixture/result review; no approval, merge, adoption or next-task dispatch.
+
+## Final correction session: B2-R1 and B2-R2
+
+[Coordinator review](https://github.com/Himanshu-singh04/releaselens/pull/35#issuecomment-7091780004)
+of `3bfc7a057b2a207d66b9848c3e6fefac131d8dda` independently passed the original20 tests and
+reproduced two missing contract clauses. Corrections below remain within issue34; the
+four fixed fixture files, source recipe, requirement sources and coordinator probe are unchanged.
+Only coordinator verification may resolve the findings.
+
+**B2-R1:** Decimal construction preceded recognition of exact zero, so Decimal's representable
+exponent imposed an unintended restriction on valid zero tokens. A full JSON-zero-token match
+now returns integer0 before that intermediate conversion. Signs, fractional zeros, e/E and
+positive/negative arbitrary-magnitude exponents preserve the zero semantic identity. Nonzero
+tokens still pass through the existing N1/N2/N3 validation; malformed numeric grammar is not
+accepted and no exponent ceiling is added. Durable regression tests include40 zero combinations
+(including1000-digit exponents), plus20 malformed/nonzero/unsafe/overflow/underflow controls.
+
+**B2-R2:** The unlocatable internal-error catch now produces location null, as required by
+contract line62. RuntimeError canary injection verifies the exact fixed E_INTERNAL diagnostic
+for suite/baseline/candidate without leaking evidence or exception text. Actual input errors
+retain their input-root/schema-known locations. The earlier test's incorrect internal-root
+expectation was corrected, not the contract.
+
+Before the product fix, the unchanged coordinator two-method probe reproduced **five expected
+failures in0.002s**, exit1, supervised0.306s. Fresh `artifacts/b2/session2/probe-before/` retains
+its exact source snapshot, command, streams and failure. After the fix, the complete product
+suite passed **22 tests in22.443s**, supervised22.745s, exit0; the same coordinator probe passed
+**2 tests in0.011s**, supervised0.337s, exit0. Both successful processes had no stop reason or
+termination signal; stdout0B, stderr3096B/386B respectively. The coordinator probe remains
+SHA256 `a77cd62ce792574977159d513b4dc19aa1328b684c59eaaea1952dd3e7760fae`.
+
+The existing supervisor accepts an explicit `session2` suffix, selecting only fresh session2
+clock/record/task directories. It permits test or the fixed hash-bound coordinator probe in
+that mode, not fixture encoding. It still counts all B2 evidence/scratch together, verifies
+the retained runtime/base/cache, snapshots exact sources and uses300s/1MiB bounds with300s
+delivery reserve. Each attempt records its clock path/hash. Original session1 clock and
+records are untouched. Commands, using approved host Python3.13 `-I -B`:
+
+```text
+experiments/b2/check.py probe-before probe session2
+experiments/b2/check.py product-after test session2
+experiments/b2/check.py probe-after probe session2
+```
+
+The coordinator resolved the first-session metadata gap through an authorized read: durable
+admission **03:36:36.057 UTC**, serialized dispatch03:36:36.096, controlling charged start
+03:35:45.977457; final idle **04:33:22.070 UTC**, elapsed3456.092543s. Complete47-call history
+verified the disclosed in-scope transport1006/retry2/synthetic recovery and no further provider
+event through idle. Subsequent coordinator tests are separate verification. This is an additive
+correction to the historical unknown-at-handoff record above; the denied registry path was not
+retried or accessed by an alternate route.
+
+Final-session controlling floor **04:41:11.319735 UTC**, deadline **05:41:11.319735 UTC**.
+Charge3600s plus prior3600s =7200s; no sessions/budget remain after closure. All reads, tests,
+corrections, CI and delivery count; no reset or self-dispatch. Coordinator will independently
+reconcile this dispatch's durable admission; the earlier floor controls regardless. Original
+91-entry seal `6c97230fc1bde35ab647119e381b7441d64fc9e52b8bf72f0a8f50f127a93a23` stays intact:
+only changed historical tracked-source entries resolve through exact3bfc7a Git blobs; all
+raw/cache/source snapshots remain direct hashes. Final checks, current-body CI, sealed results,
+allocation and serialized-history cutoff/closing interval are recorded in the PR response.

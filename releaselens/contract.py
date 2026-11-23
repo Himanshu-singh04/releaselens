@@ -48,6 +48,10 @@ def semantic_hash(value):
 
 
 def _number(token):
+    # Exact zero is independent of exponent magnitude, including beyond Decimal.
+    # Match the full JSON zero grammar; nonzero tokens retain all N1/N2/N3 checks.
+    if re.fullmatch(r'-?0(?:\.0+)?(?:[eE][+-]?[0-9]+)?', token):
+        return 0
     # Decimal construction/comparison is exact and independent of context precision.
     exact = Decimal(token)
     _require(not (exact == exact.to_integral_value() and exact.copy_abs() > SAFE), 'E_JSON')
@@ -478,6 +482,7 @@ def load(raw, owner='suite'):
     except (ValueError, UnicodeError, ArithmeticError):
         code, path = 'E_JSON', ()
     except Exception:
-        code, path = 'E_INTERNAL', ()
-    return {'diagnostic': {'code': code, 'location': {'kind': 'input', 'input': owner,
-            'pointer': ''.join('/' + str(part) for part in path)}, 'message': MESSAGES[code]}}
+        code, path = 'E_INTERNAL', None
+    location = None if path is None else {'kind': 'input', 'input': owner,
+                                         'pointer': ''.join('/' + str(part) for part in path)}
+    return {'diagnostic': {'code': code, 'location': location, 'message': MESSAGES[code]}}

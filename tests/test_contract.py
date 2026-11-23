@@ -178,6 +178,36 @@ class ContractTests(unittest.TestCase):
         raw = encoded(bundle).replace(b'"subject":1', b'"subject":1e0')
         self.accepted(bundle, 'candidate', raw=raw)
 
+    def test_exact_zero_has_no_intermediate_exponent_ceiling(self):
+        suite = small({'zero': [0]})
+        original = encoded(suite)
+        for significand in ('0', '-0', '0.0', '-0.00'):
+            for exponent in ('10000000000000000000', '+10000000000000000000',
+                             '-10000000000000000000', '9' * 1000, '-' + '9' * 1000):
+                for separator in ('e', 'E'):
+                    token = (significand + separator + exponent).encode()
+                    with self.subTest(significand=significand, exponent_sign=exponent[0], separator=separator):
+                        raw = original.replace(b'"zero":[0]', b'"zero":[' + token + b']', 1)
+                        self.assertNotEqual(raw, original)
+                        result = self.accepted(suite, raw=raw)
+                        value = result['document']['artifacts'][0]['content']['zero'][0]
+                        self.assertIs(type(value), int)
+                        self.assertEqual(value, 0)
+                        self.assertEqual(result['semantic_hash'], suite['suite_hash'])
+                        self.assertEqual(c.semantic_hash(value), ref.digest(b'0'))
+
+    def test_zero_shortcut_preserves_syntax_and_nonzero_rejections(self):
+        original = encoded(small(0))
+        tokens = [b'00e1', b'+0e1', b'0.e1', b'.0e1', b'0e', b'-0e+', b'0e+-1', b'0e1.0']
+        for significand in ('1', '-1', '0.01', '-0.01'):
+            for exponent in ('10000000000000000000', '-10000000000000000000'):
+                tokens.append((significand + 'e' + exponent).encode())
+        tokens.extend((b'9007199254740992', b'9007199254740991.5', b'1e309', b'1e-400'))
+        for token in tokens:
+            with self.subTest(token=token):
+                raw = original.replace(b'"content":0', b'"content":' + token, 1)
+                self.rejected(raw=raw, code='E_JSON', pointer='')
+
     def test_required_unknown_fields_types_ids_and_hash_grammar(self):
         for mutate, pointer in [
             (lambda s: s.pop('revision'), ''),
@@ -546,9 +576,15 @@ class ContractTests(unittest.TestCase):
         result = c.load(raw, 'baseline')
         self.assertNotIn(secret, json.dumps(result))
         self.assertEqual(result['diagnostic']['location']['pointer'], '')
-        for error, code in ((ValueError(secret), 'E_JSON'), (RuntimeError(secret), 'E_INTERNAL')):
-            with patch.object(c.rfc8785, 'dumps', side_effect=error):
-                self.rejected(small(), code=code, pointer='')
+        with patch.object(c.rfc8785, 'dumps', side_effect=ValueError(secret)):
+            self.rejected(small(), code='E_JSON', pointer='')
+        for owner in ('suite', 'baseline', 'candidate'):
+            raw = encoded(small() if owner == 'suite' else self.document(owner))
+            with patch.object(c.rfc8785, 'dumps', side_effect=RuntimeError(secret)):
+                result = c.load(raw, owner)
+            self.assertEqual(result, {'diagnostic': {'code': 'E_INTERNAL', 'location': None,
+                             'message': 'Contract validation failed.'}})
+            self.assertNotIn(secret, json.dumps(result))
         self.assertEqual(c.load(b'{}', secret)['diagnostic']['location'], None)
 
 
