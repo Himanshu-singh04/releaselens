@@ -49,6 +49,22 @@ jobs:
           ) > "$RUNNER_TEMP/b2/stdout" 2> "$RUNNER_TEMP/b2/stderr" || status=$?
           cat "$RUNNER_TEMP/b2/stdout" "$RUNNER_TEMP/b2/stderr"
           exit "$status"
+      - name: B3 per-run evaluator tests (hosted runner, not exact Mac evidence)
+        run: |
+          mkdir -p "$RUNNER_TEMP/b3"/{home,tmp,cache,config}
+          status=0
+          (
+            ulimit -f 1024
+            env -i PATH=/usr/bin:/bin HOME="$RUNNER_TEMP/b3/home" \
+              TMPDIR="$RUNNER_TEMP/b3/tmp" TEMP="$RUNNER_TEMP/b3/tmp" TMP="$RUNNER_TEMP/b3/tmp" \
+              XDG_CACHE_HOME="$RUNNER_TEMP/b3/cache" XDG_CONFIG_HOME="$RUNNER_TEMP/b3/config" \
+              PYTHONDONTWRITEBYTECODE=1 LC_ALL=C PIP_CONFIG_FILE=/dev/null \
+              PIP_DISABLE_PIP_VERSION_CHECK=1 \
+              timeout --signal=TERM --kill-after=2s 180s \
+              "$RUNNER_TEMP/b0b-run/.venv/bin/python" -I -B tests/test_evaluator.py
+          ) > "$RUNNER_TEMP/b3/stdout" 2> "$RUNNER_TEMP/b3/stderr" || status=$?
+          cat "$RUNNER_TEMP/b3/stdout" "$RUNNER_TEMP/b3/stderr"
+          exit "$status"
       - name: Validate workflow syntax
         env:
           ACTIONLINT_SHA256: 8aca8db96f1b94770f1b0d72b6dddcb1ebb8123cb3712530b08cc387b349a3d8
