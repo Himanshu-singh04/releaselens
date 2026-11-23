@@ -1,0 +1,51 @@
+{
+  "source_sha256": "9f532fdd9758b12669361cce646cb9563665357082c4a940504a102a931c42e3",
+  "derivation": "tests/fixture_source.py; independent stdlib restricted JCS",
+  "documents": {
+    "suite": {
+      "bytes": 15670,
+      "byte_hash": "sha256:156f0ce462b937cac75ddf0b8d865fd74e61125220b3924e84d7f957767afc9d",
+      "semantic_hash": "sha256:8d1ecd78c842baa7d6ccec349b2a833d96a829ba625c3c07cc1b24dc41aa452e",
+      "case_hashes": {
+        "C01": "sha256:b7fd6ac96e0da8b291790c02d86a0cc6f19aad716ec3b268ce55ca2c4cd80170",
+        "C02": "sha256:920334b7b7362249a05a813311cc1da584a8e328545a68eed1e7c05d206bb81b",
+        "C03": "sha256:0bb8f50cc7c1396b82ce23453bcaab46101621b3e44d405fd2f72ff6c99624e9",
+        "C04": "sha256:f00068156d767a6ba786e54d3c67c526220801ee4eeeea9491cf2f8edbe260cf",
+        "C05": "sha256:fdf1a77b231c068ce5f02cbce03c9021b0d8e13246a5b2ade78a4aadca7ef46e",
+        "C06": "sha256:225a458c1c80892a5c72980e3ee3da3461049298747f9af18dac264f28ddf25f",
+        "C07": "sha256:39d1675b495c152e0f6310f4a7c8794049c61d91b85014112fde25c55fec5568",
+        "C08": "sha256:cc2ee7b1a714e76432a096c80067d1edd47b577d73f86745bb763652f2aa4d87"
+      }
+    },
+    "baseline": {
+      "bytes": 39046,
+      "byte_hash": "sha256:ccba04622337281deffb39535dbd4806a9ad3dca6781b93becd645345140d770",
+      "semantic_hash": "sha256:3a0ccd465a0ee259d7f9155136e2f0520749c67eb44e3faec2941720b7d4d64c",
+      "case_hashes": {
+        "C01": "sha256:b7fd6ac96e0da8b291790c02d86a0cc6f19aad716ec3b268ce55ca2c4cd80170",
+        "C02": "sha256:920334b7b7362249a05a813311cc1da584a8e328545a68eed1e7c05d206bb81b",
+        "C03": "sha256:0bb8f50cc7c1396b82ce23453bcaab46101621b3e44d405fd2f72ff6c99624e9",
+        "C04": "sha256:f00068156d767a6ba786e54d3c67c526220801ee4eeeea9491cf2f8edbe260cf",
+        "C05": "sha256:fdf1a77b231c068ce5f02cbce03c9021b0d8e13246a5b2ade78a4aadca7ef46e",
+        "C06": "sha256:225a458c1c80892a5c72980e3ee3da3461049298747f9af18dac264f28ddf25f",
+        "C07": "sha256:39d1675b495c152e0f6310f4a7c8794049c61d91b85014112fde25c55fec5568",
+        "C08": "sha256:cc2ee7b1a714e76432a096c80067d1edd47b577d73f86745bb763652f2aa4d87"
+      }
+    },
+    "candidate": {
+      "bytes": 36598,
+      "byte_hash": "sha256:718e2e5deefd2e6479a9ccbd4eb55d44c47e874f7ec150b89bef9efba3635545",
+      "semantic_hash": "sha256:68c022d6172c51eea474dabbe6e00ccd1a8f7b0e438601c8777971fdc3911ff2",
+      "case_hashes": {
+        "C01": "sha256:b7fd6ac96e0da8b291790c02d86a0cc6f19aad716ec3b268ce55ca2c4cd80170",
+        "C02": "sha256:920334b7b7362249a05a813311cc1da584a8e328545a68eed1e7c05d206bb81b",
+        "C03": "sha256:0bb8f50cc7c1396b82ce23453bcaab46101621b3e44d405fd2f72ff6c99624e9",
+        "C04": "sha256:f00068156d767a6ba786e54d3c67c526220801ee4eeeea9491cf2f8edbe260cf",
+        "C05": "sha256:fdf1a77b231c068ce5f02cbce03c9021b0d8e13246a5b2ade78a4aadca7ef46e",
+        "C06": "sha256:225a458c1c80892a5c72980e3ee3da3461049298747f9af18dac264f28ddf25f",
+        "C07": "sha256:39d1675b495c152e0f6310f4a7c8794049c61d91b85014112fde25c55fec5568",
+        "C08": "sha256:197d1e8aab8946edcd9f826f6dbf1d742dba0278ab25e1d38de63e606cbea119"
+      }
+    }
+  }
+}
